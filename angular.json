@@ -25,7 +25,9 @@
               "apps/mygifts-desktop/src/favicon.ico",
               "apps/mygifts-desktop/src/assets"
             ],
-            "styles": ["apps/mygifts-desktop/src/styles.scss"],
+            "styles": [
+              "apps/mygifts-desktop/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -79,7 +81,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/mygifts-desktop/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/mygifts-desktop/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -112,27 +116,31 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/mygifts-desktop-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/mygifts-desktop-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
     },
-    "gifts": {
+    "mygifts-desktop-gifts": {
       "projectType": "library",
-      "root": "libs/gifts",
-      "sourceRoot": "libs/gifts/src",
+      "root": "libs/mygifts-desktop/gifts",
+      "sourceRoot": "libs/mygifts-desktop/gifts/src",
       "prefix": "mygifts",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/gifts/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/mygifts-desktop/gifts/src/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/gifts/jest.config.js",
+            "jestConfig": "libs/mygifts-desktop/gifts/jest.config.js",
             "passWithNoTests": true
           }
         }
