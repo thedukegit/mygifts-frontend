@@ -1,32 +1,60 @@
 {
   "version": 1,
   "projects": {
-    "mygifts-desktop": {
+    "mygifts-desktop-gifts": {
+      "projectType": "library",
+      "root": "libs/mygifts-desktop/gifts",
+      "sourceRoot": "libs/mygifts-desktop/gifts/src",
+      "prefix": "mygifts",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/mygifts-desktop/gifts/src/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/mygifts-desktop/gifts/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "desktop": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "apps/mygifts-desktop",
-      "sourceRoot": "apps/mygifts-desktop/src",
+      "root": "apps/desktop",
+      "sourceRoot": "apps/desktop/src",
       "prefix": "mygifts",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/mygifts-desktop",
-            "index": "apps/mygifts-desktop/src/index.html",
-            "main": "apps/mygifts-desktop/src/main.ts",
-            "polyfills": "apps/mygifts-desktop/src/polyfills.ts",
-            "tsConfig": "apps/mygifts-desktop/tsconfig.app.json",
+            "outputPath": "dist/apps/desktop",
+            "index": "apps/desktop/src/index.html",
+            "main": "apps/desktop/src/main.ts",
+            "polyfills": "apps/desktop/src/polyfills.ts",
+            "tsConfig": "apps/desktop/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "apps/mygifts-desktop/src/favicon.ico",
-              "apps/mygifts-desktop/src/assets"
+              "apps/desktop/src/favicon.ico",
+              "apps/desktop/src/assets"
             ],
             "styles": [
-              "apps/mygifts-desktop/src/styles.scss"
+              "apps/desktop/src/styles.scss"
             ],
             "scripts": []
           },
@@ -34,8 +62,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "apps/mygifts-desktop/src/environments/environment.ts",
-                  "with": "apps/mygifts-desktop/src/environments/environment.prod.ts"
+                  "replace": "apps/desktop/src/environments/environment.ts",
+                  "with": "apps/desktop/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -64,52 +92,52 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "mygifts-desktop:build"
+            "browserTarget": "desktop:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "mygifts-desktop:build:production"
+              "browserTarget": "desktop:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mygifts-desktop:build"
+            "browserTarget": "desktop:build"
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/mygifts-desktop/src/**/*.ts"
+              "apps/desktop/src/**/*.ts"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/mygifts-desktop/jest.config.js",
+            "jestConfig": "apps/desktop/jest.config.js",
             "passWithNoTests": true
           }
         }
       }
     },
-    "mygifts-desktop-e2e": {
-      "root": "apps/mygifts-desktop-e2e",
-      "sourceRoot": "apps/mygifts-desktop-e2e/src",
+    "desktop-e2e": {
+      "root": "apps/desktop-e2e",
+      "sourceRoot": "apps/desktop-e2e/src",
       "projectType": "application",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "apps/mygifts-desktop-e2e/cypress.json",
-            "tsConfig": "apps/mygifts-desktop-e2e/tsconfig.e2e.json",
-            "devServerTarget": "mygifts-desktop:serve"
+            "cypressConfig": "apps/desktop-e2e/cypress.json",
+            "tsConfig": "apps/desktop-e2e/tsconfig.e2e.json",
+            "devServerTarget": "desktop:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "mygifts-desktop:serve:production"
+              "devServerTarget": "desktop:serve:production"
             }
           }
         },
@@ -117,37 +145,9 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/mygifts-desktop-e2e/**/*.{js,ts}"
+              "apps/desktop-e2e/**/*.{js,ts}"
             ]
           }
-        }
-      }
-    },
-    "mygifts-desktop-gifts": {
-      "projectType": "library",
-      "root": "libs/mygifts-desktop/gifts",
-      "sourceRoot": "libs/mygifts-desktop/gifts/src",
-      "prefix": "mygifts",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/mygifts-desktop/gifts/src/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/mygifts-desktop/gifts/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
         }
       }
     }
@@ -175,5 +175,5 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "mygifts-desktop"
+  "defaultProject": "desktop"
 }

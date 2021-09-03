@@ -28,17 +28,17 @@
     }
   },
   "projects": {
-    "mygifts-desktop": {
-      "tags": []
-    },
-    "mygifts-desktop-e2e": {
-      "tags": [],
-      "implicitDependencies": [
-        "mygifts-desktop"
-      ]
-    },
     "mygifts-desktop-gifts": {
       "tags": []
+    },
+    "desktop": {
+      "tags": []
+    },
+    "desktop-e2e": {
+      "tags": [],
+      "implicitDependencies": [
+        "desktop"
+      ]
     }
   }
 }

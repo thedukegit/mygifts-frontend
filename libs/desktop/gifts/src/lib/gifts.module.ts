@@ -21,4 +21,4 @@ import { MygiftsDesktopGiftsFacade } from './+state/gifts.facade';
   ],
   providers: [MygiftsDesktopGiftsFacade],
 })
-export class MygiftsDesktopGiftsModule {}
+export class GiftsModule {}

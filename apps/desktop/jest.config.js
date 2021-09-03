@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'mygifts-desktop',
+  displayName: 'desktop',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../coverage/apps/mygifts-desktop',
+  coverageDirectory: '../../coverage/apps/desktop',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',
