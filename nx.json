@@ -18,27 +18,17 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
   "projects": {
-    "mygifts-desktop-gifts": {
-      "tags": []
-    },
     "desktop": {
       "tags": []
     },
     "desktop-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "desktop"
-      ]
+      "implicitDependencies": ["desktop"]
     }
   }
 }

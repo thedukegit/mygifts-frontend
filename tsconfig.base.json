@@ -10,24 +10,25 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@mygifts/mygifts-desktop/gifts": [
         "libs/mygifts-desktop/gifts/src/index.ts"
+      ],
+      "@mygifts/nrwl-angular-library": [
+        "libs/nrwl-angular-library/src/index.ts"
+      ],
+      "@mygifts/nrwl-workspace-library": [
+        "libs/nrwl-workspace-library/src/index.ts"
+      ],
+      "@mygifts/desktop/gifts/feature-gifts": [
+        "libs/desktop/gifts/feature-gifts/src/index.ts"
       ]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

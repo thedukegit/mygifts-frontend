@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GiftsComponent } from './gifts.component';
+import { By } from '@angular/platform-browser';
 
 describe('GiftsComponent', () => {
   let component: GiftsComponent;
@@ -22,4 +23,14 @@ describe('GiftsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show a gift', ()=>{
+    // arrange
+    const giftElement = fixture.debugElement.query(By.css('mg-gift'));
+
+    // act
+
+    // assert
+    expect(giftElement).toBeTruthy();
+  })
 });

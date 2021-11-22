@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'mygifts-desktop-gifts',
-  preset: '../../../jest.preset.js',
+  displayName: 'desktop-gifts-feature-gifts',
+  preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -14,7 +14,7 @@ module.exports = {
       },
     },
   },
-  coverageDirectory: '../../../coverage/libs/mygifts-desktop/gifts',
+  coverageDirectory: '../../../../coverage/libs/desktop/gifts/feature-gifts',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

@@ -2,12 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { GiftsComponent } from '../../../../libs/desktop/gifts/src/lib/gifts/gifts.component';
-import { GiftComponent } from '../../../../libs/desktop/gifts/src/lib/gift/gift.component';
+import { GiftsModule } from '@mygifts/desktop/gifts/feature-gifts';
 
 @NgModule({
-  declarations: [AppComponent, GiftsComponent, GiftComponent],
-  imports: [BrowserModule],
+  declarations: [AppComponent, ],
+  imports: [BrowserModule, GiftsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

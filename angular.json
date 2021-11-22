@@ -1,34 +1,6 @@
 {
   "version": 1,
   "projects": {
-    "mygifts-desktop-gifts": {
-      "projectType": "library",
-      "root": "libs/mygifts-desktop/gifts",
-      "sourceRoot": "libs/mygifts-desktop/gifts/src",
-      "prefix": "mygifts",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/mygifts-desktop/gifts/src/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/mygifts-desktop/gifts/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
     "desktop": {
       "projectType": "application",
       "schematics": {
@@ -54,7 +26,10 @@
               "apps/desktop/src/assets"
             ],
             "styles": [
-              "apps/desktop/src/styles.scss"
+              "apps/desktop/src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/mdc-dark-deeppurple/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
           },
@@ -109,9 +84,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/desktop/src/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/desktop/src/**/*.ts"]
           }
         },
         "test": {
