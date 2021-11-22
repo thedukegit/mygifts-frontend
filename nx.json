@@ -29,6 +29,9 @@
     "desktop-e2e": {
       "tags": [],
       "implicitDependencies": ["desktop"]
+    },
+    "desktop-shell-ui-nav-bar": {
+      "tags": []
     }
   }
 }
