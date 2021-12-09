@@ -30,7 +30,8 @@
       ],
       "@mygifts/desktop/shell/ui/nav-bar": [
         "libs/desktop/shell/ui/nav-bar/src/index.ts"
-      ]
+      ],
+      "@mygifts/desktop/home": ["libs/desktop/home/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

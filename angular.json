@@ -147,6 +147,32 @@
           "style": "scss"
         }
       }
+    },
+    "desktop-home": {
+      "projectType": "library",
+      "root": "libs/desktop/home",
+      "sourceRoot": "libs/desktop/home/src",
+      "prefix": "mygifts",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/desktop/home/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/desktop/home/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {
