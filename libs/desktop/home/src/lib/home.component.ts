@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'mygifts-home',
+  selector: 'mg-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

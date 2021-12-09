@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-import { HomeComponent } from '@mygifts/desktop/home';
+import { LayoutComponent } from '@mygifts/desktop/shell/ui/layout';
 
 // import {}
 
@@ -12,7 +12,7 @@ import { HomeComponent } from '@mygifts/desktop/home';
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: LayoutComponent, pathMatch: 'full' },
     ]),
   ],
   providers: [],

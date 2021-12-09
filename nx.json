@@ -35,6 +35,9 @@
     },
     "desktop-home": {
       "tags": []
+    },
+    "desktop-shell-ui-layout": {
+      "tags": []
     }
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'mygifts-root',
+  selector: 'mg-root',
   template: '<router-outlet></router-outlet>',
   styleUrls: ['./app.component.scss'],
 })

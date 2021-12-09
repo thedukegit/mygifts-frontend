@@ -31,7 +31,10 @@
       "@mygifts/desktop/shell/ui/nav-bar": [
         "libs/desktop/shell/ui/nav-bar/src/index.ts"
       ],
-      "@mygifts/desktop/home": ["libs/desktop/home/src/index.ts"]
+      "@mygifts/desktop/home": ["libs/desktop/home/src/index.ts"],
+      "@mygifts/desktop/shell/ui/layout": [
+        "libs/desktop/shell/ui/layout/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
