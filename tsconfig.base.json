@@ -16,6 +16,16 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mygifts/desktop/gifts/feature-gifts": [
+        "libs/desktop/gifts/feature-gifts/src/index.ts"
+      ],
+      "@mygifts/desktop/home": ["libs/desktop/home/src/index.ts"],
+      "@mygifts/desktop/shell/ui/layout": [
+        "libs/desktop/shell/ui/layout/src/index.ts"
+      ],
+      "@mygifts/desktop/shell/ui/nav-bar": [
+        "libs/desktop/shell/ui/nav-bar/src/index.ts"
+      ],
       "@mygifts/mygifts-desktop/gifts": [
         "libs/mygifts-desktop/gifts/src/index.ts"
       ],
@@ -24,16 +34,6 @@
       ],
       "@mygifts/nrwl-workspace-library": [
         "libs/nrwl-workspace-library/src/index.ts"
-      ],
-      "@mygifts/desktop/gifts/feature-gifts": [
-        "libs/desktop/gifts/feature-gifts/src/index.ts"
-      ],
-      "@mygifts/desktop/shell/ui/nav-bar": [
-        "libs/desktop/shell/ui/nav-bar/src/index.ts"
-      ],
-      "@mygifts/desktop/home": ["libs/desktop/home/src/index.ts"],
-      "@mygifts/desktop/shell/ui/layout": [
-        "libs/desktop/shell/ui/layout/src/index.ts"
       ]
     }
   },

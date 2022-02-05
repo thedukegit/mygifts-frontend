@@ -26,10 +26,12 @@
               "apps/desktop/src/assets"
             ],
             "styles": [
-              "apps/desktop/src/styles.scss",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css",
               "node_modules/primeicons/primeicons.css",
-              "node_modules/primeng/resources/themes/mdc-dark-deeppurple/theme.css",
-              "node_modules/primeng/resources/primeng.min.css"
+              "node_modules/@fullcalendar/common/main.css",
+              "apps/desktop/src/styles.scss"
             ],
             "scripts": []
           },
@@ -44,7 +46,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -62,7 +63,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -84,7 +88,10 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/desktop/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/desktop/src/**/*.ts",
+              "apps/desktop/src/**/*.html"
+            ]
           }
         },
         "test": {
@@ -92,9 +99,13 @@
           "options": {
             "jestConfig": "apps/desktop/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/apps/desktop"
+          ]
         }
-      }
+      },
+      "tags": []
     },
     "desktop-e2e": {
       "root": "apps/desktop-e2e",
@@ -117,36 +128,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/desktop-e2e/**/*.{js,ts}"]
-          }
-        }
-      }
-    },
-    "desktop-shell-ui-nav-bar": {
-      "projectType": "library",
-      "root": "libs/desktop/shell/ui/nav-bar",
-      "sourceRoot": "libs/desktop/shell/ui/nav-bar/src",
-      "prefix": "mygifts",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/desktop/shell/ui/nav-bar/src/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/desktop/shell/ui/nav-bar/jest.config.js",
-            "passWithNoTests": true
+            "lintFilePatterns": [
+              "apps/desktop-e2e/**/*.{js,ts}"
+            ]
           }
         }
       },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
+      "tags": [],
+      "implicitDependencies": [
+        "desktop"
+      ]
     },
     "desktop-home": {
       "projectType": "library",
@@ -157,7 +148,10 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/desktop/home/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/desktop/home/src/**/*.ts",
+              "libs/desktop/home/src/**/*.html"
+            ]
           }
         },
         "test": {
@@ -165,14 +159,18 @@
           "options": {
             "jestConfig": "libs/desktop/home/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/desktop/home"
+          ]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "tags": []
     },
     "desktop-shell-ui-layout": {
       "projectType": "library",
@@ -183,7 +181,10 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/desktop/shell/ui/layout/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/desktop/shell/ui/layout/src/**/*.ts",
+              "libs/desktop/shell/ui/layout/src/**/*.html"
+            ]
           }
         },
         "test": {
@@ -191,38 +192,51 @@
           "options": {
             "jestConfig": "libs/desktop/shell/ui/layout/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/layout"
+          ]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
       },
-      "library": {
-        "linter": "eslint"
+      "tags": []
+    },
+    "desktop-shell-ui-nav-bar": {
+      "projectType": "library",
+      "root": "libs/desktop/shell/ui/nav-bar",
+      "sourceRoot": "libs/desktop/shell/ui/nav-bar/src",
+      "prefix": "mygifts",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/desktop/shell/ui/nav-bar/src/**/*.ts",
+              "libs/desktop/shell/ui/nav-bar/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/desktop/shell/ui/nav-bar/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/nav-bar"
+          ]
+        }
       },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "tags": []
     }
-  },
-  "defaultProject": "desktop"
+  }
 }
