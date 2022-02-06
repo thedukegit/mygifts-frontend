@@ -64,9 +64,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -100,9 +98,7 @@
             "jestConfig": "apps/desktop/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/apps/desktop"
-          ]
+          "outputs": ["coverage/apps/desktop"]
         }
       },
       "tags": []
@@ -128,16 +124,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/desktop-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/desktop-e2e/**/*.{js,ts}"]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": [
-        "desktop"
-      ]
+      "implicitDependencies": ["desktop"]
     },
     "desktop-home": {
       "projectType": "library",
@@ -160,9 +152,7 @@
             "jestConfig": "libs/desktop/home/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/desktop/home"
-          ]
+          "outputs": ["coverage/libs/desktop/home"]
         }
       },
       "schematics": {
@@ -193,9 +183,7 @@
             "jestConfig": "libs/desktop/shell/ui/layout/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/desktop/shell/ui/layout"
-          ]
+          "outputs": ["coverage/libs/desktop/shell/ui/layout"]
         }
       },
       "schematics": {
@@ -226,9 +214,7 @@
             "jestConfig": "libs/desktop/shell/ui/nav-bar/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/desktop/shell/ui/nav-bar"
-          ]
+          "outputs": ["coverage/libs/desktop/shell/ui/nav-bar"]
         }
       },
       "schematics": {

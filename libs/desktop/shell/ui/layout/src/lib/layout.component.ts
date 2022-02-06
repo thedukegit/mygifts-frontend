@@ -1,16 +1,22 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'mygifts-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent implements OnInit {
+  @Input() public breadcrumbs: MenuItem[] = [];
+  public home: MenuItem = {};
 
-  constructor() { }
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this.home = { icon: 'pi pi-home', routerLink: '/' };
   }
-
 }
