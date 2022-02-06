@@ -7,7 +7,7 @@ import {
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'mygifts-layout',
+  selector: 'mg-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
