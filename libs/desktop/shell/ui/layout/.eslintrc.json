@@ -16,7 +16,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "mygifts",
+            "prefix": "mg",
             "style": "camelCase"
           }
         ],
@@ -24,7 +24,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "mygifts",
+            "prefix": "mg",
             "style": "kebab-case"
           }
         ]

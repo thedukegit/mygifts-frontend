@@ -10,7 +10,7 @@
       },
       "root": "apps/desktop",
       "sourceRoot": "apps/desktop/src",
-      "prefix": "mygifts",
+      "prefix": "mg",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -64,7 +64,9 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -98,7 +100,9 @@
             "jestConfig": "apps/desktop/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/desktop"]
+          "outputs": [
+            "coverage/apps/desktop"
+          ]
         }
       },
       "tags": []
@@ -124,18 +128,22 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/desktop-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/desktop-e2e/**/*.{js,ts}"
+            ]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": ["desktop"]
+      "implicitDependencies": [
+        "desktop"
+      ]
     },
     "desktop-home": {
       "projectType": "library",
       "root": "libs/desktop/home",
       "sourceRoot": "libs/desktop/home/src",
-      "prefix": "mygifts",
+      "prefix": "mg",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -152,7 +160,9 @@
             "jestConfig": "libs/desktop/home/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/home"]
+          "outputs": [
+            "coverage/libs/desktop/home"
+          ]
         }
       },
       "schematics": {
@@ -166,7 +176,7 @@
       "projectType": "library",
       "root": "libs/desktop/shell/ui/layout",
       "sourceRoot": "libs/desktop/shell/ui/layout/src",
-      "prefix": "mygifts",
+      "prefix": "mg",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -183,7 +193,9 @@
             "jestConfig": "libs/desktop/shell/ui/layout/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/shell/ui/layout"]
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/layout"
+          ]
         }
       },
       "schematics": {
@@ -197,7 +209,7 @@
       "projectType": "library",
       "root": "libs/desktop/shell/ui/nav-bar",
       "sourceRoot": "libs/desktop/shell/ui/nav-bar/src",
-      "prefix": "mygifts",
+      "prefix": "mg",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
@@ -214,7 +226,9 @@
             "jestConfig": "libs/desktop/shell/ui/nav-bar/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/shell/ui/nav-bar"]
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/nav-bar"
+          ]
         }
       },
       "schematics": {
