@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthComponent } from './auth/auth.component';
+import { AuthComponent } from './auth.component';
 import { ButtonModule } from 'primeng/button';
 import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';

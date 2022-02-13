@@ -16,7 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@mygifts/desktop/auth": ["libs/desktop/auth/src/index.ts"],
+      "@mygifts/desktop-auth-feature-auth": [
+        "libs/desktop/auth/feature/auth/src/index.ts"
+      ],
       "@mygifts/desktop/gifts/feature-gifts": [
         "libs/desktop/gifts/feature-gifts/src/index.ts"
       ],

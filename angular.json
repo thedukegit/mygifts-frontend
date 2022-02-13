@@ -67,9 +67,7 @@
               ]
             }
           },
-          "outputs": [
-            "{options.outputPath}"
-          ]
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -103,26 +101,22 @@
             "jestConfig": "apps/desktop/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/apps/desktop"
-          ]
+          "outputs": ["coverage/apps/desktop"]
         }
       },
       "tags": []
     },
-    "desktop-auth": {
+    "desktop-auth-feature-auth": {
       "projectType": "library",
-      "root": "libs/desktop/auth",
-      "sourceRoot": "libs/desktop/auth/src",
+      "root": "libs/desktop/auth/feature/auth",
+      "sourceRoot": "libs/desktop/auth/feature/auth/src",
       "prefix": "mg",
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/desktop/auth"
-          ],
+          "outputs": ["coverage/libs/desktop/auth/feature/auth"],
           "options": {
-            "jestConfig": "libs/desktop/auth/jest.config.js",
+            "jestConfig": "libs/desktop/auth/feature/auth/jest.config.js",
             "passWithNoTests": true
           }
         },
@@ -130,8 +124,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "libs/desktop/auth/src/**/*.ts",
-              "libs/desktop/auth/src/**/*.html"
+              "libs/desktop/auth/feature/auth/src/**/*.ts",
+              "libs/desktop/auth/feature/auth/src/**/*.html"
             ]
           }
         }
@@ -159,16 +153,12 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/desktop-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/desktop-e2e/**/*.{js,ts}"]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": [
-        "desktop"
-      ]
+      "implicitDependencies": ["desktop"]
     },
     "desktop-home": {
       "projectType": "library",
@@ -191,9 +181,7 @@
             "jestConfig": "libs/desktop/home/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/desktop/home"
-          ]
+          "outputs": ["coverage/libs/desktop/home"]
         }
       },
       "schematics": {
@@ -224,9 +212,7 @@
             "jestConfig": "libs/desktop/shell/ui/layout/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/desktop/shell/ui/layout"
-          ]
+          "outputs": ["coverage/libs/desktop/shell/ui/layout"]
         }
       },
       "schematics": {
@@ -257,9 +243,7 @@
             "jestConfig": "libs/desktop/shell/ui/nav-bar/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": [
-            "coverage/libs/desktop/shell/ui/nav-bar"
-          ]
+          "outputs": ["coverage/libs/desktop/shell/ui/nav-bar"]
         }
       },
       "schematics": {
