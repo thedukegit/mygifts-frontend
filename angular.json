@@ -67,7 +67,9 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -101,7 +103,38 @@
             "jestConfig": "apps/desktop/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/desktop"]
+          "outputs": [
+            "coverage/apps/desktop"
+          ]
+        }
+      },
+      "tags": []
+    },
+    "desktop-auth-data-access-store": {
+      "root": "libs/desktop/auth/data-access/store",
+      "sourceRoot": "libs/desktop/auth/data-access/store/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/desktop/auth/data-access/store/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/desktop/auth/data-access/store"
+          ],
+          "options": {
+            "jestConfig": "libs/desktop/auth/data-access/store/jest.config.js",
+            "passWithNoTests": true
+          }
         }
       },
       "tags": []
@@ -114,7 +147,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/desktop/auth/feature/auth"],
+          "outputs": [
+            "coverage/libs/desktop/auth/feature/auth"
+          ],
           "options": {
             "jestConfig": "libs/desktop/auth/feature/auth/jest.config.js",
             "passWithNoTests": true
@@ -153,12 +188,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/desktop-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/desktop-e2e/**/*.{js,ts}"
+            ]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": ["desktop"]
+      "implicitDependencies": [
+        "desktop"
+      ]
     },
     "desktop-home": {
       "projectType": "library",
@@ -181,12 +220,43 @@
             "jestConfig": "libs/desktop/home/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/home"]
+          "outputs": [
+            "coverage/libs/desktop/home"
+          ]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
+        }
+      },
+      "tags": []
+    },
+    "desktop-shared-data-access-gateways": {
+      "root": "libs/desktop/shared/data-access/gateways",
+      "sourceRoot": "libs/desktop/shared/data-access/gateways/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": [
+            "{options.outputFile}"
+          ],
+          "options": {
+            "lintFilePatterns": [
+              "libs/desktop/shared/data-access/gateways/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/desktop/shared/data-access/gateways"
+          ],
+          "options": {
+            "jestConfig": "libs/desktop/shared/data-access/gateways/jest.config.js",
+            "passWithNoTests": true
+          }
         }
       },
       "tags": []
@@ -212,7 +282,9 @@
             "jestConfig": "libs/desktop/shell/ui/layout/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/shell/ui/layout"]
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/layout"
+          ]
         }
       },
       "schematics": {
@@ -243,7 +315,9 @@
             "jestConfig": "libs/desktop/shell/ui/nav-bar/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/shell/ui/nav-bar"]
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/nav-bar"
+          ]
         }
       },
       "schematics": {

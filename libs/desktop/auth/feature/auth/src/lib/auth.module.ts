@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MessagesModule } from 'primeng/messages';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     InputTextModule,
     ReactiveFormsModule,
+    MessagesModule,
   ],
   declarations: [AuthComponent],
   exports: [AuthComponent],

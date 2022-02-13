@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountGateway } from '@mygifts/desktop/shared/data-access/gateways';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'mg-auth',
@@ -8,11 +10,32 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class AuthComponent {
   public loginForm: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required]),
   });
+  public error: Message[] = [];
+
+  public constructor(private accountGateway: AccountGateway) {}
 
   public onSubmit() {
-    throw new Error('onSubmit not yet implemented');
+    if (!this.loginForm.valid) {
+      return;
+    }
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
+    this.accountGateway.signInWithPassword(email, password).subscribe(
+      (response) => {
+        this.error = [];
+        console.log(response);
+      },
+      (errorMessage) => {
+        this.error = [];
+        this.error.push({
+          severity: 'error',
+          summary: 'Error: ',
+          detail: errorMessage,
+        });
+      }
+    );
   }
 }

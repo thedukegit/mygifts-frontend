@@ -10,8 +10,13 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -19,10 +24,18 @@
       "@mygifts/desktop-auth-feature-auth": [
         "libs/desktop/auth/feature/auth/src/index.ts"
       ],
+      "@mygifts/desktop/auth/data-access/store": [
+        "libs/desktop/auth/data-access/store/src/index.ts"
+      ],
       "@mygifts/desktop/gifts/feature-gifts": [
         "libs/desktop/gifts/feature-gifts/src/index.ts"
       ],
-      "@mygifts/desktop/home": ["libs/desktop/home/src/index.ts"],
+      "@mygifts/desktop/home": [
+        "libs/desktop/home/src/index.ts"
+      ],
+      "@mygifts/desktop/shared/data-access/gateways": [
+        "libs/desktop/shared/data-access/gateways/src/index.ts"
+      ],
       "@mygifts/desktop/shell/ui/layout": [
         "libs/desktop/shell/ui/layout/src/index.ts"
       ],
@@ -40,5 +53,8 @@
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

@@ -20,9 +20,9 @@
                   <input
                     pInputText
                     type="text"
-                    id="username"
-                    placeholder="Username"
-                    formControlName="username"
+                    id="email"
+                    placeholder="Email"
+                    formControlName="email"
                   />
                 </div>
                 <div class="col-12">
@@ -47,6 +47,7 @@
                 </div>
               </div>
             </form>
+            <p-messages [value]="error"></p-messages>
           </div>
         </div>
       </div>
