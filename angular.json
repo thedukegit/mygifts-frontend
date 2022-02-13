@@ -26,11 +26,14 @@
               "apps/desktop/src/assets"
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "apps/desktop/src/assets/theme/theme-blue-dark.css",
+              "apps/desktop/src/assets/layout/css/layout-blue-dark.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/primeflex/primeflex.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/@fullcalendar/common/main.css",
+              "apps/desktop/src/assets/demo/flags/flags.css",
+              "apps/desktop/src/assets/demo/documentation.scss",
               "apps/desktop/src/styles.scss"
             ],
             "scripts": []
@@ -103,6 +106,34 @@
           "outputs": [
             "coverage/apps/desktop"
           ]
+        }
+      },
+      "tags": []
+    },
+    "desktop-auth": {
+      "projectType": "library",
+      "root": "libs/desktop/auth",
+      "sourceRoot": "libs/desktop/auth/src",
+      "prefix": "mg",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/desktop/auth"
+          ],
+          "options": {
+            "jestConfig": "libs/desktop/auth/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/desktop/auth/src/**/*.ts",
+              "libs/desktop/auth/src/**/*.html"
+            ]
+          }
         }
       },
       "tags": []
