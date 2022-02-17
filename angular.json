@@ -191,6 +191,31 @@
       },
       "tags": []
     },
+    "desktop-shared-data-access--domains": {
+      "root": "libs/desktop/shared/data-access/domains",
+      "sourceRoot": "libs/desktop/shared/data-access/domains/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "libs/desktop/shared/data-access/domains/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/desktop/shared/data-access/domains"],
+          "options": {
+            "jestConfig": "libs/desktop/shared/data-access/domains/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "desktop-shared-data-access-gateways": {
       "root": "libs/desktop/shared/data-access/gateways",
       "sourceRoot": "libs/desktop/shared/data-access/gateways/src",

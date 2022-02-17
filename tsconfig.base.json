@@ -23,6 +23,9 @@
         "libs/desktop/gifts/feature-gifts/src/index.ts"
       ],
       "@mygifts/desktop/home": ["libs/desktop/home/src/index.ts"],
+      "@mygifts/desktop/shared/data-access//domains": [
+        "libs/desktop/shared/data-access/domains/src/index.ts"
+      ],
       "@mygifts/desktop/shared/data-access/gateways": [
         "libs/desktop/shared/data-access/gateways/src/index.ts"
       ],
