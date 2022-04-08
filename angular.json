@@ -302,6 +302,32 @@
         }
       },
       "tags": []
+    },
+    "desktop-shell-ui-spinner": {
+      "projectType": "library",
+      "root": "libs/desktop/shell/ui/spinner",
+      "sourceRoot": "libs/desktop/shell/ui/spinner/src",
+      "prefix": "mygifts",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/desktop/shell/ui/spinner"],
+          "options": {
+            "jestConfig": "libs/desktop/shell/ui/spinner/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/desktop/shell/ui/spinner/src/**/*.ts",
+              "libs/desktop/shell/ui/spinner/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": ["scope:shared", "type:ui"]
     }
   }
 }

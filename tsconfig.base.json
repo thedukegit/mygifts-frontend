@@ -19,6 +19,9 @@
       "@mygifts/desktop-auth-feature-auth": [
         "libs/desktop/auth/feature/auth/src/index.ts"
       ],
+      "@mygifts/desktop-shell-ui-spinner": [
+        "libs/desktop/shell/ui/spinner/src/index.ts"
+      ],
       "@mygifts/desktop/gifts/feature-gifts": [
         "libs/desktop/gifts/feature-gifts/src/index.ts"
       ],
