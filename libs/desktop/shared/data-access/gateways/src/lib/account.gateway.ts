@@ -1,22 +1,33 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/operators';
-import { Account } from '../../../domains/src/lib/account.interface';
+import { catchError, tap } from 'rxjs/operators';
+import { Account } from '../../../domains/src/lib/account.model';
+
+export interface AuthResponseData {
+  kind: string;
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+  registered?: boolean;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AccountGateway {
   private accountResource: string =
     'https://identitytoolkit.googleapis.com/v1/accounts';
+  public account = new BehaviorSubject<Account | null>(null);
 
   constructor(private http: HttpClient) {}
 
   public signInWithPassword(
     email: string,
     password: string
-  ): Observable<Account> {
+  ): Observable<AuthResponseData> {
     return this.http
-      .post<Account>(
+      .post<AuthResponseData>(
         `${this.accountResource}:signInWithPassword?key=AIzaSyCS0pevxJiFspRAlGsEc2DrLi89vDDsDhw`,
         {
           email: email,
@@ -32,8 +43,27 @@ export class AccountGateway {
           }
           errorMessage = this.createSensibleMessage(err.error.error.message);
           return throwError(new Error(errorMessage));
+        }),
+        tap((resData) => {
+          this.handleAuthentication(
+            resData.email,
+            resData.localId,
+            resData.idToken,
+            +resData.expiresIn
+          );
         })
       );
+  }
+
+  private handleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number
+  ) {
+    const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const account = new Account(email, userId, token, expirationDate);
+    this.account.next(account);
   }
 
   private createSensibleMessage(message: string): string {
