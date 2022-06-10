@@ -14,7 +14,10 @@
         <div class="login-wrapper">
           <div class="login-container">
             <span class="title">Login</span>
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div *ngIf="isLoading">
+              <mg-spinner></mg-spinner>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
               <div class="grid p-fluid">
                 <div class="col-12">
                   <input

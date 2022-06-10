@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MessagesModule } from 'primeng/messages';
+import { SpinnerModule } from '@mygifts/desktop-shell-ui-spinner';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { MessagesModule } from 'primeng/messages';
     InputTextModule,
     ReactiveFormsModule,
     MessagesModule,
+    SpinnerModule,
   ],
   declarations: [AuthComponent],
   exports: [AuthComponent],

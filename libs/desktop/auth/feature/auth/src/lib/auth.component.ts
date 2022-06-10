@@ -15,6 +15,7 @@ export class AuthComponent {
     password: new FormControl('', [Validators.required]),
   });
   public error: Message[] = [];
+  public isLoading: boolean = false;
 
   public constructor(
     private accountGateway: AccountGateway,
@@ -25,13 +26,16 @@ export class AuthComponent {
     if (!this.loginForm.valid) {
       return;
     }
+    this.isLoading = true;
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
     this.accountGateway.signInWithPassword(email, password).subscribe(
       () => {
+        this.isLoading = false;
         this.navigateToHomePage();
       },
       (errorMessage) => {
+        this.isLoading = false;
         this.resetErrors();
         this.setError(errorMessage);
       }
@@ -39,7 +43,7 @@ export class AuthComponent {
   }
 
   private navigateToHomePage(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['home']);
   }
 
   private resetErrors(): void {
