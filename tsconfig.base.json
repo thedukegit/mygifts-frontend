@@ -48,9 +48,6 @@
       "@mygifts/desktop/shell/ui/nav-bar": [
         "libs/desktop/shell/ui/nav-bar/src/index.ts"
       ],
-      "@mygifts/gifts/domain": [
-        "libs/gifts/domain/src/index.ts"
-      ],
       "@mygifts/mygifts-desktop/gifts": [
         "libs/mygifts-desktop/gifts/src/index.ts"
       ],

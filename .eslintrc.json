@@ -33,13 +33,6 @@
                   "domain:gifts",
                   "domain:shared"
                 ]
-              },
-              {
-                "sourceTag": "domain:gifts",
-                "onlyDependOnLibsWithTags": [
-                  "domain:gifts",
-                  "domain:shared"
-                ]
               }
             ]
           }

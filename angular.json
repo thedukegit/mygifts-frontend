@@ -406,55 +406,6 @@
         "scope:shared",
         "type:ui"
       ]
-    },
-    "gifts-domain": {
-      "projectType": "library",
-      "root": "libs/gifts/domain",
-      "sourceRoot": "libs/gifts/domain/src",
-      "prefix": "gifts",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:ng-packagr-lite",
-          "outputs": [
-            "dist/libs/gifts/domain"
-          ],
-          "options": {
-            "project": "libs/gifts/domain/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/gifts/domain/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "libs/gifts/domain/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/gifts/domain"
-          ],
-          "options": {
-            "jestConfig": "libs/gifts/domain/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/gifts/domain/src/**/*.ts",
-              "libs/gifts/domain/src/**/*.html"
-            ]
-          }
-        }
-      },
-      "tags": [
-        "domain:gifts",
-        "type:domain-logic"
-      ]
     }
   }
 }
