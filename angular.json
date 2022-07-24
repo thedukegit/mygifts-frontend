@@ -67,7 +67,9 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -101,7 +103,9 @@
             "jestConfig": "apps/desktop/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/desktop"]
+          "outputs": [
+            "coverage/apps/desktop"
+          ]
         }
       },
       "tags": []
@@ -114,7 +118,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/desktop/auth/feature/auth"],
+          "outputs": [
+            "coverage/libs/desktop/auth/feature/auth"
+          ],
           "options": {
             "jestConfig": "libs/desktop/auth/feature/auth/jest.config.js",
             "passWithNoTests": true
@@ -153,12 +159,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/desktop-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/desktop-e2e/**/*.{js,ts}"
+            ]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": ["desktop"]
+      "implicitDependencies": [
+        "desktop"
+      ]
     },
     "desktop-gifts-domain": {
       "projectType": "library",
@@ -168,7 +178,9 @@
       "architect": {
         "build": {
           "builder": "@nrwl/angular:ng-packagr-lite",
-          "outputs": ["dist/libs/desktop/gifts/domain"],
+          "outputs": [
+            "dist/libs/desktop/gifts/domain"
+          ],
           "options": {
             "project": "libs/desktop/gifts/domain/ng-package.json"
           },
@@ -184,7 +196,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/desktop/gifts/domain"],
+          "outputs": [
+            "coverage/libs/desktop/gifts/domain"
+          ],
           "options": {
             "jestConfig": "libs/desktop/gifts/domain/jest.config.js",
             "passWithNoTests": true
@@ -200,7 +214,10 @@
           }
         }
       },
-      "tags": ["domain:gifts", "type:domain-logic"]
+      "tags": [
+        "domain:gifts",
+        "type:domain-logic"
+      ]
     },
     "desktop-home": {
       "projectType": "library",
@@ -223,7 +240,9 @@
             "jestConfig": "libs/desktop/home/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/home"]
+          "outputs": [
+            "coverage/libs/desktop/home"
+          ]
         }
       },
       "schematics": {
@@ -240,7 +259,9 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
             "lintFilePatterns": [
               "libs/desktop/shared/data-access/domains/**/*.ts"
@@ -249,7 +270,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/desktop/shared/data-access/domains"],
+          "outputs": [
+            "coverage/libs/desktop/shared/data-access/domains"
+          ],
           "options": {
             "jestConfig": "libs/desktop/shared/data-access/domains/jest.config.js",
             "passWithNoTests": true
@@ -265,7 +288,9 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
             "lintFilePatterns": [
               "libs/desktop/shared/data-access/gateways/**/*.ts"
@@ -274,7 +299,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/desktop/shared/data-access/gateways"],
+          "outputs": [
+            "coverage/libs/desktop/shared/data-access/gateways"
+          ],
           "options": {
             "jestConfig": "libs/desktop/shared/data-access/gateways/jest.config.js",
             "passWithNoTests": true
@@ -304,7 +331,9 @@
             "jestConfig": "libs/desktop/shell/ui/layout/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/shell/ui/layout"]
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/layout"
+          ]
         }
       },
       "schematics": {
@@ -335,7 +364,9 @@
             "jestConfig": "libs/desktop/shell/ui/nav-bar/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/desktop/shell/ui/nav-bar"]
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/nav-bar"
+          ]
         }
       },
       "schematics": {
@@ -353,7 +384,9 @@
       "architect": {
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/desktop/shell/ui/spinner"],
+          "outputs": [
+            "coverage/libs/desktop/shell/ui/spinner"
+          ],
           "options": {
             "jestConfig": "libs/desktop/shell/ui/spinner/jest.config.js",
             "passWithNoTests": true
@@ -369,7 +402,10 @@
           }
         }
       },
-      "tags": ["scope:shared", "type:ui"]
+      "tags": [
+        "scope:shared",
+        "type:ui"
+      ]
     },
     "gifts-domain": {
       "projectType": "library",
@@ -379,7 +415,9 @@
       "architect": {
         "build": {
           "builder": "@nrwl/angular:ng-packagr-lite",
-          "outputs": ["dist/libs/gifts/domain"],
+          "outputs": [
+            "dist/libs/gifts/domain"
+          ],
           "options": {
             "project": "libs/gifts/domain/ng-package.json"
           },
@@ -395,7 +433,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/gifts/domain"],
+          "outputs": [
+            "coverage/libs/gifts/domain"
+          ],
           "options": {
             "jestConfig": "libs/gifts/domain/jest.config.js",
             "passWithNoTests": true
@@ -411,7 +451,10 @@
           }
         }
       },
-      "tags": ["domain:gifts", "type:domain-logic"]
+      "tags": [
+        "domain:gifts",
+        "type:domain-logic"
+      ]
     }
   }
 }
