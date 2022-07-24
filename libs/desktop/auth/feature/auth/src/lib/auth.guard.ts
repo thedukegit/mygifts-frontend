@@ -8,7 +8,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AccountGateway } from '@mygifts/desktop/shared/data-access/gateways';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
@@ -26,7 +26,6 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     return this.accountGateway.account.pipe(
-      take(1),
       map((account) => {
         const isAuth = !!account;
         if (isAuth) {
