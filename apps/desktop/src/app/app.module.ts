@@ -45,6 +45,10 @@ const appRoutes: Routes = [
     ],
     component: AuthComponent,
   },
+  {
+    path: '**',
+    redirectTo: '/home',
+  },
 ];
 
 @NgModule({
