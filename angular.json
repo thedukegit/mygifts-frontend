@@ -160,6 +160,48 @@
       "tags": [],
       "implicitDependencies": ["desktop"]
     },
+    "desktop-gifts-domain": {
+      "projectType": "library",
+      "root": "libs/desktop/gifts/domain",
+      "sourceRoot": "libs/desktop/gifts/domain/src",
+      "prefix": "gifts",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:ng-packagr-lite",
+          "outputs": ["dist/libs/desktop/gifts/domain"],
+          "options": {
+            "project": "libs/desktop/gifts/domain/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/desktop/gifts/domain/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/desktop/gifts/domain/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/desktop/gifts/domain"],
+          "options": {
+            "jestConfig": "libs/desktop/gifts/domain/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/desktop/gifts/domain/src/**/*.ts",
+              "libs/desktop/gifts/domain/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": ["domain:gifts", "type:domain-logic"]
+    },
     "desktop-home": {
       "projectType": "library",
       "root": "libs/desktop/home",

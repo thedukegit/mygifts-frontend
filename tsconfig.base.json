@@ -22,6 +22,9 @@
       "@mygifts/desktop-shell-ui-spinner": [
         "libs/desktop/shell/ui/spinner/src/index.ts"
       ],
+      "@mygifts/desktop/gifts/domain": [
+        "libs/desktop/gifts/domain/src/index.ts"
+      ],
       "@mygifts/desktop/gifts/feature-gifts": [
         "libs/desktop/gifts/feature-gifts/src/index.ts"
       ],
