@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   {
     path: 'gifts',
     component: GiftsComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'home',

@@ -32,7 +32,7 @@ export class AuthComponent {
     this.accountGateway.signInWithPassword(email, password).subscribe(
       () => {
         this.isLoading = false;
-        this.navigateToHomePage();
+        this.navigateToGiftsPage();
       },
       (errorMessage) => {
         this.isLoading = false;
@@ -42,8 +42,8 @@ export class AuthComponent {
     );
   }
 
-  private navigateToHomePage(): void {
-    this.router.navigate(['home']);
+  private navigateToGiftsPage(): void {
+    this.router.navigate(['gifts']);
   }
 
   private resetErrors(): void {
