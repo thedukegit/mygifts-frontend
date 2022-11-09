@@ -7,6 +7,7 @@ import { AuthComponent, AuthGuard } from '@mygifts/desktop-auth-feature-auth';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from '@mygifts/desktop/home';
 import { GiftsComponent } from '@mygifts/desktop/gifts/feature-gifts';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 const appRoutes: Routes = [
   {
@@ -53,7 +54,12 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes),
+    ProgressBarModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

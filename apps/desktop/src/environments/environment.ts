@@ -6,6 +6,17 @@ export const environment = {
   production: false,
 };
 
+// firebase general settings
+export const firebaseProjectId = 'mygifts-faf66';
+
+// firestore database settings
+export const firebaseIdentityUrlV1 =
+  'https://identitytoolkit.googleapis.com/v1/accounts:';
+export const firebaseBaseUrl = `https://firestore.googleapis.com/v1/projects/${firebaseProjectId}/databases/(default)/documents/`;
+
+//realtime database (rtdb) settings
+export const rtdbBaseUrl = `https://${firebaseProjectId}-default-rtdb.europe-west1.firebasedatabase.app/`;
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
