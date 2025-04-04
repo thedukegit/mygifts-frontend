@@ -23,6 +23,14 @@ export default [
           ],
         },
       ],
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'element',
+          prefix: 'mg',
+          style: 'kebab-case',
+        },
+      ],
     },
   },
   {
