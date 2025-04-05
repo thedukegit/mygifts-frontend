@@ -1,20 +1,11 @@
-<div class="layout-container">
+<div [ngClass]="containerClass" class="layout-container">
+  <div app-sidebar></div>
   <div class="layout-content-wrapper">
+    <div app-topbar></div>
     <div class="layout-content">
       <router-outlet></router-outlet>
     </div>
   </div>
+  <app-configurator></app-configurator>
   <div class="layout-mask animate-fadein"></div>
 </div>
-<!--<div class="layout-container" [ngClass]="containerClass">-->
-<!--  <div app-sidebar></div>-->
-<!--  <div class="layout-content-wrapper">-->
-<!--    <div app-topbar></div>-->
-<!--    <div class="layout-content">-->
-<!--      <router-outlet></router-outlet>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div app-profilesidebar></div>-->
-<!--  <app-configurator></app-configurator>-->
-<!--  <div class="layout-mask animate-fadein"></div>-->
-<!--</div>-->
