@@ -23,6 +23,14 @@ export default [
           ],
         },
       ],
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'mg',
+          style: 'camelCase',
+        },
+      ],
       '@angular-eslint/component-selector': [
         'error',
         {
