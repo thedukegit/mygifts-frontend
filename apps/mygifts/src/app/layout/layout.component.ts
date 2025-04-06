@@ -1,10 +1,10 @@
 import { Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { LayoutService } from './service/layout.service';
-import { AppTopbar } from './layout/app.topbar';
-import { AppConfigurator } from './layout/app.configurator';
-import { AppSidebar } from './layout/app.sidebar';
+import { LayoutService } from '../../../../../libs/mygifts/layout/src/lib/service/layout.service';
+import { AppTopbar } from '../../../../../libs/mygifts/layout/src/lib/layout/app.topbar';
+import { AppConfigurator } from '../../../../../libs/mygifts/layout/src/lib/layout/app.configurator';
+import { AppSidebar } from '../../../../../libs/mygifts/layout/src/lib/layout/app.sidebar';
 import { filter, Subscription } from 'rxjs';
 
 /** responsible for the common components of the screen, like top bar, menu, etc. **/
