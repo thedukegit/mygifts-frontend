@@ -1,15 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LayoutService } from '../layout.service';
-import { AppMenu } from '../../../../../../libs/mygifts/layout/src/lib/layout/app.menu';
 import { RouterLink } from '@angular/router';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[app-side-bar]',
-  imports: [CommonModule, AppMenu, RouterLink],
+  imports: [CommonModule, RouterLink, MenuComponent],
   templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.css',
 })
 export class SideBarComponent {
   timeout: any = null;
