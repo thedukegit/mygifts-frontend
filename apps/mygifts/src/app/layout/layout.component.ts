@@ -4,13 +4,19 @@ import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { LayoutService } from '../../../../../libs/mygifts/layout/src/lib/service/layout.service';
 import { AppTopbar } from '../../../../../libs/mygifts/layout/src/lib/layout/app.topbar';
 import { AppConfigurator } from '../../../../../libs/mygifts/layout/src/lib/layout/app.configurator';
-import { AppSidebar } from '../../../../../libs/mygifts/layout/src/lib/layout/app.sidebar';
 import { filter, Subscription } from 'rxjs';
+import { SideBarComponent } from './side-bar/side-bar.component';
 
 /** responsible for the common components of the screen, like top bar, menu, etc. **/
 @Component({
-  selector: 'mg-layout',
-  imports: [CommonModule, RouterOutlet, AppTopbar, AppConfigurator, AppSidebar],
+  selector: 'app-layout',
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    AppTopbar,
+    AppConfigurator,
+    SideBarComponent,
+  ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
@@ -21,7 +27,7 @@ export class LayoutComponent implements OnDestroy {
 
   menuScrollListener: any;
 
-  @ViewChild(AppSidebar) appSidebar!: AppSidebar;
+  @ViewChild(SideBarComponent) appSidebar!: SideBarComponent;
 
   @ViewChild(AppTopbar) appTopBar!: AppTopbar;
 
