@@ -5,6 +5,7 @@ import { MenuItemComponent } from '../menu-item/menu-item.component';
 @Component({
   selector: 'app-menu',
   imports: [CommonModule, MenuItemComponent],
+  standalone: true,
   templateUrl: './menu.component.html',
 })
 export class MenuComponent implements OnInit {

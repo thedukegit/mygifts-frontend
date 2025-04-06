@@ -8,6 +8,7 @@ import { MenuComponent } from '../menu/menu.component';
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[app-side-bar]',
   imports: [CommonModule, RouterLink, MenuComponent],
+  standalone: true,
   templateUrl: './side-bar.component.html',
 })
 export class SideBarComponent {

@@ -30,6 +30,7 @@ import { LayoutService } from '../layout.service';
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[app-menu-item]',
   imports: [CommonModule, RouterModule, RippleModule, TooltipModule],
+  standalone: true,
   templateUrl: './menu-item.component.html',
   animations: [
     trigger('children', [
