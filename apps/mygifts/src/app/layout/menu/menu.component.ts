@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppMenuitem } from '../../../../../../libs/mygifts/layout/src/lib/layout/app.menuitem';
 
 @Component({
   selector: 'app-menu',
-  imports: [CommonModule, AppMenuitem],
+  imports: [CommonModule],
   templateUrl: './menu.component.html',
 })
 export class MenuComponent implements OnInit {

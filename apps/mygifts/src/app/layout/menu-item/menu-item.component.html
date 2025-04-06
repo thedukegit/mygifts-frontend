@@ -1,0 +1,79 @@
+<ng-container>
+  <div
+    *ngIf="root && item.visible !== false"
+    class="layout-menuitem-root-text"
+  >
+    {{ item.label }}
+  </div>
+  <a
+    (click)="itemClick($event)"
+    (mouseenter)="onMouseEnter()"
+    *ngIf="(!item.routerLink || item.items) && item.visible !== false"
+    [attr.href]="item.url"
+    [attr.target]="item.target"
+    [ngClass]="item.class"
+    [pTooltip]="item.label"
+    [tooltipDisabled]="!(isSlim() && root && !active)"
+    pRipple
+    tabindex="0"
+  >
+    <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
+    <span class="layout-menuitem-text">{{ item.label }}</span>
+    <i
+      *ngIf="item.items"
+      class="pi pi-fw pi-angle-down layout-submenu-toggler"
+    ></i>
+  </a>
+  <a
+    (click)="itemClick($event)"
+    (mouseenter)="onMouseEnter()"
+    *ngIf="item.routerLink && !item.items && item.visible !== false"
+    [attr.target]="item.target"
+    [fragment]="item.fragment"
+    [ngClass]="item.class"
+    [pTooltip]="item.label"
+    [preserveFragment]="item.preserveFragment"
+    [queryParamsHandling]="item.queryParamsHandling"
+    [queryParams]="item.queryParams"
+    [replaceUrl]="item.replaceUrl"
+    [routerLinkActiveOptions]="
+          item.routerLinkActiveOptions || {
+            paths: 'exact',
+            queryParams: 'ignored',
+            matrixParams: 'ignored',
+            fragment: 'ignored'
+          }
+        "
+    [routerLink]="item.routerLink"
+    [skipLocationChange]="item.skipLocationChange"
+    [state]="item.state"
+    [tooltipDisabled]="!(isSlim() && root)"
+    pRipple
+    routerLinkActive="active-route"
+    tabindex="0"
+  >
+    <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
+    <span class="layout-menuitem-text">{{ item.label }}</span>
+    <i
+      *ngIf="item.items"
+      class="pi pi-fw pi-angle-down layout-submenu-toggler"
+    ></i>
+  </a>
+
+  <ul
+    #submenu
+    (@children.done)="onSubmenuAnimated($event)"
+    *ngIf="item.items && item.visible !== false"
+    [@children]="submenuAnimation"
+  >
+    <ng-template [ngForOf]="item.items" let-child let-i="index" ngFor>
+      <li
+        [class]="child['badgeClass']"
+        [index]="i"
+        [item]="child"
+        [parentKey]="key"
+        app-menu-item
+      ></li>
+    </ng-template>
+  </ul>
+</ng-container>

@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   Component,
   computed,
   ElementRef,
@@ -6,7 +7,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild, AfterViewChecked,
+  ViewChild,
 } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import {
@@ -23,93 +24,12 @@ import { DomHandler } from 'primeng/dom';
 import { TooltipModule } from 'primeng/tooltip';
 import { CommonModule } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
-import { LayoutService } from '@/layout/service/layout.service';
+import { LayoutService } from '../layout.service';
 
 @Component({
-  // eslint-disable-next-line @angular-eslint/component-selector
-  selector: '[app-menuitem]',
+  selector: 'app-menu-item',
   imports: [CommonModule, RouterModule, RippleModule, TooltipModule],
-  template: `
-    <ng-container>
-      <div
-        *ngIf="root && item.visible !== false"
-        class="layout-menuitem-root-text"
-      >
-        {{ item.label }}
-      </div>
-      <a
-        *ngIf="(!item.routerLink || item.items) && item.visible !== false"
-        [attr.href]="item.url"
-        (click)="itemClick($event)"
-        (mouseenter)="onMouseEnter()"
-        [ngClass]="item.class"
-        [attr.target]="item.target"
-        tabindex="0"
-        pRipple
-        [pTooltip]="item.label"
-        [tooltipDisabled]="!(isSlim() && root && !active)"
-      >
-        <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-        <span class="layout-menuitem-text">{{ item.label }}</span>
-        <i
-          class="pi pi-fw pi-angle-down layout-submenu-toggler"
-          *ngIf="item.items"
-        ></i>
-      </a>
-      <a
-        *ngIf="item.routerLink && !item.items && item.visible !== false"
-        (click)="itemClick($event)"
-        (mouseenter)="onMouseEnter()"
-        [ngClass]="item.class"
-        [routerLink]="item.routerLink"
-        routerLinkActive="active-route"
-        [routerLinkActiveOptions]="
-          item.routerLinkActiveOptions || {
-            paths: 'exact',
-            queryParams: 'ignored',
-            matrixParams: 'ignored',
-            fragment: 'ignored'
-          }
-        "
-        [fragment]="item.fragment"
-        [queryParamsHandling]="item.queryParamsHandling"
-        [preserveFragment]="item.preserveFragment"
-        [skipLocationChange]="item.skipLocationChange"
-        [replaceUrl]="item.replaceUrl"
-        [state]="item.state"
-        [queryParams]="item.queryParams"
-        [attr.target]="item.target"
-        tabindex="0"
-        pRipple
-        [pTooltip]="item.label"
-        [tooltipDisabled]="!(isSlim() && root)"
-      >
-        <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
-        <span class="layout-menuitem-text">{{ item.label }}</span>
-        <i
-          class="pi pi-fw pi-angle-down layout-submenu-toggler"
-          *ngIf="item.items"
-        ></i>
-      </a>
-
-      <ul
-        #submenu
-        *ngIf="item.items && item.visible !== false"
-        [@children]="submenuAnimation"
-        (@children.done)="onSubmenuAnimated($event)"
-      >
-        <ng-template ngFor let-child let-i="index" [ngForOf]="item.items">
-          <li
-            app-menuitem
-            [item]="child"
-            [index]="i"
-            [parentKey]="key"
-            [class]="child['badgeClass']"
-          ></li>
-        </ng-template>
-      </ul>
-    </ng-container>
-  `,
+  templateUrl: './menu-item.component.html',
   animations: [
     trigger('children', [
       state(
@@ -143,7 +63,7 @@ import { LayoutService } from '@/layout/service/layout.service';
     ]),
   ],
 })
-export class AppMenuitem implements OnInit, OnDestroy, AfterViewChecked {
+export class MenuItemComponent implements OnInit, AfterViewChecked, OnDestroy {
   @Input() item: any;
 
   @Input() index!: number;
