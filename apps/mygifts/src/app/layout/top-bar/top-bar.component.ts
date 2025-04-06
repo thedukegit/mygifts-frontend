@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppBreadcrumb } from '../../../../../../libs/mygifts/layout/src/lib/layout/app.breadcrumb';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -8,6 +7,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RouterModule } from '@angular/router';
 import { StyleClassModule } from 'primeng/styleclass';
 import { LayoutService } from '../layout.service';
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -16,11 +16,11 @@ import { LayoutService } from '../layout.service';
     RouterModule,
     CommonModule,
     StyleClassModule,
-    AppBreadcrumb,
     InputTextModule,
     ButtonModule,
     IconFieldModule,
     InputIconModule,
+    BreadcrumbComponent,
   ],
   standalone: true,
   templateUrl: './top-bar.component.html',
