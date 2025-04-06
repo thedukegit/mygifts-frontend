@@ -27,7 +27,8 @@ import { RippleModule } from 'primeng/ripple';
 import { LayoutService } from '../layout.service';
 
 @Component({
-  selector: 'app-menu-item',
+  // eslint-disable-next-line @angular-eslint/component-selector
+  selector: '[app-menu-item]',
   imports: [CommonModule, RouterModule, RippleModule, TooltipModule],
   templateUrl: './menu-item.component.html',
   animations: [
