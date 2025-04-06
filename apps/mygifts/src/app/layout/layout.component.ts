@@ -1,11 +1,11 @@
 import { Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { LayoutService } from '../../../../../libs/mygifts/layout/src/lib/service/layout.service';
-import { AppTopbar } from '../../../../../libs/mygifts/layout/src/lib/layout/app.topbar';
 import { AppConfigurator } from '../../../../../libs/mygifts/layout/src/lib/layout/app.configurator';
 import { filter, Subscription } from 'rxjs';
 import { SideBarComponent } from './side-bar/side-bar.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { LayoutService } from './layout.service';
 
 /** responsible for the common components of the screen, like top bar, menu, etc. **/
 @Component({
@@ -13,10 +13,11 @@ import { SideBarComponent } from './side-bar/side-bar.component';
   imports: [
     CommonModule,
     RouterOutlet,
-    AppTopbar,
+    TopBarComponent,
     AppConfigurator,
     SideBarComponent,
   ],
+  standalone: true,
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
@@ -29,7 +30,7 @@ export class LayoutComponent implements OnDestroy {
 
   @ViewChild(SideBarComponent) appSidebar!: SideBarComponent;
 
-  @ViewChild(AppTopbar) appTopBar!: AppTopbar;
+  @ViewChild(TopBarComponent) appTopBar!: TopBarComponent;
 
   constructor(
     public layoutService: LayoutService,
