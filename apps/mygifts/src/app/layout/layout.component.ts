@@ -6,6 +6,7 @@ import { SideBarComponent } from './side-bar/side-bar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { LayoutService } from './layout.service';
 import { ConfiguratorComponent } from './configurator/configurator.component';
+import { ProfileSideBarComponent } from './profile-side-bar/profile-side-bar.component';
 
 /** responsible for the common components of the screen, like top bar, menu, etc. **/
 @Component({
@@ -16,10 +17,10 @@ import { ConfiguratorComponent } from './configurator/configurator.component';
     TopBarComponent,
     SideBarComponent,
     ConfiguratorComponent,
+    ProfileSideBarComponent,
   ],
   standalone: true,
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.css',
 })
 export class LayoutComponent implements OnDestroy {
   overlayMenuOpenSubscription: Subscription;
