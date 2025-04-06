@@ -1,0 +1,205 @@
+<button
+  (click)="toggleConfigSidebar()"
+  *ngIf="simple"
+  class="layout-config-button config-link"
+  type="button"
+>
+  <i class="pi pi-cog"></i>
+</button>
+<p-drawer
+  (onHide)="onDrawerHide()"
+  [transitionOptions]="'.3s cubic-bezier(0, 0, 0.2, 1)'"
+  [visible]="visible()"
+  header="Settings"
+  position="right"
+  styleClass="layout-config-sidebar w-80"
+>
+  <div class="flex flex-col gap-4">
+    <div>
+      <span class="text-lg font-semibold">Primary</span>
+      <div class="pt-2 flex gap-2 flex-wrap">
+        @for (primaryColor of primaryColors(); track primaryColor.name) {
+          <button
+            type="button"
+            [title]="primaryColor.name"
+            (click)="updateColors($event, 'primary', primaryColor)"
+            [ngClass]="{
+                'outline-primary': primaryColor.name === selectedPrimaryColor()
+              }"
+            class="cursor-pointer w-6 h-6 rounded-full flex flex-shrink-0 items-center justify-center p-0 outline-none outline-offset-1"
+            [style]="{
+                                    'background-color': primaryColor?.name === 'noir' ? 'var(--text-color)' : primaryColor?.palette?.['500']
+                                }"
+          ></button>
+        }
+      </div>
+    </div>
+
+    <div>
+      <span class="text-lg font-semibold">Surface</span>
+      <div class="pt-2 flex gap-2 flex-wrap">
+        @for (surface of surfaces; track surface.name) {
+          <button
+            type="button"
+            [title]="surface.name"
+            (click)="updateColors($event, 'surface', surface)"
+            class="cursor-pointer w-6 h-6 rounded-full flex flex-shrink-0 items-center justify-center p-0 outline-none outline-offset-1"
+            [ngClass]="{
+                'outline-primary': selectedSurface()
+                  ? selectedSurface() === surface.name
+                  : darkTheme()
+                  ? surface.name === 'zinc'
+                  : surface.name === 'slate'
+              }"
+            [style]="{
+                                    'background-color': surface?.palette?.['500']
+                                }"
+          ></button>
+        }
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <span class="text-lg font-semibold">Presets</span>
+      <p-selectbutton
+        (ngModelChange)="onPresetChange($event)"
+        [allowEmpty]="false"
+        [ngModel]="selectedPreset()"
+        [options]="presets"
+      ></p-selectbutton>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <span class="text-lg font-semibold">Color Scheme</span>
+      <p-selectbutton
+        (ngModelChange)="toggleDarkMode()"
+        [allowEmpty]="false"
+        [ngModel]="darkTheme()"
+        [options]="themeOptions"
+        optionLabel="name"
+        optionValue="value"
+      ></p-selectbutton>
+    </div>
+
+    <div *ngIf="!simple" class="flex flex-col gap-2">
+      <span class="text-lg font-semibold">Menu Type</span>
+      <div class="flex flex-wrap flex-col gap-3">
+        <div class="flex">
+          <div class="flex items-center gap-2 w-1/2">
+            <p-radio-button
+              (ngModelChange)="setMenuMode('static')"
+              [(ngModel)]="menuMode"
+              inputId="static"
+              name="menuMode"
+              value="static"
+            ></p-radio-button>
+            <label for="static">Static</label>
+          </div>
+
+          <div class="flex items-center gap-2 w-1/2">
+            <p-radio-button
+              (ngModelChange)="setMenuMode('overlay')"
+              [(ngModel)]="menuMode"
+              inputId="overlay"
+              name="menuMode"
+              value="overlay"
+            ></p-radio-button>
+            <label for="overlay">Overlay</label>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="flex items-center gap-2 w-1/2">
+            <p-radio-button
+              (ngModelChange)="setMenuMode('slim')"
+              [(ngModel)]="menuMode"
+              inputId="slim"
+              name="menuMode"
+              value="slim"
+            ></p-radio-button>
+            <label for="slim">Slim</label>
+          </div>
+          <div class="flex items-center gap-2 w-1/2">
+            <p-radio-button
+              (ngModelChange)="setMenuMode('slim-plus')"
+              [(ngModel)]="menuMode"
+              inputId="slim-plus"
+              name="menuMode"
+              value="slim-plus"
+            ></p-radio-button>
+            <label for="slim-plus">Slim+</label>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="flex items-center gap-2 w-1/2">
+            <p-radio-button
+              (ngModelChange)="setMenuMode('reveal')"
+              [(ngModel)]="menuMode"
+              inputId="reveal"
+              name="menuMode"
+              value="reveal"
+            ></p-radio-button>
+            <label for="reveal">Reveal</label>
+          </div>
+          <div class="flex items-center gap-2 w-1/2">
+            <p-radio-button
+              (ngModelChange)="setMenuMode('drawer')"
+              [(ngModel)]="menuMode"
+              inputId="drawer"
+              name="menuMode"
+              value="drawer"
+            ></p-radio-button>
+            <label for="drawer">Drawer</label>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 w-1/2">
+          <p-radio-button
+            (ngModelChange)="setMenuMode('horizontal')"
+            [(ngModel)]="menuMode"
+            inputId="horizontal"
+            name="menuMode"
+            value="horizontal"
+          ></p-radio-button>
+          <label for="horizontal">Horizontal</label>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!simple" class="flex flex-col gap-2">
+      <span class="text-lg font-semibold">Menu Theme</span>
+      <div class="flex flex-wrap flex-col gap-4">
+        <div class="flex items-center gap-2">
+          <p-radiobutton
+            (ngModelChange)="setMenuTheme('colorScheme')"
+            [ngModel]="menuTheme()"
+            inputId="menutheme-colorscheme"
+            name="menuTheme"
+            value="colorScheme"
+          ></p-radiobutton>
+          <label for="scheme">Color Scheme</label>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <p-radiobutton
+            (ngModelChange)="setMenuTheme('primaryColor')"
+            [ngModel]="menuTheme()"
+            inputId="menutheme-primarycolor"
+            name="menuTheme"
+            value="primaryColor"
+          ></p-radiobutton>
+          <label for="primary">Primary Color</label>
+        </div>
+        <div class="flex items-center gap-2">
+          <p-radiobutton
+            (ngModelChange)="setMenuTheme('transparent')"
+            [disabled]="isTransparentThemeOptionDisabled()"
+            [ngModel]="menuTheme()"
+            inputId="menutheme-transparent"
+            name="menuTheme"
+            value="transparent"
+          ></p-radiobutton>
+          <label for="transparent">Transparent</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-drawer>

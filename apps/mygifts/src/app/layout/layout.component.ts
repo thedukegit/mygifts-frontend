@@ -1,11 +1,11 @@
 import { Component, OnDestroy, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
-import { AppConfigurator } from '../../../../../libs/mygifts/layout/src/lib/layout/app.configurator';
 import { filter, Subscription } from 'rxjs';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { LayoutService } from './layout.service';
+import { ConfiguratorComponent } from './configurator/configurator.component';
 
 /** responsible for the common components of the screen, like top bar, menu, etc. **/
 @Component({
@@ -14,8 +14,8 @@ import { LayoutService } from './layout.service';
     CommonModule,
     RouterOutlet,
     TopBarComponent,
-    AppConfigurator,
     SideBarComponent,
+    ConfiguratorComponent,
   ],
   standalone: true,
   templateUrl: './layout.component.html',
