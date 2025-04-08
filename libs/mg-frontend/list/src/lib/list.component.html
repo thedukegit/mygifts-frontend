@@ -1,1 +1,53 @@
-<p>List works!</p>
+<div class="gifts-container">
+    <div class="view-controls">
+      <button mat-icon-button (click)="toggleViewMode()" [matTooltip]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'">
+        <mat-icon>{{ viewMode === 'grid' ? 'view_list' : 'grid_view' }}</mat-icon>
+      </button>
+    </div>
+  
+    @if (viewMode === 'grid') {
+      <div class="grid-container">
+        @for (gift of gifts; track gift.id) {
+          <div class="grid-item">
+            <mat-card class="gift-card">
+              <div class="card-content">
+                <div class="image-container">
+                  <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
+                </div>
+                <div class="gift-details">
+                  <div class="gift-header">
+                    <h3 class="gift-name">{{ gift.name }}</h3>
+                  </div>
+                  <p class="gift-description">{{ gift.description }}</p>
+                  <div class="gift-footer">
+                    <span class="price">${{ gift.price }}</span>
+                  </div>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="list-container">
+        @for (gift of gifts; track gift.id) {
+          <mat-card class="gift-card list-item">
+            <div class="card-content">
+              <div class="image-container">
+                <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
+              </div>
+              <div class="gift-details">
+                <div class="gift-header">
+                  <h3 class="gift-name">{{ gift.name }}</h3>
+                </div>
+                <p class="gift-description">{{ gift.description }}</p>
+                <div class="gift-footer">
+                  <span class="price">${{ gift.price }}</span>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        }
+      </div>
+    }
+  </div>

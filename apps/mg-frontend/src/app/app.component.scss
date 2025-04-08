@@ -7,13 +7,14 @@
   width: 250px;
   background-color: #ffffff;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 0 0;
 }
 
 .sidenav-header {
   padding: 16px;
   background-color: #3f51b5;
   color: white;
-  
+
   .app-title {
     margin: 0;
     font-size: 1.5rem;
@@ -24,11 +25,11 @@
 .nav-item {
   margin: 8px 0;
   border-radius: 4px;
-  
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.04);
   }
-  
+
   &.active {
     background-color: #e8eaf6;
     color: #3f51b5;
