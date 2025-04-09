@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>Add New Gift</h2>
+<form (ngSubmit)="onSubmit()" [formGroup]="giftForm">
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input formControlName="name" matInput required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea formControlName="description" matInput required></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Price</mat-label>
+      <input formControlName="price" matInput required type="number" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Image URL</mat-label>
+      <input formControlName="imageUrl" matInput />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Link (optional)</mat-label>
+      <input formControlName="link" matInput />
+    </mat-form-field>
+  </div>
+
+  <div align="end" mat-dialog-actions>
+    <button (click)="onCancel()" mat-button>Cancel</button>
+    <button
+      [disabled]="!giftForm.valid"
+      color="primary"
+      mat-raised-button
+      type="submit"
+    >
+      Add Gift
+    </button>
+  </div>
+</form>
+  

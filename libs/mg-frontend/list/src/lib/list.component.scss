@@ -130,3 +130,10 @@
     padding: 1rem;
   }
 }
+
+.add-gift-fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 1000;
+}
