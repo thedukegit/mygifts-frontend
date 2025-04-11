@@ -10,7 +10,7 @@ import { Gift } from './gift.interface';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
 import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
 import { IGiftRepository } from './repositories/gift-repository.interface';
-import { LocalStorageGiftRepository } from './repositories/local-storage-gift.repository';
+import { IndexedDBGiftRepository } from './repositories/indexed-db-gift.repository';
 
 @Component({
   selector: 'mg-list',
@@ -23,9 +23,7 @@ import { LocalStorageGiftRepository } from './repositories/local-storage-gift.re
     MatGridListModule,
     MatTooltipModule,
   ],
-  providers: [
-    { provide: GIFT_REPOSITORY, useClass: LocalStorageGiftRepository },
-  ],
+  providers: [{ provide: GIFT_REPOSITORY, useClass: IndexedDBGiftRepository }],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
