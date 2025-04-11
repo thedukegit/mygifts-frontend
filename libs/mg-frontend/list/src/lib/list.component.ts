@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,8 +7,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { Gift } from './gift.interface';
-import { GiftRepository } from './gift.repository';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
+import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
+import { IGiftRepository } from './repositories/gift-repository.interface';
+import { LocalStorageGiftRepository } from './repositories/local-storage-gift.repository';
 
 @Component({
   selector: 'mg-list',
@@ -21,14 +23,22 @@ import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.compon
     MatGridListModule,
     MatTooltipModule,
   ],
+  providers: [
+    { provide: GIFT_REPOSITORY, useClass: LocalStorageGiftRepository },
+  ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent {
+export class ListComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'grid';
-  private readonly giftRepository = inject(GiftRepository);
-  protected gifts: Gift[] = this.giftRepository.getAll();
+  protected gifts: Gift[] = [];
+
+  private readonly giftRepository = inject<IGiftRepository>(GIFT_REPOSITORY);
   private readonly dialog = inject(MatDialog);
+
+  async ngOnInit() {
+    this.gifts = await this.giftRepository.getAll();
+  }
 
   toggleViewMode() {
     this.viewMode = this.viewMode === 'list' ? 'grid' : 'list';
@@ -39,10 +49,10 @@ export class ListComponent {
       width: '500px',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
-        this.giftRepository.add(result);
-        this.gifts = this.giftRepository.getAll();
+        await this.giftRepository.add(result);
+        this.gifts = await this.giftRepository.getAll();
       }
     });
   }
