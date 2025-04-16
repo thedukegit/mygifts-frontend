@@ -9,8 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Gift } from './gift.interface';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
 import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
-import { IGiftRepository } from './repositories/gift-repository.interface';
-import { IndexedDBGiftRepository } from './repositories/indexed-db-gift.repository';
+import { GiftRepository } from './repositories/gift-repository.interface';
+import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-repository';
 
 @Component({
   selector: 'mg-list',
@@ -23,7 +23,7 @@ import { IndexedDBGiftRepository } from './repositories/indexed-db-gift.reposito
     MatGridListModule,
     MatTooltipModule,
   ],
-  providers: [{ provide: GIFT_REPOSITORY, useClass: IndexedDBGiftRepository }],
+  providers: [{ provide: GIFT_REPOSITORY, useClass: IndexedDbGiftRepository }],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
   viewMode: 'list' | 'grid' = 'grid';
   protected gifts: Gift[] = [];
 
-  private readonly giftRepository = inject<IGiftRepository>(GIFT_REPOSITORY);
+  private readonly giftRepository = inject<GiftRepository>(GIFT_REPOSITORY);
   private readonly dialog = inject(MatDialog);
 
   async ngOnInit() {
