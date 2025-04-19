@@ -18,7 +18,7 @@ class LocalStorageGiftRepository {
 
 class ListComponent {
   #gifts: Gift[]
-  -giftRepository: GiftRepository
+  -giftRepository: LocalStorageGiftRepository
   #addGift() void
 }
 ListComponent --> LocalStorageGiftRepository
