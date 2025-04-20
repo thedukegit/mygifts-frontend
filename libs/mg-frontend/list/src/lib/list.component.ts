@@ -10,7 +10,7 @@ import { Gift } from './gift.interface';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
 import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
 import { GiftRepository } from './repositories/gift-repository.interface';
-import { InMemoryGiftRepository } from './repositories/in-memory-storage-gift.repository';
+import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-repository';
 
 @Component({
   selector: 'mg-list',
@@ -23,7 +23,7 @@ import { InMemoryGiftRepository } from './repositories/in-memory-storage-gift.re
     MatGridListModule,
     MatTooltipModule,
   ],
-  providers: [{ provide: GIFT_REPOSITORY, useClass: InMemoryGiftRepository }],
+  providers: [{ provide: GIFT_REPOSITORY, useClass: IndexedDbGiftRepository }],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
