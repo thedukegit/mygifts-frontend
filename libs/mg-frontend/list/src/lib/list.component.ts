@@ -8,6 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { Gift } from './gift.interface';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
 import { GiftRepository } from './repositories/gift-repository.interface';
 import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-repository';
@@ -50,6 +51,19 @@ export class ListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result) {
         await this.giftRepository.add(result);
+        this.gifts = await this.giftRepository.getAll();
+      }
+    });
+  }
+
+  async deleteGift(id: string): Promise<void> {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(async (confirmed) => {
+      if (confirmed) {
+        await this.giftRepository.delete(id);
         this.gifts = await this.giftRepository.getAll();
       }
     });
