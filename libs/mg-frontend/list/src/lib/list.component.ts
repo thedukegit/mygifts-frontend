@@ -5,13 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Gift } from './gift.interface';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
 import { GiftRepository } from './repositories/gift-repository.interface';
 import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-repository';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'mg-list',
@@ -29,43 +30,61 @@ import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-reposito
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  viewMode: 'list' | 'grid' = 'grid';
-  protected gifts: Gift[] = [];
+  protected viewMode: 'list' | 'grid' = 'grid';
+  private readonly giftRepository: GiftRepository =
+    inject<GiftRepository>(GIFT_REPOSITORY);
+  private readonly dialog: MatDialog = inject(MatDialog);
+  private readonly snackBar: MatSnackBar = inject(MatSnackBar);
 
-  private readonly giftRepository = inject<GiftRepository>(GIFT_REPOSITORY);
-  private readonly dialog = inject(MatDialog);
+  private _gifts: Gift[] = [];
 
-  async ngOnInit() {
-    this.gifts = await this.giftRepository.getAll();
+  get gifts(): ReadonlyArray<Gift> {
+    return this._gifts;
   }
 
-  toggleViewMode() {
+  async ngOnInit(): Promise<void> {
+    await this.loadGifts();
+  }
+
+  toggleViewMode(): void {
     this.viewMode = this.viewMode === 'list' ? 'grid' : 'list';
   }
 
   openAddGiftDialog(): void {
-    const dialogRef = this.dialog.open(AddGiftDialogComponent, {
-      width: '500px',
-    });
+    const dialogRef: MatDialogRef<AddGiftDialogComponent> = this.dialog.open(
+      AddGiftDialogComponent,
+      {
+        width: '500px',
+      }
+    );
 
-    dialogRef.afterClosed().subscribe(async (result) => {
+    dialogRef.afterClosed().subscribe(async (result: Gift | undefined) => {
       if (result) {
         await this.giftRepository.add(result);
-        this.gifts = await this.giftRepository.getAll();
+        this._gifts = await this.giftRepository.getAll();
       }
     });
   }
 
   async deleteGift(id: string): Promise<void> {
-    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
-      width: '400px',
-    });
+    const dialogRef: MatDialogRef<DeleteConfirmationDialogComponent> =
+      this.dialog.open(DeleteConfirmationDialogComponent, {
+        width: '400px',
+      });
 
-    dialogRef.afterClosed().subscribe(async (confirmed) => {
+    dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
       if (confirmed) {
         await this.giftRepository.delete(id);
-        this.gifts = await this.giftRepository.getAll();
+        this._gifts = await this.giftRepository.getAll();
       }
     });
+  }
+
+  private async loadGifts(): Promise<void> {
+    try {
+      this._gifts = await this.giftRepository.getAll();
+    } catch (error) {
+      this.snackBar.open('Failed to load friends', 'Close', { duration: 3000 });
+    }
   }
 }
