@@ -11,8 +11,9 @@ import { FRIEND_REPOSITORY } from './friend-repository.token';
 import { AddFriendDialogComponent } from './add-friend-dialog/add-friend-dialog.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { FriendRepository } from './friend-repository.interface';
-import { IndexedDbFriendRepository } from './repositories/indexed-db-friend-repository';
+import { FirestoreFriendRepository } from './repositories/firestore-friend-repository';
 import { MatTooltip } from '@angular/material/tooltip';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'lib-friends',
@@ -25,7 +26,12 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatTooltip,
   ],
   providers: [
-    { provide: FRIEND_REPOSITORY, useClass: IndexedDbFriendRepository },
+    {
+      provide: FRIEND_REPOSITORY,
+      useFactory: (firestore: Firestore) =>
+        new FirestoreFriendRepository(firestore),
+      deps: [Firestore],
+    },
   ],
   templateUrl: './friends.component.html',
   styleUrl: './friends.component.scss',

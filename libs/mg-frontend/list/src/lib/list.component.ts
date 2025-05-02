@@ -11,8 +11,9 @@ import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.compon
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
 import { GiftRepository } from './repositories/gift-repository.interface';
-import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-repository';
+import { FirestoreGiftRepository } from './repositories/firestore-gift-repository';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'mg-list',
@@ -25,7 +26,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatGridListModule,
     MatTooltipModule,
   ],
-  providers: [{ provide: GIFT_REPOSITORY, useClass: IndexedDbGiftRepository }],
+  providers: [
+    {
+      provide: GIFT_REPOSITORY,
+      useFactory: (firestore: Firestore) =>
+        new FirestoreGiftRepository(firestore),
+      deps: [Firestore],
+    },
+  ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
