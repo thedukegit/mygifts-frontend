@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
-import { ListComponent } from '@mg-frontend/list';
 import { FriendsComponent } from '@mg-frontend/friends';
+import { ListComponent } from '@mg-frontend/list';
 
 export const appRoutes: Route[] = [
   {
@@ -9,8 +9,8 @@ export const appRoutes: Route[] = [
     pathMatch: 'full',
   },
   {
-    path: 'list', // Define the path for the ListComponent
-    component: ListComponent, // Specify the ListComponent
+    path: 'list',
+    component: ListComponent,
   },
   {
     path: 'friends',

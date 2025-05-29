@@ -92,7 +92,7 @@ export class ListComponent implements OnInit {
     try {
       this._gifts = await this.giftRepository.getAll();
     } catch (error) {
-      this.snackBar.open('Failed to load friends', 'Close', { duration: 3000 });
+      this.snackBar.open('Failed to load gifts', 'Close', { duration: 3000 });
     }
   }
 }

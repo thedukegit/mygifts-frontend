@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Gift } from '../gift.interface';
 import { GiftRepository } from './gift-repository.interface';
-import {
-  Firestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-} from '@angular/fire/firestore';
+import { addDoc, collection, deleteDoc, doc, Firestore, getDocs } from '@angular/fire/firestore';
 import { DefaultImageService } from '../services/default-image.service';
 
 @Injectable()
