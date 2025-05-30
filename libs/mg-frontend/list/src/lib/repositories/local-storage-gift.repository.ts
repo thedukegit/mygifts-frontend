@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { Gift } from '../gift.interface';
-import { GiftRepository } from './gift-repository.interface';
+import { GiftRepository } from '../gift-repository.interface';
 import { DefaultImageService } from '../services/default-image.service';
 
 @Injectable()
@@ -22,6 +22,13 @@ export class LocalStorageGiftRepository implements GiftRepository {
     };
     gifts.push(newGift);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(gifts));
+    return Promise.resolve();
+  }
+
+  async delete(id: string): Promise<void> {
+    const gifts = await this.getAll();
+    const updatedGifts = gifts.filter(gift => gift.id !== id);
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedGifts));
     return Promise.resolve();
   }
 }

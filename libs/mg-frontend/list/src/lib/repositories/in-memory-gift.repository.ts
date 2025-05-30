@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { Gift } from '../gift.interface';
-import { GiftRepository } from './gift-repository.interface';
+import { GiftRepository } from '../gift-repository.interface';
 import { DefaultImageService } from '../services/default-image.service';
 
 @Injectable()
 export class InMemoryGiftRepository implements GiftRepository {
+
   private gifts: Gift[] = [];
 
   async getAll(): Promise<Gift[]> {
@@ -20,5 +21,8 @@ export class InMemoryGiftRepository implements GiftRepository {
     };
     this.gifts.push(newGift);
     return Promise.resolve();
+  }
+  delete(id: string): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 }
