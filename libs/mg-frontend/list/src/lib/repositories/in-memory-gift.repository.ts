@@ -22,7 +22,9 @@ export class InMemoryGiftRepository implements GiftRepository {
     this.gifts.push(newGift);
     return Promise.resolve();
   }
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  
+  public async delete(id: string): Promise<void> {
+    this.gifts = this.gifts.filter(gift => gift.id !== id);
+    return Promise.resolve();
   }
 }
