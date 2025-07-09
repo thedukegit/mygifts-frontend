@@ -6,8 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
-import { Gift } from './gift.interface';
+import { ListComponentBusiness } from './list.component.business';
 import { GiftRepository } from './repositories/gift-repository.interface';
 import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
 import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-repository';
@@ -28,54 +27,40 @@ import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-reposito
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  viewMode: 'list' | 'grid' = 'grid';
-  protected gifts: Gift[] = [];
-
-  sortBy: 'name' | 'price' = 'name';
-  sortDirection: 'asc' | 'desc' = 'asc';
-
   private readonly giftRepository = inject<GiftRepository>(GIFT_REPOSITORY);
   private readonly dialog = inject(MatDialog);
+  business: ListComponentBusiness;
 
-  async ngOnInit() {
-    this.gifts = await this.giftRepository.getAll();
+  constructor() {
+    this.business = new ListComponentBusiness(this.giftRepository, this.dialog);
   }
 
-  get sortedGifts(): Gift[] {
-    return [...this.gifts].sort((a, b) => {
-      let compare = 0;
-      if (this.sortBy === 'name') {
-        compare = a.name.localeCompare(b.name);
-      } else if (this.sortBy === 'price') {
-        compare = a.price - b.price;
-      }
-      return this.sortDirection === 'asc' ? compare : -compare;
-    });
+  async ngOnInit() {
+    await this.business.init();
+  }
+
+  get viewMode() {
+    return this.business.viewMode;
+  }
+  get sortedGifts() {
+    return this.business.sortedGifts;
+  }
+  get sortBy() {
+    return this.business.sortBy;
+  }
+  get sortDirection() {
+    return this.business.sortDirection;
   }
 
   setSort(by: 'name' | 'price') {
-    if (this.sortBy === by) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.sortBy = by;
-      this.sortDirection = 'asc';
-    }
+    this.business.setSort(by);
   }
 
   toggleViewMode() {
-    this.viewMode = this.viewMode === 'list' ? 'grid' : 'list';
+    this.business.toggleViewMode();
   }
 
   openAddGiftDialog(): void {
-    const dialogRef = this.dialog.open(AddGiftDialogComponent, {
-      width: '500px',
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      if (result) {
-        await this.giftRepository.add(result);
-        this.gifts = await this.giftRepository.getAll();
-      }
-    });
+    this.business.openAddGiftDialog();
   }
 }
