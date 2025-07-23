@@ -2,7 +2,11 @@
   "name": "@mg-frontend/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "emulators:start": "firebase emulators:start",
+    "emulators:start:import": "firebase emulators:start --import=./firebase-export",
+    "emulators:export": "firebase emulators:export ./firebase-export"
+  },
   "private": true,
   "dependencies": {
     "@angular/cdk": "~19.2.8",
