@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
 import { Friend } from '../friend.interface';
 import { FriendRepository } from '../friend-repository.interface';
 import {

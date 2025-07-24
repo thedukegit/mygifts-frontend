@@ -81,7 +81,7 @@ export class ListComponent implements OnInit {
   private async loadGifts(): Promise<void> {
     try {
       this._gifts = await this.giftRepository.getAll();
-    } catch (error) {
+    } catch {
       this.snackBar.open('Failed to load gifts', 'Close', { duration: 3000 });
     }
   }

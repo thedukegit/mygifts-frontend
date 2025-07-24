@@ -59,7 +59,7 @@ export class FriendsComponent implements OnInit {
           this.snackBar.open('Friend added successfully', 'Close', {
             duration: 3000,
           });
-        } catch (error) {
+        } catch {
           this.snackBar.open('Failed to add friend', 'Close', {
             duration: 3000,
           });
@@ -82,7 +82,7 @@ export class FriendsComponent implements OnInit {
           this.snackBar.open('Friend removed successfully', 'Close', {
             duration: 3000,
           });
-        } catch (error) {
+        } catch {
           this.snackBar.open('Failed to remove friend', 'Close', {
             duration: 3000,
           });
@@ -97,7 +97,7 @@ export class FriendsComponent implements OnInit {
       await this.router.navigate(['/gifts'], {
         queryParams: { friendId: friend.id },
       });
-    } catch (error) {
+    } catch {
       this.snackBar.open("Failed to load friend's gifts", 'Close', {
         duration: 3000,
       });
@@ -107,7 +107,7 @@ export class FriendsComponent implements OnInit {
   private async loadFriends(): Promise<void> {
     try {
       this._friends = await this.friendRepository.getAll();
-    } catch (error) {
+    } catch {
       this.snackBar.open('Failed to load friends', 'Close', { duration: 3000 });
     }
   }

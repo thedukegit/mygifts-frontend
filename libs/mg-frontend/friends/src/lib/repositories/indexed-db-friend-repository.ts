@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Friend } from '../friend.interface';
 import { FriendRepository } from '../friend-repository.interface';
 import { FriendDatabase } from '../services/friend.database';
+import { Gift } from '@mg-frontend/list';
 
 @Injectable()
 export class IndexedDbFriendRepository implements FriendRepository {
@@ -30,7 +31,7 @@ export class IndexedDbFriendRepository implements FriendRepository {
     await this.db.friends.delete(id);
   }
 
-  async getFriendGifts(friendId: string): Promise<any[]> {
+  async getFriendGifts(): Promise<Gift[]> {
     // For now, return empty array as we'll implement this later
     return [];
   }

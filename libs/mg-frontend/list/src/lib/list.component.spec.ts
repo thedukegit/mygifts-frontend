@@ -13,8 +13,8 @@ describe('ListComponent', () => {
   let giftRepository: InMemoryGiftRepository;
 
   beforeEach( () => {
-    mockDialog = { open: jest.fn() } as any;
-    mockSnackBar = { open: jest.fn() } as any;    
+    mockDialog = { open: jest.fn() } as unknown as jest.Mocked<MatDialog>;
+    mockSnackBar = { open: jest.fn() } as unknown as jest.Mocked<MatSnackBar>;    
     giftRepository = new InMemoryGiftRepository();
 
      TestBed.configureTestingModule({
