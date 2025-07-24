@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
-  useEmulators: true, // Flag to indicate we're using emulators
+  // For local development, use local storage instead of Firestore
+  useLocalRepositories: true,
   firebase: {
     apiKey: 'demo-key', // Demo key for emulator
     authDomain: 'mygifts-faf66.firebaseapp.com',

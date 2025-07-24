@@ -1,19 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Gift } from './gift.interface';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { GIFT_REPOSITORY } from './gift-repository.token';
 import { GiftRepository } from './gift-repository.interface';
-import { FirestoreGiftRepository } from './repositories/firestore-gift-repository';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Firestore } from '@angular/fire/firestore';
+import { GIFT_REPOSITORY } from './gift-repository.token';
+import { Gift } from './gift.interface';
 
 @Component({
   selector: 'mg-list',
@@ -25,14 +23,6 @@ import { Firestore } from '@angular/fire/firestore';
     MatIconModule,
     MatGridListModule,
     MatTooltipModule,
-  ],
-  providers: [
-    {
-      provide: GIFT_REPOSITORY,
-      useFactory: (firestore: Firestore) =>
-        new FirestoreGiftRepository(firestore),
-      deps: [Firestore],
-    },
   ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],

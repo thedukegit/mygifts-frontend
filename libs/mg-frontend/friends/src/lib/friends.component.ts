@@ -1,19 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { Friend } from './friend.interface';
-import { FRIEND_REPOSITORY } from './friend-repository.token';
 import { AddFriendDialogComponent } from './add-friend-dialog/add-friend-dialog.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { FriendRepository } from './friend-repository.interface';
-import { FirestoreFriendRepository } from './repositories/firestore-friend-repository';
-import { MatTooltip } from '@angular/material/tooltip';
-import { Firestore } from '@angular/fire/firestore';
+import { FRIEND_REPOSITORY } from './friend-repository.token';
+import { Friend } from './friend.interface';
 
 @Component({
   selector: 'lib-friends',
@@ -24,14 +22,6 @@ import { Firestore } from '@angular/fire/firestore';
     MatButtonModule,
     MatIconModule,
     MatTooltip,
-  ],
-  providers: [
-    {
-      provide: FRIEND_REPOSITORY,
-      useFactory: (firestore: Firestore) =>
-        new FirestoreFriendRepository(firestore),
-      deps: [Firestore],
-    },
   ],
   templateUrl: './friends.component.html',
   styleUrl: './friends.component.scss',
