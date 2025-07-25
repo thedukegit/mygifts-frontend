@@ -19,7 +19,7 @@ describe('ListComponent', () => {
 
      TestBed.configureTestingModule({
       imports: [
-        ListComponent,
+        ListComponent, 
       ],
       providers: [
         { provide: GIFT_REPOSITORY, useValue: giftRepository },
