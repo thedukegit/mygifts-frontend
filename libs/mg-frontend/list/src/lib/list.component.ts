@@ -1,16 +1,17 @@
-import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialog } from '@angular/material/dialog';
-import { Gift } from './gift.interface';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
-import { GIFT_REPOSITORY } from './repositories/gift-repository.token';
-import { GiftRepository } from './repositories/gift-repository.interface';
-import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-repository';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { GiftRepository } from './gift-repository.interface';
+import { GIFT_REPOSITORY } from './gift-repository.token';
+import { Gift } from './gift.interface';
 
 @Component({
   selector: 'mg-list',
@@ -23,35 +24,65 @@ import { IndexedDbGiftRepository } from './repositories/indexed-db-gift-reposito
     MatGridListModule,
     MatTooltipModule,
   ],
-  providers: [{ provide: GIFT_REPOSITORY, useClass: IndexedDbGiftRepository }],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  viewMode: 'list' | 'grid' = 'grid';
-  protected gifts: Gift[] = [];
+  protected viewMode: 'list' | 'grid' = 'grid';
+  private readonly giftRepository: GiftRepository =
+    inject<GiftRepository>(GIFT_REPOSITORY);
+  private readonly dialog: MatDialog = inject(MatDialog);
+  private readonly snackBar: MatSnackBar = inject(MatSnackBar);
 
-  private readonly giftRepository = inject<GiftRepository>(GIFT_REPOSITORY);
-  private readonly dialog = inject(MatDialog);
+  private _gifts: Gift[] = [];
 
-  async ngOnInit() {
-    this.gifts = await this.giftRepository.getAll();
+  get gifts(): ReadonlyArray<Gift> {
+    return this._gifts;
   }
 
-  toggleViewMode() {
+  async ngOnInit(): Promise<void> {
+    await this.loadGifts();
+  }
+
+  toggleViewMode(): void {
     this.viewMode = this.viewMode === 'list' ? 'grid' : 'list';
   }
 
   openAddGiftDialog(): void {
-    const dialogRef = this.dialog.open(AddGiftDialogComponent, {
-      width: '500px',
-    });
+    const dialogRef: MatDialogRef<AddGiftDialogComponent> = this.dialog.open(
+      AddGiftDialogComponent,
+      {
+        width: '500px',
+      }
+    );
 
-    dialogRef.afterClosed().subscribe(async (result) => {
+    dialogRef.afterClosed().subscribe(async (result: Gift | undefined) => {
       if (result) {
         await this.giftRepository.add(result);
-        this.gifts = await this.giftRepository.getAll();
+        this._gifts = await this.giftRepository.getAll();
       }
     });
+  }
+
+  async deleteGift(id: string): Promise<void> {
+    const dialogRef: MatDialogRef<DeleteConfirmationDialogComponent> =
+      this.dialog.open(DeleteConfirmationDialogComponent, {
+        width: '400px',
+      });
+
+    dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
+      if (confirmed) {
+        await this.giftRepository.delete(id);
+        this._gifts = await this.giftRepository.getAll();
+      }
+    });
+  }
+
+  private async loadGifts(): Promise<void> {
+    try {
+      this._gifts = await this.giftRepository.getAll();
+    } catch {
+      this.snackBar.open('Failed to load gifts', 'Close', { duration: 3000 });
+    }
   }
 }

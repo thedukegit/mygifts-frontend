@@ -23,6 +23,9 @@
                 <p class="gift-description">{{ gift.description }}</p>
                 <div class="gift-footer">
                   <span class="price">${{ gift.price }}</span>
+                  <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" class="delete-button">
+                    <mat-icon>delete</mat-icon>
+                  </button>
                 </div>
               </div>
             </div>
@@ -45,6 +48,9 @@
               <p class="gift-description">{{ gift.description }}</p>
               <div class="gift-footer">
                 <span class="price">${{ gift.price }}</span>
+                <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" class="delete-button">
+                  <mat-icon>delete</mat-icon>
+                </button>
               </div>
             </div>
           </div>

@@ -79,12 +79,24 @@
 .gift-footer {
   margin-top: auto;
   padding-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .price {
   font-size: 1.1rem;
   font-weight: 600;
   color: #3f51b5;
+}
+
+.delete-button {
+  margin-left: 0.5rem;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 // Grid view specific styles
