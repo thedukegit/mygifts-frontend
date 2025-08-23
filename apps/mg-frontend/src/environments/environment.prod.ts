@@ -1,9 +1,11 @@
+import { StorageSolution } from '../app/interfaces/storage-solution.enum';
+
 export const environment = {
   production: true,
-  // In production, always use Firestore
-  useLocalRepositories: false,
+  //if production is true, then it will always use firestore, no matter what the storageSolution is set to
+  storageSolution: StorageSolution.Firestore, 
   firebase: {
-    apiKey: 'AIzaSyDlxkUjHM6j62Sg6bFLJI1XTajmUJ6xwYQ', // Demo key for emulator
+    apiKey: 'AIzaSyDlxkUjHM6j62Sg6bFLJI1XTajmUJ6xwYQ',
     authDomain: 'mygifts-faf66.firebaseapp.com',
     projectId: 'mygifts-faf66', // Match the project ID from .firebaserc
     storageBucket: 'mygifts-faf66.firebasestorage.app',

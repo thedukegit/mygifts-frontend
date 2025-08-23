@@ -1,7 +1,9 @@
+import { StorageSolution } from '../app/interfaces/storage-solution.enum';
+
 export const environment = {
   production: false,
-  // For local development, use local storage instead of Firestore
-  useLocalRepositories: true,
+  // Select which storage solution to use in development
+  storageSolution: StorageSolution.FirestoreEmulator,
   firebase: {
     apiKey: 'demo-key', // Demo key for emulator
     authDomain: 'mygifts-faf66.firebaseapp.com',
