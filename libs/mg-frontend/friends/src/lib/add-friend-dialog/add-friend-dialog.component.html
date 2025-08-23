@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Add New Friend</h2>
+<form (ngSubmit)="onSubmit()" [formGroup]="friendForm">
+    <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" matInput required type="email" />
+        </mat-form-field>
+    </div>
+
+    <div align="end" mat-dialog-actions>
+        <button (click)="onCancel()" mat-button>Cancel</button>
+        <button [disabled]="!friendForm.valid" color="primary" mat-raised-button type="submit">
+            Add Friend
+        </button>
+    </div>
+</form>

@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { FriendsComponent } from '@mg-frontend/friends';
 import { ListComponent } from '@mg-frontend/list';
 import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -23,6 +24,10 @@ export const appRoutes: Route[] = [
       {
         path: 'friends',
         component: FriendsComponent,
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
       },
     ],
   },

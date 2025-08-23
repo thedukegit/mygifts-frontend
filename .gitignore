@@ -19,7 +19,12 @@ node_modules
 *.launch
 .settings/
 *.sublime-workspace
-/.cursor
+
+# IDE - CURSOR
+# Ignore everything in .cursor except the rules folder
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
 
 # IDE - VSCode
 .vscode/*
