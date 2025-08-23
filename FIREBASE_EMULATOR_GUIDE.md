@@ -20,7 +20,7 @@ In a separate terminal:
 npx nx serve mg-frontend
 ```
 
-Your app will automatically connect to the local emulators when running in development mode.
+Your app will connect to the local emulators when `storageSolution` is set to `FirestoreEmulator` in the development environment.
 
 ## 🔧 Available Scripts
 
@@ -46,7 +46,12 @@ Your app will automatically connect to the local emulators when running in devel
 ### Environment Setup
 - Development environment (`environment.ts`) uses demo Firebase config
 - Production environment (`environment.prod.ts`) uses real Firebase config
-- `useEmulators` flag controls emulator connection
+- `storageSolution` controls the storage backend:
+  - `LocalStorage` → browser LocalStorage (no Firebase)
+  - `IndexedDb` → browser IndexedDB (no Firebase)
+  - `FirestoreEmulator` → connects to local Firestore emulator
+  - `Firestore` → connects to real Firestore
+- In production, the app always uses `Firestore` regardless of `storageSolution`.
 
 ### Collections Used
 - `friends` - Friend data from the friends library
