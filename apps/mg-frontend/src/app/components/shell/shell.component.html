@@ -28,25 +28,11 @@
                 <span class="page-title">{{ currentPageTitle }}</span>
             </div>
             <div class="right-section">
-                <button mat-icon-button [matMenuTriggerFor]="notificationsMenu">
-                    <mat-icon [matBadge]="notificationCount" matBadgeColor="warn">notifications</mat-icon>
-                </button>
                 <button mat-icon-button [matMenuTriggerFor]="userMenu">
                     <mat-icon>account_circle</mat-icon>
                 </button>
             </div>
         </div>
-
-        <mat-menu #notificationsMenu="matMenu">
-            <button mat-menu-item *ngFor="let notification of notifications">
-                <mat-icon>{{ notification.icon }}</mat-icon>
-                <span>{{ notification.message }}</span>
-            </button>
-            <button mat-menu-item *ngIf="notifications.length === 0">
-                <span>No new notifications</span>
-            </button>
-        </mat-menu>
-
         <mat-menu #userMenu="matMenu">
             <button mat-menu-item>
                 <mat-icon>person</mat-icon>

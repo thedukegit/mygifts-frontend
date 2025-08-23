@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,10 +9,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
-interface Notification {
-  icon: string;
-  message: string;
-}
 
 @Component({
   selector: 'app-shell',
@@ -26,7 +21,7 @@ interface Notification {
     MatButtonModule,
     MatDividerModule,
     MatMenuModule,
-    MatBadgeModule,
+    
     CommonModule,
   ],
   templateUrl: './shell.component.html',
@@ -35,18 +30,10 @@ interface Notification {
 export class ShellComponent {
   title = 'mg-frontend';
   currentPageTitle = 'Dashboard';
-  notificationCount = 0;
-  notifications: Notification[] = [];
   readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
-  constructor() {
-    this.notifications = [
-      { icon: 'shopping_cart', message: 'New gift added to your list' },
-      { icon: 'event', message: 'Birthday reminder: John Doe' },
-    ];
-    this.notificationCount = this.notifications.length;
-  }
+  constructor() {}
 
   async onLogout() {
     await this.authService.signOut();
