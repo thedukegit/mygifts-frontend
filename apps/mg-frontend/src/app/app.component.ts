@@ -1,47 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 
-interface Notification {
-  icon: string;
-  message: string;
-}
-
 @Component({
-  imports: [
-    RouterModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatMenuModule,
-    MatBadgeModule,
-    CommonModule,
-  ],
+  imports: [RouterModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'mg-frontend';
-  currentPageTitle = 'Dashboard';
-  notificationCount = 0;
-  notifications: Notification[] = [];
-
-  constructor() {
-    // Example notifications - in a real app, these would come from a service
-    this.notifications = [
-      { icon: 'shopping_cart', message: 'New gift added to your list' },
-      { icon: 'event', message: 'Birthday reminder: John Doe' },
-    ];
-    this.notificationCount = this.notifications.length;
-  }
 }

@@ -1,0 +1,22 @@
+<div class="login-container">
+    <mat-card>
+        <h2>Sign in</h2>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email" required />
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password" required />
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading">
+                {{ loading ? 'Signing in…' : 'Sign in' }}
+            </button>
+            <button mat-button type="button" (click)="onSignUp()" [disabled]="form.invalid || loading">
+                Create account
+            </button>
+        </form>
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+    </mat-card>
+</div>

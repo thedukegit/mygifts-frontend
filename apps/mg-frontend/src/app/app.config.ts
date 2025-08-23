@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { connectAuthEmulator, getAuth, provideAuth } from '@angular/fire/auth';
 import { connectFirestoreEmulator, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideRouter } from '@angular/router';
 import { environment } from '../environments/environment';
@@ -18,6 +19,13 @@ export const appConfig: ApplicationConfig = {
       environment.storageSolution === StorageSolution.FirestoreEmulator)
       ? [
           provideFirebaseApp(() => initializeApp(environment.firebase)),
+          provideAuth(() => {
+            const auth = getAuth();
+            if (environment.storageSolution === StorageSolution.FirestoreEmulator) {
+              connectAuthEmulator(auth, 'http://localhost:9099', { disableWarnings: true });
+            }
+            return auth;
+          }),
           provideFirestore(() => {
             const firestore = getFirestore();
             if (environment.storageSolution === StorageSolution.FirestoreEmulator) {
