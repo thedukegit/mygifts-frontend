@@ -67,6 +67,7 @@
 - For images, use `NgOptimizedImage` to improve loading and prevent broken links in case of failures.
 - Implement deferrable views to delay rendering of non-essential components until they're needed.
 - use modern control flow syntax, like `@if` `@else`, `@else-if`, `@for`, `@empty`, `@switch`
+- when creating a component, split the html and (s)css into separate files
 
 **Error Handling and Validation**
 - Apply robust error handling in services and components, using custom error types or error factories as needed.

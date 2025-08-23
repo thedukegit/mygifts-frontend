@@ -3,6 +3,7 @@ import { FriendsComponent } from '@mg-frontend/friends';
 import { ListComponent } from '@mg-frontend/list';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -28,6 +29,10 @@ export const appRoutes: Route[] = [
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
       },
     ],
   },
