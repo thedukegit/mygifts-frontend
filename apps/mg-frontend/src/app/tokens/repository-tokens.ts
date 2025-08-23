@@ -1,4 +1,5 @@
 import { Provider } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import { environment } from '../../environments/environment';
 import { StorageSolution } from '../interfaces/storage-solution.enum';
@@ -21,13 +22,13 @@ export function createGiftRepositoryProvider(): Provider {
     },
     [StorageSolution.Firestore]: {
       provide: GIFT_REPOSITORY,
-      useFactory: (firestore: Firestore) => new FirestoreGiftRepository(firestore),
-      deps: [Firestore],
+      useFactory: (firestore: Firestore, auth: Auth) => new FirestoreGiftRepository(firestore, auth),
+      deps: [Firestore, Auth],
     },
     [StorageSolution.FirestoreEmulator]: {
       provide: GIFT_REPOSITORY,
-      useFactory: (firestore: Firestore) => new FirestoreGiftRepository(firestore),
-      deps: [Firestore],
+      useFactory: (firestore: Firestore, auth: Auth) => new FirestoreGiftRepository(firestore, auth),
+      deps: [Firestore, Auth],
     },
   };
   return environment.production ? storageSolutions[StorageSolution.Firestore] : storageSolutions[environment.storageSolution];
