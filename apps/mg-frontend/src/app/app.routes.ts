@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ShellComponent } from './components/shell/shell.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { AuthGuard } from './guards/auth.guard';
 
 export const appRoutes: Route[] = [
@@ -39,5 +40,9 @@ export const appRoutes: Route[] = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'verify-email',
+    component: VerifyEmailComponent,
   },
 ];

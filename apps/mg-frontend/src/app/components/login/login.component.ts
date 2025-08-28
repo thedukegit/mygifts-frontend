@@ -30,6 +30,7 @@ export class LoginComponent {
 
   loading = false;
   errorMessage = '';
+  infoMessage = '';
 
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -44,8 +45,13 @@ export class LoginComponent {
     this.errorMessage = '';
     const { email, password } = this.form.getRawValue();
     try {
-      await this.authService.signIn(email as string, password as string);
-      await this.router.navigate(['/list']);
+      const cred = await this.authService.signIn(email as string, password as string);
+      if (cred.user && cred.user.emailVerified) {
+        await this.router.navigate(['/list']);
+      } else {
+        this.infoMessage = 'Please verify your email. We can resend the link.';
+        await this.router.navigate(['/verify-email']);
+      }
     } catch (err: unknown) {
       this.errorMessage = 'Sign in failed. Please check your credentials.';
     } finally {
@@ -61,8 +67,12 @@ export class LoginComponent {
     this.errorMessage = '';
     const { email, password } = this.form.getRawValue();
     try {
-      await this.authService.signUp(email as string, password as string);
-      await this.router.navigate(['/list']);
+      const cred = await this.authService.signUp(email as string, password as string);
+      if (cred.user) {
+        await this.authService.sendVerificationEmail();
+      }
+      this.infoMessage = 'Verification email sent. Please check your inbox.';
+      await this.router.navigate(['/verify-email']);
     } catch (err: unknown) {
       this.errorMessage = 'Sign up failed. Try a different email or password.';
     } finally {
