@@ -47,13 +47,13 @@ export function createFriendRepositoryProvider(): Provider {
     },
     [StorageSolution.Firestore]: {
       provide: FRIEND_REPOSITORY,
-      useFactory: (firestore: Firestore) => new FirestoreFriendRepository(firestore),
-      deps: [Firestore],
+      useFactory: (firestore: Firestore, auth: Auth) => new FirestoreFriendRepository(firestore, auth),
+      deps: [Firestore, Auth],
     },
     [StorageSolution.FirestoreEmulator]: {
       provide: FRIEND_REPOSITORY,
-      useFactory: (firestore: Firestore) => new FirestoreFriendRepository(firestore),
-      deps: [Firestore],
+      useFactory: (firestore: Firestore, auth: Auth) => new FirestoreFriendRepository(firestore, auth),
+      deps: [Firestore, Auth],
     },
   };
   return environment.production ? storageSolutions[StorageSolution.Firestore] : storageSolutions[environment.storageSolution];

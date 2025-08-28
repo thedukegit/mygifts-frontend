@@ -10,6 +10,11 @@ service cloud.firestore {
     match /users/{userId}/gifts/{giftId} {
       allow read, create, update, delete: if request.auth != null && request.auth.uid == userId;
     }
+
+    // User-scoped friends: each user can only access their own friends
+    match /users/{userId}/friends/{friendId} {
+      allow read, create, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
   }
 }
 
