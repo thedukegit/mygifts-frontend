@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import {
-    Firestore,
-    addDoc,
-    collection,
-    deleteDoc,
-    doc,
-    getDocs,
+  Firestore,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
 } from '@angular/fire/firestore';
 import { Gift } from '@mg-frontend/list';
 import { FriendRepository } from '../friend-repository.interface';
@@ -14,6 +14,7 @@ import { Friend } from '../friend.interface';
 
 @Injectable()
 export class FirestoreFriendRepository implements FriendRepository {
+  // @todo: use inject
   constructor(private firestore: Firestore, private auth: Auth) {}
 
   private getUserFriendsCollection() {

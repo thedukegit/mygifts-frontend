@@ -6,6 +6,11 @@ service cloud.firestore {
       allow read, write: if request.auth != null;
     }
 
+    // Top-level user document: each user can only access their own user doc
+    match /users/{userId} {
+      allow read, create, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
+
     // User-scoped gifts: each user can only access their own gifts
     match /users/{userId}/gifts/{giftId} {
       allow read, create, update, delete: if request.auth != null && request.auth.uid == userId;
