@@ -1,30 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Friend } from '../friend.interface';
-import { FriendRepository } from '../friend-repository.interface';
+import { Auth } from '@angular/fire/auth';
 import {
   Firestore,
-  collection,
   addDoc,
-  getDocs,
+  collection,
   deleteDoc,
   doc,
-  query,
-  where,
+  getDocs,
 } from '@angular/fire/firestore';
 import { Gift } from '@mg-frontend/list';
+import { FriendRepository } from '../friend-repository.interface';
+import { Friend } from '../friend.interface';
 
 @Injectable()
 export class FirestoreFriendRepository implements FriendRepository {
-  private readonly COLLECTION_NAME = 'friends';
+  // @todo: use inject
+  constructor(private firestore: Firestore, private auth: Auth) {}
 
-  constructor(private firestore: Firestore) {}
+  private getUserFriendsCollection() {
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) {
+      throw new Error('User is not authenticated.');
+    }
+    return collection(this.firestore, 'users', currentUser.uid, 'friends');
+  }
 
   async getAll(): Promise<Friend[]> {
-    const friendsCollection = collection(this.firestore, this.COLLECTION_NAME);
+    const friendsCollection = this.getUserFriendsCollection();
     const snapshot = await getDocs(friendsCollection);
-    return snapshot.docs.map(
-      (doc) => ({ id: doc.id, ...doc.data() } as Friend)
-    );
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Friend));
   }
 
   async add(email: string): Promise<Friend> {
@@ -33,7 +37,7 @@ export class FirestoreFriendRepository implements FriendRepository {
       email: email,
     };
 
-    const friendsCollection = collection(this.firestore, this.COLLECTION_NAME);
+    const friendsCollection = this.getUserFriendsCollection();
     const docRef = await addDoc(friendsCollection, newFriend);
 
     return {
@@ -43,14 +47,24 @@ export class FirestoreFriendRepository implements FriendRepository {
   }
 
   async delete(id: string): Promise<void> {
-    const friendDoc = doc(this.firestore, this.COLLECTION_NAME, id);
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) {
+      throw new Error('User is not authenticated.');
+    }
+    const friendDoc = doc(this.firestore, 'users', currentUser.uid, 'friends', id);
     await deleteDoc(friendDoc);
   }
 
   async getFriendGifts(friendId: string): Promise<Gift[]> {
-    const giftsCollection = collection(this.firestore, 'gifts');
-    const q = query(giftsCollection, where('friendId', '==', friendId));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Gift));
+    // Gifts are already scoped under users/{uid}/gifts in the list module
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) {
+      throw new Error('User is not authenticated.');
+    }
+    const giftsCollection = collection(this.firestore, 'users', currentUser.uid, 'gifts');
+    const snapshot = await getDocs(giftsCollection);
+    return snapshot.docs
+      .map((doc) => ({ id: doc.id, ...doc.data() } as Gift))
+      .filter((gift) => (gift as any).friendId === friendId);
   }
 }

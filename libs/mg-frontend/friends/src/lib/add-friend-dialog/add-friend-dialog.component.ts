@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'lib-add-friend-dialog',
@@ -22,37 +22,8 @@ import {
     MatButtonModule,
     ReactiveFormsModule,
   ],
-  template: `
-    <h2 mat-dialog-title>Add New Friend</h2>
-    <form (ngSubmit)="onSubmit()" [formGroup]="friendForm">
-      <div mat-dialog-content>
-        <mat-form-field appearance="fill">
-          <mat-label>Email</mat-label>
-          <input formControlName="email" matInput required type="email" />
-        </mat-form-field>
-      </div>
-
-      <div align="end" mat-dialog-actions>
-        <button (click)="onCancel()" mat-button>Cancel</button>
-        <button
-          [disabled]="!friendForm.valid"
-          color="primary"
-          mat-raised-button
-          type="submit"
-        >
-          Add Friend
-        </button>
-      </div>
-    </form>
-  `,
-  styles: [
-    `
-      mat-form-field {
-        width: 100%;
-        margin-bottom: 16px;
-      }
-    `,
-  ],
+  templateUrl: './add-friend-dialog.component.html',
+  styleUrl: './add-friend-dialog.component.scss',
 })
 export class AddFriendDialogComponent {
   friendForm: FormGroup;
