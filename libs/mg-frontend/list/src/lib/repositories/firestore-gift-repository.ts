@@ -23,6 +23,12 @@ export class FirestoreGiftRepository implements GiftRepository {
     return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Gift));
   }
 
+  async getByUserId(userId: string): Promise<Gift[]> {
+    const giftsCollection = collection(this.firestore, 'users', userId, 'gifts');
+    const snapshot = await getDocs(giftsCollection);
+    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Gift));
+  }
+
   async add(gift: Omit<Gift, 'id'>): Promise<void> {
     const newGift = {
       ...gift,

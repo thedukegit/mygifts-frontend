@@ -59,8 +59,13 @@ export class FriendsComponent implements OnInit {
           this.snackBar.open('Friend added successfully', 'Close', {
             duration: 3000,
           });
-        } catch {
-          this.snackBar.open('Failed to add friend', 'Close', {
+        } catch (e: unknown) {
+          const message = (e as Error)?.message === 'FRIEND_NOT_FOUND'
+            ? 'No user found with that email'
+            : (e as Error)?.message === 'CANNOT_ADD_SELF'
+              ? 'You cannot add yourself as a friend'
+              : 'Failed to add friend';
+          this.snackBar.open(message, 'Close', {
             duration: 3000,
           });
         }
@@ -92,16 +97,9 @@ export class FriendsComponent implements OnInit {
   }
 
   async viewGifts(friend: Friend): Promise<void> {
-    try {
-      await this.friendRepository.getFriendGifts(friend.id);
-      await this.router.navigate(['/gifts'], {
-        queryParams: { friendId: friend.id },
-      });
-    } catch {
-      this.snackBar.open("Failed to load friend's gifts", 'Close', {
-        duration: 3000,
-      });
-    }
+    await this.router.navigate(['/list'], {
+      queryParams: { friendId: friend.id },
+    });
   }
 
   private async loadFriends(): Promise<void> {

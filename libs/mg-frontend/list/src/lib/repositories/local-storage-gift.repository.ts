@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { Gift } from '../gift.interface';
 import { GiftRepository } from '../gift-repository.interface';
+import { Gift } from '../gift.interface';
 import { DefaultImageService } from '../services/default-image.service';
 
 @Injectable()
@@ -30,5 +30,10 @@ export class LocalStorageGiftRepository implements GiftRepository {
     const updatedGifts = gifts.filter(gift => gift.id !== id);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updatedGifts));
     return Promise.resolve();
+  }
+
+  async getByUserId(userId: string): Promise<Gift[]> {
+    // LocalStorage is single-user; cross-user view returns empty
+    return Promise.resolve([]);
   }
 }
