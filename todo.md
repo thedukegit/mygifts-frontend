@@ -1,3 +1,5 @@
 - [x] when viewing another users gifts, you should not be able to remove them
 - [ ] when viewing another users gifts, show the name of the user, so you know whos list you are viewing
-- [ ]
+- [x] the header of each page should reflect the name of the page you are on, so dashboard should change into list, of you are on the list page, etc
+- [ ] Create a splash page for friends and list in case there arent any yet
+- [ ] On the homepage show a summary of changes that happened on friends lists in the past 30 days, so that user can quickly see updates on friends lists. Make the updates link to the respective list

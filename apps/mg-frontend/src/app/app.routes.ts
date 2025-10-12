@@ -22,18 +22,22 @@ export const appRoutes: Route[] = [
       {
         path: 'list',
         component: ListComponent,
+        data: { title: 'List' },
       },
       {
         path: 'friends',
         component: FriendsComponent,
+        data: { title: 'Friends' },
       },
       {
         path: 'profile',
         component: ProfileComponent,
+        data: { title: 'Profile' },
       },
       {
         path: 'settings',
         component: SettingsComponent,
+        data: { title: 'Settings' },
       },
     ],
   },
