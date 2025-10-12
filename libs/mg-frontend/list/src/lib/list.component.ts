@@ -71,6 +71,10 @@ export class ListComponent implements OnInit {
   }
 
   async deleteGift(id: string): Promise<void> {
+    if (this.currentFriendId) {
+      this.snackBar.open('You cannot delete gifts from another user\'s list.', 'Close', { duration: 3000 });
+      return;
+    }
     const dialogRef: MatDialogRef<DeleteConfirmationDialogComponent> =
       this.dialog.open(DeleteConfirmationDialogComponent, {
         width: '400px',

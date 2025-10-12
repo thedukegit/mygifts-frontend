@@ -1,0 +1,3 @@
+- [x] when viewing another users gifts, you should not be able to remove them
+- [ ] when viewing another users gifts, show the name of the user, so you know whos list you are viewing
+- [ ]
