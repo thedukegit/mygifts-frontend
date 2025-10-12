@@ -5,8 +5,9 @@
   "scripts": {
     "build": "npx nx run mg-frontend:build:production",
     "emulators:start": "firebase emulators:start",
-    "emulators:start:import": "firebase emulators:start --import=./firebase-export",
+    "emulators:start:import": "firebase emulators:start --import=./firebase-export --export-on-exit",
     "emulators:export": "firebase emulators:export ./firebase-export"
+
   },
   "private": true,
   "dependencies": {
@@ -22,7 +23,7 @@
     "@angular/router": "~19.2.0",
     "@firebase/data-connect": "^0.3.4",
     "dexie": "^4.0.11",
-    "firebase": "^11.6.0",
+    "firebase": "^12.2.1",
     "rxjs": "~7.8.0",
     "uuid": "^11.1.0",
     "zone.js": "~0.15.0"
@@ -36,12 +37,15 @@
     "@angular/language-service": "~19.2.0",
     "@angular/material": "^19.2.8",
     "@eslint/js": "^9.8.0",
+    "@firebase/rules-unit-testing": "^5.0.0",
     "@nx/angular": "20.7.1",
     "@nx/devkit": "20.7.1",
+    "@nx/esbuild": "21.5.1",
     "@nx/eslint": "20.7.1",
     "@nx/eslint-plugin": "20.7.1",
     "@nx/jest": "20.7.1",
-    "@nx/js": "20.7.1",
+    "@nx/js": "21.5.1",
+    "@nx/node": "^21.5.1",
     "@nx/playwright": "20.7.1",
     "@nx/web": "20.7.1",
     "@nx/workspace": "20.7.1",
@@ -51,9 +55,10 @@
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
     "@types/jest": "^29.5.12",
-    "@types/node": "^18.19.87",
+    "@types/node": "20.19.9",
     "@typescript-eslint/utils": "^8.19.0",
     "angular-eslint": "^19.2.0",
+    "esbuild": "^0.19.2",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-playwright": "^1.6.2",

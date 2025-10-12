@@ -7,6 +7,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute } from '@angular/router';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { GiftRepository } from './gift-repository.interface';
@@ -33,15 +34,20 @@ export class ListComponent implements OnInit {
     inject<GiftRepository>(GIFT_REPOSITORY);
   private readonly dialog: MatDialog = inject(MatDialog);
   private readonly snackBar: MatSnackBar = inject(MatSnackBar);
+  private readonly route: ActivatedRoute = inject(ActivatedRoute);
 
   private _gifts: Gift[] = [];
+  protected currentFriendId: string | null = null;
 
   get gifts(): ReadonlyArray<Gift> {
     return this._gifts;
   }
 
   async ngOnInit(): Promise<void> {
-    await this.loadGifts();
+    this.route.queryParamMap.subscribe(async (params) => {
+      this.currentFriendId = params.get('friendId');
+      await this.loadGifts();
+    });
   }
 
   toggleViewMode(): void {
@@ -80,7 +86,11 @@ export class ListComponent implements OnInit {
 
   private async loadGifts(): Promise<void> {
     try {
-      this._gifts = await this.giftRepository.getAll();
+      if (this.currentFriendId && this.giftRepository.getByUserId) {
+        this._gifts = await this.giftRepository.getByUserId(this.currentFriendId);
+      } else {
+        this._gifts = await this.giftRepository.getAll();
+      }
     } catch {
       this.snackBar.open('Failed to load gifts', 'Close', { duration: 3000 });
     }

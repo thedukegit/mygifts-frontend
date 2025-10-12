@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
-import { Gift } from '../gift.interface';
 import { GiftRepository } from '../gift-repository.interface';
-import { GiftDatabase } from '../services/gift.database';
+import { Gift } from '../gift.interface';
 import { DefaultImageService } from '../services/default-image.service';
+import { GiftDatabase } from '../services/gift.database';
 
 @Injectable()
 export class IndexedDbGiftRepository implements GiftRepository {
@@ -28,5 +28,10 @@ export class IndexedDbGiftRepository implements GiftRepository {
 
   async delete(id: string): Promise<void> {
     await this.db.gifts.delete(id);
+  }
+
+  async getByUserId(userId: string): Promise<Gift[]> {
+    // IndexedDB is single-user; cross-user view returns empty
+    return [];
   }
 }
