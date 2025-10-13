@@ -26,6 +26,10 @@ export class IndexedDbGiftRepository implements GiftRepository {
     await this.db.gifts.add(newGift);
   }
 
+  async update(id: string, gift: Partial<Gift>, userId?: string): Promise<void> {
+    await this.db.gifts.update(id, gift);
+  }
+
   async delete(id: string): Promise<void> {
     await this.db.gifts.delete(id);
   }

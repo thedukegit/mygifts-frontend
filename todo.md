@@ -3,9 +3,14 @@
 - [x] the header of each page should reflect the name of the page you are on, so dashboard should change into list, of you are on the list page, etc
 - [x] Create a splash page for friends and list in case there arent any yet
 - [ ] On the homepage show a summary of changes that happened on friends lists in the past 30 days, so that user can quickly see updates on friends lists. Make the updates link to the respective list
-[ ] add a shopping cart on the gift card to indicate you have bought that gift for someone. Keep track of the person who bought it and when it was bought
-[ ] implement editing of a gift
-[ ] when adding or editing a gift add number field to indicate how many of that gift you want
-[ ] Keep track of how many of a gift have been bought
-[ ] when someone marks a gift as bought and its more than the user asked for then show a warning that says that it was already bought, when it was bought and by who
-[ ] when viewing a friends list dont show the add gift button
+- [x] add a shopping cart on the gift card to indicate you have bought that gift for someone. Keep track of the person who bought it and when it was bought
+- [ ] implement editing of a gift
+- [ ] when adding or editing a gift add number field to indicate how many of that gift you want
+- [ ] Keep track of how many of a gift have been bought
+- [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
+- [ ] when someone marks a gift as bought and its more than the user asked for then show a warning that says that it was already bought, when it was bought and by who
+- [x] when viewing a friends list dont show the add gift button
+- [ ] dont show the uuid of the user anywhere
+- [ ] create an overview page that shows which gifts you bought for each of your friends and how much youve spent. Add filters for friends and year
+- [ ] in case a gift has been marked as purchased a long time ago, but the owner hasnt removed it from their list (for instance if its something they want every year), implement a button that will ask the owner if they still want this gift. On the owners gift a text must appear that says something like 'jimmy wants to know if you still want this gift?' if they answer with 'yes' then mark the gift as not purchased and reset it back to 0 bought
+- [ ] Implement a drag and drop functionality for a users own list to order the gifts. The higher the gift, the more user wants it

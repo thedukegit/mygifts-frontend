@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -26,6 +27,7 @@ import { Gift } from './gift.interface';
     MatIconModule,
     MatGridListModule,
     MatTooltipModule,
+    MatBadgeModule,
   ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
@@ -76,6 +78,58 @@ export class ListComponent implements OnInit {
     });
   }
 
+  async togglePurchased(gift: Gift): Promise<void> {
+    if (!this.currentFriendId) {
+      this.snackBar.open('You cannot mark your own gifts as purchased.', 'Close', { duration: 3000 });
+      return;
+    }
+
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) {
+      this.snackBar.open('You must be logged in to mark gifts as purchased.', 'Close', { duration: 3000 });
+      return;
+    }
+
+    // If gift is already purchased, only the person who purchased it can unmark it
+    if (gift.purchased && gift.purchasedBy !== currentUser.uid) {
+      this.snackBar.open('Only the person who marked this gift as purchased can unmark it.', 'Close', { duration: 3000 });
+      return;
+    }
+
+    try {
+      const isPurchased = !gift.purchased;
+      const updateData: Partial<Gift> = {
+        purchased: isPurchased,
+        purchasedBy: isPurchased ? currentUser.uid : undefined,
+        purchasedByName: isPurchased ? currentUser.displayName || currentUser.email || 'Unknown' : undefined,
+        purchasedAt: isPurchased ? new Date() : undefined,
+      };
+
+      await this.giftRepository.update(gift.id, updateData, this.currentFriendId || undefined);
+      await this.loadGifts();
+
+      const message = isPurchased
+        ? 'Gift marked as purchased!'
+        : 'Gift marked as not purchased.';
+      this.snackBar.open(message, 'Close', { duration: 3000 });
+    } catch (error) {
+      this.snackBar.open('Failed to update gift.', 'Close', { duration: 3000 });
+    }
+  }
+
+  canTogglePurchase(gift: Gift): boolean {
+    const currentUser = this.auth.currentUser;
+    if (!currentUser || !this.currentFriendId) {
+      return false;
+    }
+    // If not purchased yet, anyone can mark it
+    if (!gift.purchased) {
+      return true;
+    }
+    // If already purchased, only the purchaser can unmark it
+    return gift.purchasedBy === currentUser.uid;
+  }
+
   async deleteGift(id: string): Promise<void> {
     if (this.currentFriendId) {
       this.snackBar.open('You cannot delete gifts from another user\'s list.', 'Close', { duration: 3000 });
@@ -112,17 +166,11 @@ export class ListComponent implements OnInit {
         // Load friend's name
         const friendDoc = await getDoc(doc(this.firestore, 'users', this.currentFriendId));
         const friendData = friendDoc.data() as any;
-        this.displayName = friendData?.displayName || friendData?.email || 'Friend';
+        this.displayName = (friendData?.displayName || friendData?.email || 'Friend') +'\'s list';
       } else {
-        // Load current user's name
-        const currentUser = this.auth.currentUser;
-        if (currentUser) {
-          const userDoc = await getDoc(doc(this.firestore, 'users', currentUser.uid));
-          const userData = userDoc.data() as any;
-          this.displayName = userData?.displayName || currentUser.email || 'My List';
-        } else {
+        
           this.displayName = 'My List';
-        }
+        
       }
     } catch {
       this.displayName = this.currentFriendId ? 'Friend' : 'My List';

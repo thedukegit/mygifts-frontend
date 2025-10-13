@@ -25,6 +25,16 @@ export class LocalStorageGiftRepository implements GiftRepository {
     return Promise.resolve();
   }
 
+  async update(id: string, gift: Partial<Gift>, userId?: string): Promise<void> {
+    const gifts = await this.getAll();
+    const index = gifts.findIndex(g => g.id === id);
+    if (index !== -1) {
+      gifts[index] = { ...gifts[index], ...gift };
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(gifts));
+    }
+    return Promise.resolve();
+  }
+
   async delete(id: string): Promise<void> {
     const gifts = await this.getAll();
     const updatedGifts = gifts.filter(gift => gift.id !== id);

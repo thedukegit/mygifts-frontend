@@ -5,4 +5,8 @@ export interface Gift {
   price: number;
   imageUrl: string;
   link?: string;
+  purchased?: boolean;
+  purchasedBy?: string;
+  purchasedByName?: string;
+  purchasedAt?: Date;
 }

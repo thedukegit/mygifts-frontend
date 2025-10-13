@@ -1,6 +1,6 @@
 <div class="gifts-container">
   <div class="view-controls">
-    <h2 class="list-title">{{ displayName }}'s Wishlist</h2>
+    <h2 class="list-title">{{ displayName }}</h2>
     <button (click)="toggleViewMode()"
       [matTooltip]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'" mat-icon-button>
       <mat-icon>{{ viewMode === 'grid' ? 'view_list' : 'grid_view' }}</mat-icon>
@@ -28,6 +28,12 @@
     @for (gift of gifts; track gift.id) {
     <div class="grid-item">
       <mat-card class="gift-card">
+        @if (currentFriendId && gift.purchased) {
+        <div class="purchased-badge">
+          <mat-icon>shopping_cart</mat-icon>
+          <span>Purchased</span>
+        </div>
+        }
         <div class="card-content">
           <div class="image-container">
             <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
@@ -37,13 +43,30 @@
               <h3 class="gift-name">{{ gift.name }}</h3>
             </div>
             <p class="gift-description">{{ gift.description }}</p>
+            @if (currentFriendId && gift.purchased && gift.purchasedByName) {
+            <p class="purchased-info">
+              Purchased by {{ gift.purchasedByName }}
+              @if (gift.purchasedAt) {
+              <span class="purchased-date"> on {{ gift.purchasedAt | date:'mediumDate' }}</span>
+              }
+            </p>
+            }
             <div class="gift-footer">
               <span class="price">${{ gift.price }}</span>
-              @if (!currentFriendId) {
-              <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" class="delete-button">
-                <mat-icon>delete</mat-icon>
-              </button>
-              }
+              <div class="action-buttons">
+                @if (currentFriendId) {
+                <button (click)="togglePurchased(gift)"
+                  [matTooltip]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'"
+                  mat-icon-button [color]="gift.purchased ? 'primary' : 'default'" [disabled]="!canTogglePurchase(gift)"
+                  class="cart-button">
+                  <mat-icon>{{ gift.purchased ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
+                </button>
+                } @else {
+                <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" class="delete-button">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                }
+              </div>
             </div>
           </div>
         </div>
@@ -55,6 +78,12 @@
   <div class="list-container">
     @for (gift of gifts; track gift.id) {
     <mat-card class="gift-card list-item">
+      @if (currentFriendId && gift.purchased) {
+      <div class="purchased-badge">
+        <mat-icon>shopping_cart</mat-icon>
+        <span>Purchased</span>
+      </div>
+      }
       <div class="card-content">
         <div class="image-container">
           <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
@@ -64,13 +93,30 @@
             <h3 class="gift-name">{{ gift.name }}</h3>
           </div>
           <p class="gift-description">{{ gift.description }}</p>
+          @if (currentFriendId && gift.purchased && gift.purchasedByName) {
+          <p class="purchased-info">
+            Purchased by {{ gift.purchasedByName }}
+            @if (gift.purchasedAt) {
+            <span class="purchased-date"> on {{ gift.purchasedAt | date:'mediumDate' }}</span>
+            }
+          </p>
+          }
           <div class="gift-footer">
             <span class="price">${{ gift.price }}</span>
-            @if (!currentFriendId) {
-            <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" class="delete-button">
-              <mat-icon>delete</mat-icon>
-            </button>
-            }
+            <div class="action-buttons">
+              @if (currentFriendId) {
+              <button (click)="togglePurchased(gift)"
+                [matTooltip]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'"
+                mat-icon-button [color]="gift.purchased ? 'primary' : 'default'" [disabled]="!canTogglePurchase(gift)"
+                class="cart-button">
+                <mat-icon>{{ gift.purchased ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
+              </button>
+              } @else {
+              <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" class="delete-button">
+                <mat-icon>delete</mat-icon>
+              </button>
+              }
+            </div>
           </div>
         </div>
       </div>
@@ -80,7 +126,9 @@
   }
   }
 
+  @if (!currentFriendId) {
   <button (click)="openAddGiftDialog()" class="add-gift-fab" color="primary" mat-fab matTooltip="Add new gift">
     <mat-icon>add</mat-icon>
   </button>
+  }
 </div>
