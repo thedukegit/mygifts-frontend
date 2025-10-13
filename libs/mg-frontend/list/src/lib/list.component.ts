@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
+import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -35,9 +37,12 @@ export class ListComponent implements OnInit {
   private readonly dialog: MatDialog = inject(MatDialog);
   private readonly snackBar: MatSnackBar = inject(MatSnackBar);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
+  private readonly auth: Auth = inject(Auth);
+  private readonly firestore: Firestore = inject(Firestore);
 
   private _gifts: Gift[] = [];
   protected currentFriendId: string | null = null;
+  protected displayName: string = '';
 
   get gifts(): ReadonlyArray<Gift> {
     return this._gifts;
@@ -46,6 +51,7 @@ export class ListComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.route.queryParamMap.subscribe(async (params) => {
       this.currentFriendId = params.get('friendId');
+      await this.loadDisplayName();
       await this.loadGifts();
     });
   }
@@ -97,6 +103,29 @@ export class ListComponent implements OnInit {
       }
     } catch {
       this.snackBar.open('Failed to load gifts', 'Close', { duration: 3000 });
+    }
+  }
+
+  private async loadDisplayName(): Promise<void> {
+    try {
+      if (this.currentFriendId) {
+        // Load friend's name
+        const friendDoc = await getDoc(doc(this.firestore, 'users', this.currentFriendId));
+        const friendData = friendDoc.data() as any;
+        this.displayName = friendData?.displayName || friendData?.email || 'Friend';
+      } else {
+        // Load current user's name
+        const currentUser = this.auth.currentUser;
+        if (currentUser) {
+          const userDoc = await getDoc(doc(this.firestore, 'users', currentUser.uid));
+          const userData = userDoc.data() as any;
+          this.displayName = userData?.displayName || currentUser.email || 'My List';
+        } else {
+          this.displayName = 'My List';
+        }
+      }
+    } catch {
+      this.displayName = this.currentFriendId ? 'Friend' : 'My List';
     }
   }
 }
