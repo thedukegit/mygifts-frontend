@@ -4,11 +4,8 @@
     </mat-card-header>
     <mat-card-content>
         @if (authService.user$ | async; as authUser) {
+        <p><strong>Display name:</strong> {{ authUser?.displayName }}</p>
         <p><strong>Email:</strong> {{ authUser?.email }}</p>
-        <p><strong>UID:</strong> {{ authUser?.uid }}</p>
-
-        } @else {
-        <p>No user information available.</p>
         }
     </mat-card-content>
 </mat-card>
