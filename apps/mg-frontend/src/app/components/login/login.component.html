@@ -13,7 +13,7 @@
             <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading">
                 {{ loading ? 'Signing in…' : 'Sign in' }}
             </button>
-            <button mat-button type="button" (click)="onSignUp()" [disabled]="form.invalid || loading">
+            <button mat-button type="button" (click)="navigateToRegister()" [disabled]="loading">
                 Create account
             </button>
         </form>
