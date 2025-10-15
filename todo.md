@@ -8,6 +8,7 @@
 - [x] dont show the uuid of the user anywhere
 - [x] implement editing of a gift
 - [x] show the first name near the profile icon
+- [ ] implement a 'forgot password' functionality
 - [ ] when adding or editing a gift add number field to indicate how many of that gift you want
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
