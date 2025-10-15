@@ -1,6 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { of, switchMap } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
@@ -14,6 +15,15 @@ import { UserService } from '../../services/user.service';
 export class ProfileComponent {
   readonly authService = inject(AuthService);
   readonly userService = inject(UserService);
+
+  userDoc$ = this.authService.user$.pipe(
+    switchMap(authUser => {
+      if (authUser) {
+        return this.userService.getCurrentUserDoc();
+      }
+      return of(undefined);
+    })
+  );
 }
 
 

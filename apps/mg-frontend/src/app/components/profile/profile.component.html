@@ -3,9 +3,10 @@
         <mat-card-title>Your Profile</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        @if (authService.user$ | async; as authUser) {
-        <p><strong>Display name:</strong> {{ authUser?.displayName }}</p>
-        <p><strong>Email:</strong> {{ authUser?.email }}</p>
+        @if (userDoc$ | async; as userDoc) {
+        <p><strong>First Name:</strong> {{ userDoc?.firstName }}</p>
+        <p><strong>Last Name:</strong> {{ userDoc?.lastName }}</p>
+        <p><strong>Email:</strong> {{ userDoc?.email }}</p>
         }
     </mat-card-content>
 </mat-card>

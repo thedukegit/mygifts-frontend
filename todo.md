@@ -16,3 +16,4 @@
 - [ ] in case a gift has been marked as purchased a long time ago, but the owner hasnt removed it from their list (for instance if its something they want every year), implement a button that will ask the owner if they still want this gift. On the owners gift a text must appear that says something like 'jimmy wants to know if you still want this gift?' if they answer with 'yes' then mark the gift as not purchased and reset it back to 0 bought
 - [ ] Implement a drag and drop functionality for a users own list to order the gifts. The higher the gift, the more user wants it
 - [ ] On the homepage show a summary of changes that happened on friends lists in the past 30 days, so that user can quickly see updates on friends lists. Make the updates link to the respective list
+- [ ] on the friends page show the amount of gifts the friend has

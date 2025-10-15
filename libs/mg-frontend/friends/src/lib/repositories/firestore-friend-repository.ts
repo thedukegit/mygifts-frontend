@@ -35,7 +35,10 @@ export class FirestoreFriendRepository implements FriendRepository {
       try {
         const profileSnap = await getDoc(doc(this.firestore, 'users', friendUid));
         const data = profileSnap.data() as any;
-        results.push({ id: friendUid, name: data?.displayName ?? friendUid, email: data?.email ?? '' });
+        const fullName = data?.firstName && data?.lastName 
+          ? `${data.firstName} ${data.lastName}` 
+          : (data?.firstName || data?.lastName || friendUid);
+        results.push({ id: friendUid, name: fullName, email: data?.email ?? '' });
       } catch {
         results.push({ id: friendUid, name: friendUid, email: '' });
       }

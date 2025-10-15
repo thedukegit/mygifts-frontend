@@ -117,10 +117,25 @@ export class ListComponent implements OnInit {
 
     try {
       const isPurchased = !gift.purchased;
+      
+      // Get purchaser's name from Firestore
+      let purchaserName = 'Unknown';
+      if (isPurchased) {
+        try {
+          const userDoc = await getDoc(doc(this.firestore, 'users', currentUser.uid));
+          const userData = userDoc.data() as any;
+          if (userData) {
+            purchaserName = `${userData.firstName} ${userData.lastName}`;
+          }
+        } catch {
+          purchaserName = currentUser.email || 'Unknown';
+        }
+      }
+      
       const updateData: Partial<Gift> = {
         purchased: isPurchased,
         purchasedBy: isPurchased ? currentUser.uid : undefined,
-        purchasedByName: isPurchased ? currentUser.displayName || currentUser.email || 'Unknown' : undefined,
+        purchasedByName: isPurchased ? purchaserName : undefined,
         purchasedAt: isPurchased ? new Date() : undefined,
       };
 
@@ -185,11 +200,13 @@ export class ListComponent implements OnInit {
         // Load friend's name
         const friendDoc = await getDoc(doc(this.firestore, 'users', this.currentFriendId));
         const friendData = friendDoc.data() as any;
-        this.displayName = (friendData?.displayName || friendData?.email || 'Friend') +'\'s list';
+        let friendName = 'Friend';
+        if (friendData) {
+          friendName = `${friendData.firstName} ${friendData.lastName}`;
+        } 
+        this.displayName = `${friendName}'s list`;
       } else {
-        
-          this.displayName = 'My List';
-        
+        this.displayName = 'My List';
       }
     } catch {
       this.displayName = this.currentFriendId ? 'Friend' : 'My List';

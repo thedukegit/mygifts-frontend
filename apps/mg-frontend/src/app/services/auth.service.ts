@@ -1,6 +1,6 @@
 // apps/mg-frontend/src/app/services/auth.service.ts
 import { Injectable, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, reload, sendEmailVerification, signInWithEmailAndPassword, signOut, updateProfile, user } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, reload, sendEmailVerification, signInWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
 import { UserService } from './user.service';
 
 // @todo: introduce an interface for the functions in this service, so that we can implement other authentication providers as well
@@ -19,13 +19,8 @@ export class AuthService {
   async signUp(email: string, password: string, firstName: string, lastName: string) {
     const cred = await createUserWithEmailAndPassword(this.auth, email, password);
     
-    // Update the user's display name if first and last names are provided
-    if (cred.user ) {
-      const displayName = `${firstName} ${lastName}`;
-      await updateProfile(cred.user, { displayName });
-    }
-    
-    await this.userService.upsertCurrentUserDoc();
+    // Store firstName and lastName separately in Firestore
+    await this.userService.upsertCurrentUserDoc({ firstName, lastName });
     return cred;
   }
 
