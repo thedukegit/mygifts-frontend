@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -32,8 +33,11 @@ export class ShellComponent {
   title = 'mg-frontend';
   currentPageTitle = 'Dashboard';
   readonly authService = inject(AuthService);
+  readonly userService = inject(UserService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  
+  readonly currentUser$ = this.userService.getCurrentUserDoc();
 
   public constructor() {
     this.router.events

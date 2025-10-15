@@ -7,11 +7,11 @@
 - [x] when viewing a friends list dont show the add gift button
 - [x] dont show the uuid of the user anywhere
 - [x] implement editing of a gift
+- [x] show the first name near the profile icon
 - [ ] when adding or editing a gift add number field to indicate how many of that gift you want
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
 - [ ] when someone marks a gift as bought and its more than the user asked for then show a warning that says that it was already bought, when it was bought and by who
-
 - [ ] create an overview page that shows which gifts you bought for each of your friends and how much youve spent. Add filters for friends and year
 - [ ] in case a gift has been marked as purchased a long time ago, but the owner hasnt removed it from their list (for instance if its something they want every year), implement a button that will ask the owner if they still want this gift. On the owners gift a text must appear that says something like 'jimmy wants to know if you still want this gift?' if they answer with 'yes' then mark the gift as not purchased and reset it back to 0 bought
 - [ ] Implement a drag and drop functionality for a users own list to order the gifts. The higher the gift, the more user wants it
