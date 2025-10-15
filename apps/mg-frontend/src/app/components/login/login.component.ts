@@ -59,25 +59,8 @@ export class LoginComponent {
     }
   }
 
-  async onSignUp() {
-    if (this.form.invalid) {
-      return;
-    }
-    this.loading = true;
-    this.errorMessage = '';
-    const { email, password } = this.form.getRawValue();
-    try {
-      const cred = await this.authService.signUp(email as string, password as string);
-      if (cred.user) {
-        await this.authService.sendVerificationEmail();
-      }
-      this.infoMessage = 'Verification email sent. Please check your inbox.';
-      await this.router.navigate(['/verify-email']);
-    } catch (err: unknown) {
-      this.errorMessage = 'Sign up failed. Try a different email or password.';
-    } finally {
-      this.loading = false;
-    }
+  navigateToRegister() {
+    this.router.navigate(['/register']);
   }
 }
 

@@ -66,7 +66,7 @@
 - Use Angular's signals system for efficient reactive state management.
 - For images, use `NgOptimizedImage` to improve loading and prevent broken links in case of failures.
 - Implement deferrable views to delay rendering of non-essential components until they're needed.
-- use modern control flow syntax, like `@if` `@else`, `@else-if`, `@for`, `@empty`, `@switch`
+- use modern control flow syntax, like `@if` `@else`, `@else-if`, `@for`, `@empty`, `@switch`, instead of `*ngIf`, `*ngFor`
 - when creating a component, split the html and (s)css into separate files
 
 **Error Handling and Validation**

@@ -16,9 +16,11 @@ export class AuthService {
     return await signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string, firstName: string, lastName: string) {
     const cred = await createUserWithEmailAndPassword(this.auth, email, password);
-    await this.userService.upsertCurrentUserDoc();
+    
+    // Store firstName and lastName separately in Firestore
+    await this.userService.upsertCurrentUserDoc({ firstName, lastName });
     return cred;
   }
 

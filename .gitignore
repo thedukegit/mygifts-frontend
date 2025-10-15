@@ -45,6 +45,9 @@ firebase-debug.log
 firestore-debug.log
 /typings
 
+# firestore
+firebase-export
+
 # System Files
 .DS_Store
 Thumbs.db

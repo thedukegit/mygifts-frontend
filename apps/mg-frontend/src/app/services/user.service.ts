@@ -1,11 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { Firestore, doc, serverTimestamp, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, docData, serverTimestamp, setDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 export interface AppUserDocument {
   uid: string;
   email: string | null;
-  displayName?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
   photoURL?: string | null;
   createdAt?: unknown;
   updatedAt?: unknown;
@@ -25,12 +27,22 @@ export class UserService {
     const base: AppUserDocument = {
       uid: currentUser.uid,
       email: currentUser.email,
-      displayName: (currentUser as any).displayName ?? null,
+      firstName: null,
+      lastName: null,
       photoURL: (currentUser as any).photoURL ?? null,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     };
     await setDoc(userDocRef, { ...base, ...partial, updatedAt: serverTimestamp() }, { merge: true });
+  }
+
+  getCurrentUserDoc(): Observable<AppUserDocument | undefined> {
+    const currentUser = this.auth.currentUser;
+    if (!currentUser) {
+      throw new Error('User is not authenticated.');
+    }
+    const userDocRef = doc(this.firestore, 'users', currentUser.uid);
+    return docData(userDocRef) as Observable<AppUserDocument | undefined>;
   }
 }
 
