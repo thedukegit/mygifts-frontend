@@ -62,7 +62,12 @@
                   <mat-icon>{{ gift.purchased ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
                 </button>
                 } @else {
-                <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" class="delete-button">
+                <button (click)="openEditGiftDialog(gift)" mat-icon-button color="primary" matTooltip="Edit gift"
+                  class="edit-button">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" matTooltip="Delete gift"
+                  class="delete-button">
                   <mat-icon>delete</mat-icon>
                 </button>
                 }
@@ -112,7 +117,12 @@
                 <mat-icon>{{ gift.purchased ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
               </button>
               } @else {
-              <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" class="delete-button">
+              <button (click)="openEditGiftDialog(gift)" mat-icon-button color="primary" matTooltip="Edit gift"
+                class="edit-button">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" matTooltip="Delete gift"
+                class="delete-button">
                 <mat-icon>delete</mat-icon>
               </button>
               }

@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Add New Gift</h2>
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
 <form (ngSubmit)="onSubmit()" [formGroup]="giftForm">
   <div mat-dialog-content>
     <mat-form-field appearance="fill">
@@ -29,14 +29,8 @@
 
   <div align="end" mat-dialog-actions>
     <button (click)="onCancel()" mat-button>Cancel</button>
-    <button
-      [disabled]="!giftForm.valid"
-      color="primary"
-      mat-raised-button
-      type="submit"
-    >
-      Add Gift
+    <button [disabled]="!giftForm.valid" color="primary" mat-raised-button type="submit">
+      {{ submitButtonText }}
     </button>
   </div>
 </form>
-

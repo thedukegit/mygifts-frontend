@@ -6,7 +6,7 @@
 - [x] add a shopping cart on the gift card to indicate you have bought that gift for someone. Keep track of the person who bought it and when it was bought
 - [x] when viewing a friends list dont show the add gift button
 - [x] dont show the uuid of the user anywhere
-- [ ] implement editing of a gift
+- [x] implement editing of a gift
 - [ ] when adding or editing a gift add number field to indicate how many of that gift you want
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased

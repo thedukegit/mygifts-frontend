@@ -67,6 +67,7 @@ export class ListComponent implements OnInit {
       AddGiftDialogComponent,
       {
         width: '500px',
+        data: { mode: 'add' }
       }
     );
 
@@ -74,6 +75,24 @@ export class ListComponent implements OnInit {
       if (result) {
         await this.giftRepository.add(result);
         this._gifts = await this.giftRepository.getAll();
+      }
+    });
+  }
+
+  openEditGiftDialog(gift: Gift): void {
+    const dialogRef: MatDialogRef<AddGiftDialogComponent> = this.dialog.open(
+      AddGiftDialogComponent,
+      {
+        width: '500px',
+        data: { gift, mode: 'edit' }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(async (result: Gift | undefined) => {
+      if (result && result.id) {
+        await this.giftRepository.update(result.id, result);
+        this._gifts = await this.giftRepository.getAll();
+        this.snackBar.open('Gift updated successfully!', 'Close', { duration: 3000 });
       }
     });
   }

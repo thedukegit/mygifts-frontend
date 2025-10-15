@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Gift } from '../gift.interface';
+
+export interface GiftDialogData {
+  gift?: Gift;
+  mode: 'add' | 'edit';
+}
 
 @Component({
   selector: 'mg-add-gift-dialog',
@@ -28,24 +33,41 @@ import { Gift } from '../gift.interface';
 })
 export class AddGiftDialogComponent {
   giftForm: FormGroup;
+  mode: 'add' | 'edit';
+  giftId?: string;
 
   constructor(
     private dialogRef: MatDialogRef<AddGiftDialogComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data?: GiftDialogData
   ) {
+    this.mode = data?.mode || 'add';
+    this.giftId = data?.gift?.id;
+
     this.giftForm = this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', [Validators.required, Validators.min(0)]],
-      imageUrl: [''],
-      link: [''],
+      name: [data?.gift?.name || '', Validators.required],
+      description: [data?.gift?.description || '', Validators.required],
+      price: [data?.gift?.price || '', [Validators.required, Validators.min(0)]],
+      imageUrl: [data?.gift?.imageUrl || ''],
+      link: [data?.gift?.link || ''],
     });
+  }
+
+  get dialogTitle(): string {
+    return this.mode === 'edit' ? 'Edit Gift' : 'Add New Gift';
+  }
+
+  get submitButtonText(): string {
+    return this.mode === 'edit' ? 'Update Gift' : 'Add Gift';
   }
 
   onSubmit(): void {
     if (this.giftForm.valid) {
-      const gift: Omit<Gift, 'id'> = this.giftForm.value;
-      this.dialogRef.close(gift);
+      const giftData = this.giftForm.value;
+      const result = this.mode === 'edit' 
+        ? { ...giftData, id: this.giftId }
+        : giftData;
+      this.dialogRef.close(result);
     }
   }
 
