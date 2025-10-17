@@ -10,6 +10,9 @@
                 <mat-label>Password</mat-label>
                 <input matInput type="password" formControlName="password" required />
             </mat-form-field>
+            <div class="forgot-password-link">
+                <a routerLink="/forgot-password">Forgot password?</a>
+            </div>
             <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || loading">
                 {{ loading ? 'Signing in…' : 'Sign in' }}
             </button>

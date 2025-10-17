@@ -8,7 +8,7 @@
 - [x] dont show the uuid of the user anywhere
 - [x] implement editing of a gift
 - [x] show the first name near the profile icon
-- [ ] implement a 'forgot password' functionality
+- [x] implement a 'forgot password' functionality
 - [ ] when adding or editing a gift add number field to indicate how many of that gift you want
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
@@ -19,3 +19,5 @@
 - [ ] On the homepage show a summary of changes that happened on friends lists in the past 30 days, so that user can quickly see updates on friends lists. Make the updates link to the respective list
 - [ ] on the friends page show the amount of gifts the friend has
 - [ ] implement tailwind css instead of angular material, to make the website look much more professional
+- [ ] on the profile page, make firstname and lastname editable
+- [ ] implement translations
