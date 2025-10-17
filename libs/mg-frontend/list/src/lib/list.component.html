@@ -55,6 +55,13 @@
               <div class="price-info">
                 <span class="price">${{ gift.price }}</span>
 
+                @if (gift.link) {
+                <a [href]="gift.link" target="_blank" rel="noopener noreferrer" class="gift-link">
+                  <mat-icon>link</mat-icon>
+                  <span>View product</span>
+                </a>
+                }
+
                 <span class="quantity">
                   <mat-icon>numbers</mat-icon>
                   <span>{{ gift.quantity }} wanted</span>
@@ -117,6 +124,13 @@
           <div class="gift-footer">
             <div class="price-info">
               <span class="price">${{ gift.price }}</span>
+
+              @if (gift.link) {
+              <a [href]="gift.link" target="_blank" rel="noopener noreferrer" class="gift-link">
+                <mat-icon>link</mat-icon>
+                <span>View product</span>
+              </a>
+              }
 
               <span class="quantity">
                 <mat-icon>numbers</mat-icon>

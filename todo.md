@@ -9,7 +9,8 @@
 - [x] implement editing of a gift
 - [x] show the first name near the profile icon
 - [x] implement a 'forgot password' functionality
-- [ ] when adding or editing a gift add number field to indicate how many of that gift you want
+- [x] when adding or editing a gift add number field to indicate how many of that gift you want
+- [ ] show link in gift card
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
 - [ ] when someone marks a gift as bought and its more than the user asked for then show a warning that says that it was already bought, when it was bought and by who

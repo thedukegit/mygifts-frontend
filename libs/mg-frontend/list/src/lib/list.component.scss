@@ -85,6 +85,31 @@
   line-height: 1.4;
 }
 
+.gift-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #3f51b5;
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:hover {
+    text-decoration: underline;
+    color: #303f9f;
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  span {
+    font-weight: 500;
+  }
+}
+
 .purchased-badge {
   position: absolute;
   top: 12px;
@@ -234,7 +259,8 @@
 
   .image-container {
     width: 150px;
-    height: 150px;
+    min-height: 150px;
+    align-self: stretch;
   }
 
   .gift-details {
