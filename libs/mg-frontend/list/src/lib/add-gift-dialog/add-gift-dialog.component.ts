@@ -48,6 +48,7 @@ export class AddGiftDialogComponent {
       name: [data?.gift?.name || '', Validators.required],
       description: [data?.gift?.description || '', Validators.required],
       price: [data?.gift?.price || '', [Validators.required, Validators.min(0)]],
+      quantity: [data?.gift?.quantity || 1, [Validators.required, Validators.min(1)]],
       imageUrl: [data?.gift?.imageUrl || ''],
       link: [data?.gift?.link || ''],
     });

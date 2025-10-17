@@ -52,7 +52,15 @@
             </p>
             }
             <div class="gift-footer">
-              <span class="price">${{ gift.price }}</span>
+              <div class="price-info">
+                <span class="price">${{ gift.price }}</span>
+
+                <span class="quantity">
+                  <mat-icon>numbers</mat-icon>
+                  <span>{{ gift.quantity }} wanted</span>
+                </span>
+
+              </div>
               <div class="action-buttons">
                 @if (currentFriendId) {
                 <button (click)="togglePurchased(gift)"
@@ -107,7 +115,15 @@
           </p>
           }
           <div class="gift-footer">
-            <span class="price">${{ gift.price }}</span>
+            <div class="price-info">
+              <span class="price">${{ gift.price }}</span>
+
+              <span class="quantity">
+                <mat-icon>numbers</mat-icon>
+                <span>{{ gift.quantity }} wanted</span>
+              </span>
+
+            </div>
             <div class="action-buttons">
               @if (currentFriendId) {
               <button (click)="togglePurchased(gift)"
