@@ -13,6 +13,7 @@
 - [x] show link in gift card
 - [x] fix menu alignment
 - [ ] some general visual improvements
+- [ ] Implement user agreement, when creating an account
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
 - [ ] when someone marks a gift as bought and its more than the user asked for then show a warning that says that it was already bought, when it was bought and by who

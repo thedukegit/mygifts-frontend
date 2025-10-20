@@ -24,17 +24,14 @@
     align-items: center;
     min-height: 56px;
 
-    .app-title {
-        margin: 0;
-        font-size: 1.5rem;
-        font-weight: 500;
-        white-space: nowrap;
+    .logo-full {
+        height: 40px;
+        width: auto;
     }
 
-    .app-title-short {
-        margin: 0;
-        font-size: 1.5rem;
-        font-weight: 500;
+    .logo-icon {
+        height: 32px;
+        width: 32px;
     }
 }
 
