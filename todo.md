@@ -8,7 +8,12 @@
 - [x] dont show the uuid of the user anywhere
 - [x] implement editing of a gift
 - [x] show the first name near the profile icon
-- [ ] when adding or editing a gift add number field to indicate how many of that gift you want
+- [x] implement a 'forgot password' functionality
+- [x] when adding or editing a gift add number field to indicate how many of that gift you want
+- [x] show link in gift card
+- [x] fix menu alignment
+- [ ] some general visual improvements
+- [ ] Implement user agreement, when creating an account
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
 - [ ] when someone marks a gift as bought and its more than the user asked for then show a warning that says that it was already bought, when it was bought and by who
@@ -18,3 +23,5 @@
 - [ ] On the homepage show a summary of changes that happened on friends lists in the past 30 days, so that user can quickly see updates on friends lists. Make the updates link to the respective list
 - [ ] on the friends page show the amount of gifts the friend has
 - [ ] implement tailwind css instead of angular material, to make the website look much more professional
+- [ ] on the profile page, make firstname and lastname editable
+- [ ] implement translations

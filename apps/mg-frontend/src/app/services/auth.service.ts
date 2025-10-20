@@ -1,6 +1,6 @@
 // apps/mg-frontend/src/app/services/auth.service.ts
 import { Injectable, inject } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, reload, sendEmailVerification, signInWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, reload, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
 import { UserService } from './user.service';
 
 // @todo: introduce an interface for the functions in this service, so that we can implement other authentication providers as well
@@ -43,5 +43,9 @@ export class AuthService {
     }
     await reload(currentUser);
     return currentUser.emailVerified;
+  }
+
+  async sendPasswordReset(email: string) {
+    return await sendPasswordResetEmail(this.auth, email);
   }
 }

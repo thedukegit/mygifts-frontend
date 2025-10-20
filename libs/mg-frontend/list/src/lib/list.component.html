@@ -52,7 +52,22 @@
             </p>
             }
             <div class="gift-footer">
-              <span class="price">${{ gift.price }}</span>
+              <div class="price-info">
+                <span class="price">${{ gift.price }}</span>
+
+                @if (gift.link) {
+                <a [href]="gift.link" target="_blank" rel="noopener noreferrer" class="gift-link">
+                  <mat-icon>link</mat-icon>
+                  <span>View product</span>
+                </a>
+                }
+
+                <span class="quantity">
+                  <mat-icon>numbers</mat-icon>
+                  <span>{{ gift.quantity }} wanted</span>
+                </span>
+
+              </div>
               <div class="action-buttons">
                 @if (currentFriendId) {
                 <button (click)="togglePurchased(gift)"
@@ -107,7 +122,22 @@
           </p>
           }
           <div class="gift-footer">
-            <span class="price">${{ gift.price }}</span>
+            <div class="price-info">
+              <span class="price">${{ gift.price }}</span>
+
+              @if (gift.link) {
+              <a [href]="gift.link" target="_blank" rel="noopener noreferrer" class="gift-link">
+                <mat-icon>link</mat-icon>
+                <span>View product</span>
+              </a>
+              }
+
+              <span class="quantity">
+                <mat-icon>numbers</mat-icon>
+                <span>{{ gift.quantity }} wanted</span>
+              </span>
+
+            </div>
             <div class="action-buttons">
               @if (currentFriendId) {
               <button (click)="togglePurchased(gift)"

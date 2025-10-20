@@ -8,23 +8,39 @@
     background-color: #ffffff;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     border-radius: 0 0 0 0;
+    transition: width 0.3s ease-in-out;
+
+    &.collapsed {
+        width: 64px;
+    }
 }
 
 .sidenav-header {
     padding: 16px;
     background-color: #3f51b5;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 56px;
 
-    .app-title {
-        margin: 0;
-        font-size: 1.5rem;
-        font-weight: 500;
+    .logo-full {
+        height: 40px;
+        width: auto;
+    }
+
+    .logo-icon {
+        height: 32px;
+        width: 32px;
     }
 }
 
 .nav-item {
     margin: 8px 0;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.04);
@@ -33,6 +49,20 @@
     &.active {
         background-color: #e8eaf6;
         color: #3f51b5;
+    }
+
+    mat-icon {
+        margin-right: 16px;
+    }
+}
+
+.collapsed .nav-item {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+
+    mat-icon {
+        margin-right: 0;
     }
 }
 
@@ -83,6 +113,12 @@
 
 .sidenav-content {
     padding: 24px;
+    margin-left: 250px !important;
+    transition: margin-left 0.3s ease-in-out;
+
+    &.expanded {
+        margin-left: 64px !important;
+    }
 }
 
 .content-wrapper {

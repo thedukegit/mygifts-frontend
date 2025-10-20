@@ -32,6 +32,7 @@ import { UserService } from '../../services/user.service';
 export class ShellComponent {
   title = 'mg-frontend';
   currentPageTitle = 'Dashboard';
+  sidenavExpanded = true;
   readonly authService = inject(AuthService);
   readonly userService = inject(UserService);
   private readonly router = inject(Router);
@@ -49,6 +50,10 @@ export class ShellComponent {
     let deepest = this.route.firstChild;
     const titleFromRoute = deepest?.snapshot.data?.['title'];
     this.currentPageTitle = titleFromRoute ?? 'Dashboard';
+  }
+
+  toggleSidenav() {
+    this.sidenavExpanded = !this.sidenavExpanded;
   }
 
   async onLogout() {
