@@ -1,12 +1,10 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>Your Profile</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        @if (userDoc$ | async; as userDoc) {
-        <p><strong>First Name:</strong> {{ userDoc?.firstName }}</p>
-        <p><strong>Last Name:</strong> {{ userDoc?.lastName }}</p>
-        <p><strong>Email:</strong> {{ userDoc?.email }}</p>
-        }
-    </mat-card-content>
-</mat-card>
+<div class="rounded-xl border border-border bg-card p-6 shadow-sm">
+    <h2 class="text-xl font-semibold mb-4">Your Profile</h2>
+    @if (userDoc$ | async; as userDoc) {
+    <div class="space-y-2">
+        <p><span class="text-muted">First Name:</span> {{ userDoc?.firstName }}</p>
+        <p><span class="text-muted">Last Name:</span> {{ userDoc?.lastName }}</p>
+        <p><span class="text-muted">Email:</span> {{ userDoc?.email }}</p>
+    </div>
+    }
+</div>

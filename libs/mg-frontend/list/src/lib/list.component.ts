@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -31,6 +31,7 @@ import { Gift } from './gift.interface';
   ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ListComponent implements OnInit {
   protected viewMode: 'list' | 'grid' = 'grid';

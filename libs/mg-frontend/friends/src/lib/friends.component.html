@@ -1,17 +1,17 @@
 <div class="friends-container">
   <div class="view-controls">
-    <button (click)="openAddFriendDialog()" class="add-friend-fab" color="primary" mat-fab matTooltip="Add new friend">
-      <mat-icon>add</mat-icon>
+    <button (click)="openAddFriendDialog()" class="add-friend-fab" [attr.title]="'Add new friend'">
+      <iconify-icon icon="heroicons:plus"></iconify-icon>
     </button>
   </div>
 
   @if (friends.length === 0) {
   <div class="empty-state">
-    <mat-icon class="empty-icon">group</mat-icon>
+    <iconify-icon icon="heroicons:user-group" class="empty-icon"></iconify-icon>
     <h2>No Friends Yet</h2>
     <p>Want to see your friends lists, add them here by the email address associated with their account!</p>
     <button mat-raised-button color="primary" (click)="openAddFriendDialog()" class="cta-button">
-      <mat-icon>person_add</mat-icon>
+      <iconify-icon icon="heroicons:user-plus"></iconify-icon>
       Add Your First Friend
     </button>
   </div>

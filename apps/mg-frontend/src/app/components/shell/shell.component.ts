@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
@@ -17,15 +11,9 @@ import { UserService } from '../../services/user.service';
   standalone: true,
   imports: [
     RouterModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatMenuModule,
-    
     CommonModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
 })
@@ -33,6 +21,7 @@ export class ShellComponent {
   title = 'mg-frontend';
   currentPageTitle = 'Dashboard';
   sidenavExpanded = true;
+  menuOpen = false;
   readonly authService = inject(AuthService);
   readonly userService = inject(UserService);
   private readonly router = inject(Router);
@@ -54,6 +43,10 @@ export class ShellComponent {
 
   toggleSidenav() {
     this.sidenavExpanded = !this.sidenavExpanded;
+  }
+
+  toggleUserMenu(): void {
+    this.menuOpen = !this.menuOpen;
   }
 
   async onLogout() {

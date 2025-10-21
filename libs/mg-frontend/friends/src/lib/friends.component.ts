@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -25,6 +25,7 @@ import { Friend } from './friend.interface';
   ],
   templateUrl: './friends.component.html',
   styleUrl: './friends.component.scss',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class FriendsComponent implements OnInit {
   private readonly friendRepository: FriendRepository =

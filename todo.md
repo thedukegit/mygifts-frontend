@@ -13,6 +13,7 @@
 - [x] show link in gift card
 - [x] fix menu alignment
 - [ ] some general visual improvements
+- [ ] implement tailwind css instead of angular material, to make the website look much more professional
 - [ ] Implement user agreement, when creating an account
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
@@ -22,6 +23,6 @@
 - [ ] Implement a drag and drop functionality for a users own list to order the gifts. The higher the gift, the more user wants it
 - [ ] On the homepage show a summary of changes that happened on friends lists in the past 30 days, so that user can quickly see updates on friends lists. Make the updates link to the respective list
 - [ ] on the friends page show the amount of gifts the friend has
-- [ ] implement tailwind css instead of angular material, to make the website look much more professional
+
 - [ ] on the profile page, make firstname and lastname editable
 - [ ] implement translations
