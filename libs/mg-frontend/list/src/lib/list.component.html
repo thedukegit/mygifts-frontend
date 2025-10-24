@@ -1,9 +1,9 @@
-<div class="gifts-container">
+<div class="page-container">
   <div class="view-controls">
-    <h2 class="list-title">{{ displayName }}</h2>
+    <h2 class="page-title">{{ displayName }}</h2>
     <button (click)="toggleViewMode()" class="icon-btn"
       [attr.title]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'">
-      <iconify-icon [icon]="viewMode === 'grid' ? 'heroicons:view-list' : 'heroicons:squares-2x2'"
+      <iconify-icon [icon]="viewMode === 'grid' ? 'heroicons:list-bullet' : 'heroicons:squares-2x2'"
         class="text-lg"></iconify-icon>
     </button>
   </div>

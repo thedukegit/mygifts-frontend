@@ -165,11 +165,10 @@ export class ListComponent implements OnInit {
         // Load friend's name
         const friendDoc = await getDoc(doc(this.firestore, 'users', this.currentFriendId));
         const friendData = friendDoc.data() as any;
-        let friendName = 'Friend';
+        this.displayName = 'Friend';
         if (friendData) {
-          friendName = `${friendData.firstName} ${friendData.lastName}`;
+          this.displayName = `${friendData.firstName} ${friendData.lastName}`;
         } 
-        this.displayName = `${friendName}'s list`;
       } else {
         this.displayName = 'My List';
       }
