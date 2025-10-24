@@ -17,17 +17,17 @@ import { ToastService } from '../services/toast.service';
                  'border-red-600': t.type === 'error',
                  'border-primary': t.type === 'info'
                }">
-            <div class="flex items-start gap-2">
-              <div class="mt-0.5" [ngClass]="{
+            <div class="flex items-center gap-2">
+              <div class="flex-shrink-0" [ngClass]="{
                  'text-green-600': t.type === 'success',
                  'text-red-600': t.type === 'error',
                  'text-primary': t.type === 'info'
                }">
-                <iconify-icon [icon]="t.type === 'success' ? 'heroicons:check-circle' : t.type === 'error' ? 'heroicons:exclamation-triangle' : 'heroicons:information-circle'" class="text-lg"></iconify-icon>
+                <iconify-icon [icon]="t.type === 'success' ? 'heroicons:check-circle' : t.type === 'error' ? 'heroicons:exclamation-triangle' : 'heroicons:information-circle'" class="text-base"></iconify-icon>
               </div>
-              <div class="text-sm">{{ t.message }}</div>
-              <button class="ml-auto icon-btn" (click)="toastService.dismiss(t.id)">
-                <iconify-icon icon="heroicons:x-mark" class="text-lg"></iconify-icon>
+              <div class="flex-1 text-sm">{{ t.message }}</div>
+              <button class="flex-shrink-0 icon-btn" (click)="toastService.dismiss(t.id)">
+                <iconify-icon icon="heroicons:x-mark" class="text-base"></iconify-icon>
               </button>
             </div>
           </div>

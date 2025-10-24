@@ -1,4 +1,4 @@
-<div class="flex min-h-screen">
+<div class="flex h-screen overflow-hidden">
     <!-- Sidebar -->
     <aside class="transition-all duration-300 border-r border-border bg-card" [class.w-64]="sidenavExpanded"
         [class.w-16]="!sidenavExpanded">
@@ -19,8 +19,8 @@
     </aside>
 
     <!-- Main -->
-    <div class="flex-1">
-        <header class="sticky top-0 z-10 border-b border-border bg-bg/80 backdrop-blur">
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <header class="flex-shrink-0 z-10 border-b border-border bg-bg/80 backdrop-blur">
             <div class="flex h-14 items-center justify-between px-3">
                 <div class="flex items-center gap-2">
                     <button type="button" (click)="toggleSidenav()" class="icon-btn">
@@ -48,8 +48,8 @@
             </div>
         </header>
 
-        <main class="p-4">
-            <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
+        <main class="flex-1 overflow-hidden p-4">
+            <div class="h-full rounded-xl border border-border bg-card p-4 shadow-sm overflow-hidden">
                 <router-outlet></router-outlet>
             </div>
         </main>

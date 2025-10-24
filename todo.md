@@ -14,10 +14,12 @@
 - [x] fix menu alignment
 - [x] some general visual improvements
 - [x] implement tailwind css instead of angular material, to make the website look much more professional
+- [x] purchase icon changes to cart icon when clicked, should show an 'unpurchase' icon
+- [x] make header in card sticky and scrollable
+- [ ] implement roles so an admin can see the 'add friends' button when regular users cant
 - [ ] find some nice gift images to use as backgrounds.
 - [ ] use christmas themes images for when its christmas
 - [ ] use sinterklaas themed images for when it is sinterklaas (only for netherlands)
-- [ ] purchase icon changes to cart icon when clicked, should show an 'unpurchase' icon
 - [ ] Implement user agreement, when creating an account
 - [ ] Keep track of how many of a gift have been bought
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
