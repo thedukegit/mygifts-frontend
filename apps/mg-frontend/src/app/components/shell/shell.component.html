@@ -7,17 +7,13 @@
                 src="/logo-icon.svg" alt="MG" class="h-6 w-6"> }
         </div>
         <nav class="p-2">
-            <a routerLink="/" routerLinkActive="active" class="nav-item">
-                <iconify-icon icon="heroicons:home" class="text-lg"></iconify-icon>
-                @if (sidenavExpanded) { <span>Home</span> }
+            <a routerLink="/list" routerLinkActive="active" class="nav-item">
+                <iconify-icon icon="heroicons:queue-list" class="text-lg"></iconify-icon>
+                @if (sidenavExpanded) { <span>My list</span> }
             </a>
             <a routerLink="/friends" routerLinkActive="active" class="nav-item">
                 <iconify-icon icon="heroicons:users" class="text-lg"></iconify-icon>
                 @if (sidenavExpanded) { <span>Friends</span> }
-            </a>
-            <a routerLink="/list" routerLinkActive="active" class="nav-item">
-                <iconify-icon icon="heroicons:queue-list" class="text-lg"></iconify-icon>
-                @if (sidenavExpanded) { <span>List</span> }
             </a>
         </nav>
     </aside>
@@ -30,7 +26,6 @@
                     <button type="button" (click)="toggleSidenav()" class="icon-btn">
                         <iconify-icon icon="heroicons:bars-3" class="text-lg"></iconify-icon>
                     </button>
-                    <span class="page-title">{{ currentPageTitle }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <div class="relative" #userMenuRef>

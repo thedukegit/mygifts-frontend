@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
-import { filter } from 'rxjs';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
@@ -19,28 +18,16 @@ import { UserService } from '../../services/user.service';
 })
 export class ShellComponent {
   title = 'mg-frontend';
-  currentPageTitle = 'Dashboard';
   sidenavExpanded = true;
   menuOpen = false;
   @ViewChild('userMenuRef') userMenuRef?: ElementRef<HTMLElement>;
   readonly authService = inject(AuthService);
   readonly userService = inject(UserService);
   private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
   
   readonly currentUser$ = this.userService.getCurrentUserDoc();
 
-  public constructor() {
-    this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe(() => this.updateTitleFromRoute());
-  }
 
-  private updateTitleFromRoute() {
-    let deepest = this.route.firstChild;
-    const titleFromRoute = deepest?.snapshot.data?.['title'];
-    this.currentPageTitle = titleFromRoute ?? 'Dashboard';
-  }
 
   toggleSidenav() {
     this.sidenavExpanded = !this.sidenavExpanded;
