@@ -1,38 +1,112 @@
 <div class="page-container">
   <div class="view-controls">
     <h2 class="page-title">{{ displayName }}</h2>
-    <button (click)="toggleViewMode()" class="icon-btn"
-      [attr.title]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'">
-      <iconify-icon [icon]="viewMode === 'grid' ? 'heroicons:list-bullet' : 'heroicons:squares-2x2'"
-        class="text-lg"></iconify-icon>
-    </button>
+    <div class="flex gap-2">
+      <button (click)="toggleViewMode()" class="icon-btn"
+        [attr.title]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'">
+        <iconify-icon [icon]="viewMode === 'grid' ? 'heroicons:list-bullet' : 'heroicons:squares-2x2'"
+          class="text-lg"></iconify-icon>
+      </button>@if (!currentFriendId) {
+      <button (click)="openAddGiftDialog()" class="icon-btn" [attr.title]="'Add new gift'">
+        <iconify-icon icon="heroicons:plus" class="text-lg"></iconify-icon>
+      </button>
+      }
+    </div>
   </div>
 
-  @if (gifts.length === 0) {
-  <div class="empty-state">
-    <iconify-icon class="empty-icon" icon="heroicons:gift"></iconify-icon>
-    @if (currentFriendId) {
-    <h2>No Gifts Yet</h2>
-    <p>This friend hasn't added any gifts to their wishlist yet.</p>
+  <div class="content-area">
+    @if (gifts.length === 0) {
+    <div class="empty-state">
+      <iconify-icon class="empty-icon" icon="heroicons:gift"></iconify-icon>
+      @if (currentFriendId) {
+      <h2>No Gifts Yet</h2>
+      <p>This friend hasn't added any gifts to their wishlist yet.</p>
+      } @else {
+      <h2>No Gifts Yet</h2>
+      <p>Start building your wishlist by adding your first gift!</p>
+      <button (click)="openAddGiftDialog()"
+        class="cta-button inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
+        <iconify-icon icon="heroicons:plus-circle"></iconify-icon>
+        Add Your First Gift
+      </button>
+      }
+    </div>
     } @else {
-    <h2>No Gifts Yet</h2>
-    <p>Start building your wishlist by adding your first gift!</p>
-    <button (click)="openAddGiftDialog()"
-      class="cta-button inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
-      <iconify-icon icon="heroicons:plus-circle"></iconify-icon>
-      Add Your First Gift
-    </button>
-    }
-  </div>
-  } @else {
-  @if (viewMode === 'grid') {
-  <div class="grid-container">
-    @for (gift of gifts; track gift.id) {
-    <div class="grid-item">
-      <div class="gift-card rounded-xl border border-border bg-card shadow-sm">
+    @if (viewMode === 'grid') {
+    <div class="grid-container">
+      @for (gift of gifts; track gift.id) {
+      <div class="grid-item">
+        <div class="gift-card rounded-xl border border-border bg-card shadow-sm">
+          @if (currentFriendId && gift.purchased) {
+          <div class="purchased-badge">
+            <iconify-icon icon="heroicons:shopping-bag" class="text-xl"></iconify-icon>
+            <span>Purchased</span>
+          </div>
+          }
+          <div class="card-content">
+            <div class="image-container">
+              <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
+            </div>
+            <div class="gift-details">
+              <div class="gift-header">
+                <h3 class="gift-name">{{ gift.name }}</h3>
+              </div>
+              <p class="gift-description">{{ gift.description }}</p>
+              @if (currentFriendId && gift.purchased && gift.purchasedByName) {
+              <p class="purchased-info">
+                Purchased by {{ gift.purchasedByName }}
+                @if (gift.purchasedAt) {
+                <span class="purchased-date"> on {{ gift.purchasedAt | date:'mediumDate' }}</span>
+                }
+              </p>
+              }
+              <div class="gift-footer">
+                <div class="price-info">
+                  <span class="price">${{ gift.price }}</span>
+
+                  @if (gift.link) {
+                  <a [href]="gift.link" target="_blank" rel="noopener noreferrer" class="gift-link">
+                    <iconify-icon icon="heroicons:link" class="text-base"></iconify-icon>
+                    <span>View product</span>
+                  </a>
+                  }
+
+                  <span class="quantity">
+                    <iconify-icon icon="heroicons:hashtag" class="text-base"></iconify-icon>
+                    <span>{{ gift.quantity }} wanted</span>
+                  </span>
+
+                </div>
+                <div class="action-buttons">
+                  @if (currentFriendId) {
+                  <button (click)="togglePurchased(gift)" [disabled]="!canTogglePurchase(gift)"
+                    class="icon-btn cart-button" [ngClass]="{'purchased-state': gift.purchased}"
+                    [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'">
+                    <iconify-icon icon="heroicons:shopping-bag" class="text-lg"></iconify-icon>
+                  </button>
+                  } @else {
+                  <button (click)="openEditGiftDialog(gift)" class="icon-btn edit-button" title="Edit gift">
+                    <iconify-icon icon="heroicons:pencil-square" class="text-lg"></iconify-icon>
+                  </button>
+                  <button (click)="deleteGift(gift.id)" class="icon-btn delete-button" title="Delete gift">
+                    <iconify-icon icon="heroicons:trash" class="text-lg"></iconify-icon>
+                  </button>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <div class="list-container">
+      @for (gift of gifts; track gift.id) {
+      <div class="gift-card list-item rounded-xl border border-border bg-card shadow-sm">
         @if (currentFriendId && gift.purchased) {
         <div class="purchased-badge">
-          <iconify-icon icon="heroicons:shopping-cart" class="text-xl"></iconify-icon>
+          <iconify-icon icon="heroicons:shopping-bag" class="text-xl"></iconify-icon>
           <span>Purchased</span>
         </div>
         }
@@ -73,10 +147,9 @@
               <div class="action-buttons">
                 @if (currentFriendId) {
                 <button (click)="togglePurchased(gift)" [disabled]="!canTogglePurchase(gift)"
-                  class="icon-btn cart-button"
+                  class="icon-btn cart-button" [ngClass]="{'purchased-state': gift.purchased}"
                   [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'">
-                  <iconify-icon [icon]="gift.purchased ? 'heroicons:shopping-cart' : 'heroicons:shopping-bag'"
-                    class="text-lg"></iconify-icon>
+                  <iconify-icon icon="heroicons:shopping-bag" class="text-lg"></iconify-icon>
                 </button>
                 } @else {
                 <button (click)="openEditGiftDialog(gift)" class="icon-btn edit-button" title="Edit gift">
@@ -91,81 +164,9 @@
           </div>
         </div>
       </div>
-    </div>
-    }
-  </div>
-  } @else {
-  <div class="list-container">
-    @for (gift of gifts; track gift.id) {
-    <div class="gift-card list-item rounded-xl border border-border bg-card shadow-sm">
-      @if (currentFriendId && gift.purchased) {
-      <div class="purchased-badge">
-        <iconify-icon icon="heroicons:shopping-cart" class="text-xl"></iconify-icon>
-        <span>Purchased</span>
-      </div>
       }
-      <div class="card-content">
-        <div class="image-container">
-          <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
-        </div>
-        <div class="gift-details">
-          <div class="gift-header">
-            <h3 class="gift-name">{{ gift.name }}</h3>
-          </div>
-          <p class="gift-description">{{ gift.description }}</p>
-          @if (currentFriendId && gift.purchased && gift.purchasedByName) {
-          <p class="purchased-info">
-            Purchased by {{ gift.purchasedByName }}
-            @if (gift.purchasedAt) {
-            <span class="purchased-date"> on {{ gift.purchasedAt | date:'mediumDate' }}</span>
-            }
-          </p>
-          }
-          <div class="gift-footer">
-            <div class="price-info">
-              <span class="price">${{ gift.price }}</span>
-
-              @if (gift.link) {
-              <a [href]="gift.link" target="_blank" rel="noopener noreferrer" class="gift-link">
-                <iconify-icon icon="heroicons:link" class="text-base"></iconify-icon>
-                <span>View product</span>
-              </a>
-              }
-
-              <span class="quantity">
-                <iconify-icon icon="heroicons:hashtag" class="text-base"></iconify-icon>
-                <span>{{ gift.quantity }} wanted</span>
-              </span>
-
-            </div>
-            <div class="action-buttons">
-              @if (currentFriendId) {
-              <button (click)="togglePurchased(gift)" [disabled]="!canTogglePurchase(gift)" class="icon-btn cart-button"
-                [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'">
-                <iconify-icon [icon]="gift.purchased ? 'heroicons:shopping-cart' : 'heroicons:shopping-bag'"
-                  class="text-lg"></iconify-icon>
-              </button>
-              } @else {
-              <button (click)="openEditGiftDialog(gift)" class="icon-btn edit-button" title="Edit gift">
-                <iconify-icon icon="heroicons:pencil-square" class="text-lg"></iconify-icon>
-              </button>
-              <button (click)="deleteGift(gift.id)" class="icon-btn delete-button" title="Delete gift">
-                <iconify-icon icon="heroicons:trash" class="text-lg"></iconify-icon>
-              </button>
-              }
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
     }
+    }
   </div>
-  }
-  }
-
-  @if (!currentFriendId) {
-  <button (click)="openAddGiftDialog()" class="add-gift-fab icon-btn" [attr.title]="'Add new gift'">
-    <iconify-icon icon="heroicons:plus" class="text-lg"></iconify-icon>
-  </button>
-  }
 </div>

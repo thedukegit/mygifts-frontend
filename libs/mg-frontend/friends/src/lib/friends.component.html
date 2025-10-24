@@ -6,39 +6,41 @@
     </button>
   </div>
 
-  @if (friends.length === 0) {
-  <div class="empty-state">
-    <iconify-icon icon="heroicons:user-group" class="empty-icon"></iconify-icon>
-    <h2>No Friends Yet</h2>
-    <p>Want to see your friends lists, add them here by the email address associated with their account!</p>
-    <button (click)="openAddFriendDialog()"
-      class="cta-button inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
-      <iconify-icon icon="heroicons:user-plus"></iconify-icon>
-      Add Your First Friend
-    </button>
-  </div>
-  } @else {
-  <div class="flex flex-col gap-3">
-    @for (friend of friends; track friend.id) {
-    <div class="rounded-xl border border-border bg-card p-4 shadow-sm flex items-center justify-between">
-      <div class="flex items-center gap-3 min-w-0">
-        <div class="h-9 w-9 rounded-full bg-bg border border-border flex items-center justify-center">
-          <iconify-icon icon="heroicons:user" class="text-base"></iconify-icon>
+  <div class="content-area">
+    @if (friends.length === 0) {
+    <div class="empty-state">
+      <iconify-icon icon="heroicons:user-group" class="empty-icon"></iconify-icon>
+      <h2>No Friends Yet</h2>
+      <p>Want to see your friends lists, add them here by the email address associated with their account!</p>
+      <button (click)="openAddFriendDialog()"
+        class="cta-button inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
+        <iconify-icon icon="heroicons:user-plus"></iconify-icon>
+        Add Your First Friend
+      </button>
+    </div>
+    } @else {
+    <div class="flex flex-col gap-3">
+      @for (friend of friends; track friend.id) {
+      <div class="rounded-xl border border-border bg-card p-4 shadow-sm flex items-center justify-between">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="h-9 w-9 rounded-full bg-bg border border-border flex items-center justify-center">
+            <iconify-icon icon="heroicons:user" class="text-base"></iconify-icon>
+          </div>
+          <div class="truncate">
+            <p class="font-medium truncate">{{ friend.name }}</p>
+          </div>
         </div>
-        <div class="truncate">
-          <p class="font-medium truncate">{{ friend.name }}</p>
+        <div class="flex items-center gap-2">
+          <button class="icon-btn" (click)="viewGifts(friend)" title="View gifts">
+            <iconify-icon icon="heroicons:gift" class="text-lg"></iconify-icon>
+          </button>
+          <button class="icon-btn" (click)="deleteFriend(friend)" title="Remove friend">
+            <iconify-icon icon="heroicons:trash" class="text-lg"></iconify-icon>
+          </button>
         </div>
       </div>
-      <div class="flex items-center gap-2">
-        <button class="icon-btn" (click)="viewGifts(friend)" title="View gifts">
-          <iconify-icon icon="heroicons:gift" class="text-lg"></iconify-icon>
-        </button>
-        <button class="icon-btn" (click)="deleteFriend(friend)" title="Remove friend">
-          <iconify-icon icon="heroicons:trash" class="text-lg"></iconify-icon>
-        </button>
-      </div>
+      }
     </div>
     }
   </div>
-  }
 </div>
