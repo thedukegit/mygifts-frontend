@@ -1,8 +1,19 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>Settings</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>🚧 Under construction. Check back soon.</p>
-    </mat-card-content>
-</mat-card>
+<div class="max-w-2xl">
+    <h1 class="text-xl font-semibold mb-6">Settings</h1>
+
+    <div class="mb-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="font-medium mb-1">Theme</p>
+                <p class="text-sm text-muted">Toggle between light and dark theme</p>
+            </div>
+            <button type="button" (click)="toggleTheme()"
+                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                [class.bg-primary]="isDark" [class.bg-gray-300]="!isDark" role="switch" [attr.aria-checked]="isDark">
+                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+                    [class.translate-x-6]="isDark" [class.translate-x-1]="!isDark">
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

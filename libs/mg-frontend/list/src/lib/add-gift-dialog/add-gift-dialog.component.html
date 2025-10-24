@@ -1,41 +1,58 @@
-<h2 mat-dialog-title>{{ dialogTitle }}</h2>
-<form (ngSubmit)="onSubmit()" [formGroup]="giftForm">
-  <div mat-dialog-content>
-    <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input formControlName="name" matInput required />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <textarea formControlName="description" matInput required></textarea>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Price</mat-label>
-      <input formControlName="price" matInput required type="number" />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Quantity</mat-label>
-      <input formControlName="quantity" matInput required type="number" min="1" />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Image URL</mat-label>
-      <input formControlName="imageUrl" matInput />
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>Link (optional)</mat-label>
-      <input formControlName="link" matInput />
-    </mat-form-field>
-  </div>
-
-  <div align="end" mat-dialog-actions>
-    <button (click)="onCancel()" mat-button>Cancel</button>
-    <button [disabled]="!giftForm.valid" color="primary" mat-raised-button type="submit">
-      {{ submitButtonText }}
+<div class="w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-lg">
+  <div class="mb-4 flex items-center justify-between">
+    <h2 class="text-xl font-semibold">{{ dialogTitle }}</h2>
+    <button type="button" (click)="onCancel()" aria-label="Close"
+      class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-bg hover:bg-card">
+      <iconify-icon icon="heroicons:x-mark" class="text-lg"></iconify-icon>
     </button>
   </div>
-</form>
+  <form (ngSubmit)="onSubmit()" [formGroup]="giftForm" class="space-y-3">
+    <div>
+      <label class="block text-sm font-medium mb-1" for="name">Name</label>
+      <input id="name" formControlName="name" required type="text"
+        class="block w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1" for="description">Description</label>
+      <textarea id="description" formControlName="description" required rows="3"
+        class="block w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary"></textarea>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label class="block text-sm font-medium mb-1" for="price">Price</label>
+        <input id="price" formControlName="price" required type="number" step="0.01" min="0"
+          class="block w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1" for="quantity">Quantity</label>
+        <input id="quantity" formControlName="quantity" required type="number" min="1"
+          class="block w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1" for="imageUrl">Image URL</label>
+      <input id="imageUrl" formControlName="imageUrl" type="url"
+        class="block w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium mb-1" for="link">Product Link (optional)</label>
+      <input id="link" formControlName="link" type="url"
+        class="block w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+    </div>
+
+    <div class="flex justify-end gap-2 pt-2">
+      <button type="button" (click)="onCancel()"
+        class="inline-flex items-center rounded-lg border border-border bg-bg px-4 py-2 text-sm font-medium transition hover:bg-card">
+        Cancel
+      </button>
+      <button type="submit" [disabled]="!giftForm.valid"
+        class="inline-flex items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/90 disabled:opacity-60">
+        {{ submitButtonText }}
+      </button>
+    </div>
+  </form>
+</div>

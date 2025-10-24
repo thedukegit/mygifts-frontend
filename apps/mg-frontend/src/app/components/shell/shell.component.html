@@ -1,69 +1,57 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="side" opened [class.collapsed]="!sidenavExpanded" class="sidenav">
-        <div class="sidenav-header">
-            @if (sidenavExpanded) {
-            <img src="/logo-full.svg" alt="MyGifts" class="logo-full">
-            } @else {
-            <img src="/logo-icon.svg" alt="MG" class="logo-icon">
-            }
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="transition-all duration-300 border-r border-border bg-card" [class.w-64]="sidenavExpanded"
+        [class.w-16]="!sidenavExpanded">
+        <div class="flex h-14 items-center justify-center border-b border-border">
+            @if (sidenavExpanded) { <img src="/logo-full.svg" alt="MyGifts" class="h-6"> } @else { <img
+                src="/logo-icon.svg" alt="MG" class="h-6 w-6"> }
         </div>
-        <mat-divider></mat-divider>
-        <mat-nav-list>
-            <a mat-list-item routerLink="/" class="nav-item">
-                <mat-icon matListItemIcon>home</mat-icon>
-                @if (sidenavExpanded) {
-                <span matListItemTitle>Home</span>
-                }
+        <nav class="p-2">
+            <a routerLink="/list" routerLinkActive="active" class="nav-item">
+                <iconify-icon icon="heroicons:queue-list" class="text-lg"></iconify-icon>
+                @if (sidenavExpanded) { <span>My list</span> }
             </a>
-            <a mat-list-item routerLink="/friends" class="nav-item">
-                <mat-icon matListItemIcon>people</mat-icon>
-                @if (sidenavExpanded) {
-                <span matListItemTitle>Friends</span>
-                }
+            <a routerLink="/friends" routerLinkActive="active" class="nav-item">
+                <iconify-icon icon="heroicons:users" class="text-lg"></iconify-icon>
+                @if (sidenavExpanded) { <span>Friends</span> }
             </a>
-            <a mat-list-item routerLink="/list" class="nav-item">
-                <mat-icon matListItemIcon>list</mat-icon>
-                @if (sidenavExpanded) {
-                <span matListItemTitle>List</span>
-                }
-            </a>
-        </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content class="sidenav-content" [class.expanded]="!sidenavExpanded">
-        <div class="top-bar">
-            <div class="left-section">
-                <button mat-icon-button (click)="toggleSidenav()">
-                    <mat-icon>menu</mat-icon>
-                </button>
-                <span class="page-title">{{ currentPageTitle }}</span>
-            </div>
-            <div class="right-section">
-                <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-trigger">
-                    @if (currentUser$ | async; as user) {
-                    <span class="user-name">{{ user.firstName }}</span>
-                    }
-                    <mat-icon>account_circle</mat-icon>
-                </button>
-            </div>
-        </div>
-        <mat-menu #userMenu="matMenu">
-            <button mat-menu-item [routerLink]="'/profile'">
-                <mat-icon>person</mat-icon>
-                <span>Profile</span>
-            </button>
-            <button mat-menu-item [routerLink]="'/settings'">
-                <mat-icon>settings</mat-icon>
-                <span>Settings</span>
-            </button>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="onLogout()">
-                <mat-icon>logout</mat-icon>
-                <span>Logout</span>
-            </button>
-        </mat-menu>
+        </nav>
+    </aside>
 
-        <div class="content-wrapper">
-            <router-outlet></router-outlet>
-        </div>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+    <!-- Main -->
+    <div class="flex-1">
+        <header class="sticky top-0 z-10 border-b border-border bg-bg/80 backdrop-blur">
+            <div class="flex h-14 items-center justify-between px-3">
+                <div class="flex items-center gap-2">
+                    <button type="button" (click)="toggleSidenav()" class="icon-btn">
+                        <iconify-icon icon="heroicons:bars-3" class="text-lg"></iconify-icon>
+                    </button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="relative" #userMenuRef>
+                        <button type="button" class="user-btn" (click)="toggleUserMenu()">
+                            @if (currentUser$ | async; as user) { <span class="user-name">{{ user.firstName }}</span> }
+                            <iconify-icon icon="heroicons:user-circle" class="text-lg"></iconify-icon>
+                        </button>
+                        @if (menuOpen) {
+                        <div class="menu" (click)="$event.stopPropagation()">
+                            <div class="menu-items">
+                                <a routerLink="/profile" class="menu-item">Profile</a>
+                                <a routerLink="/settings" class="menu-item">Settings</a>
+                                <hr class="my-1 border-border" />
+                                <button (click)="onLogout()" class="menu-item w-full text-left">Logout</button>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="p-4">
+            <div class="rounded-xl border border-border bg-card p-4 shadow-sm">
+                <router-outlet></router-outlet>
+            </div>
+        </main>
+    </div>
+</div>

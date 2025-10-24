@@ -1,4 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* Theme tokens (light by default) */
+:root {
+  --color-bg: 255 255 255;
+  /* white */
+  --color-fg: 17 24 39;
+  /* gray-900 */
+  --color-muted: 107 114 128;
+  /* gray-500 */
+  --color-primary: 59 130 246;
+  /* blue-500 */
+  --color-card: 249 250 251;
+  /* gray-50 */
+  --color-border: 229 231 235;
+  /* gray-200 */
+}
+
+/* Dark theme overrides */
+.dark {
+  --color-bg: 17 24 39;
+  /* gray-900 */
+  --color-fg: 243 244 246;
+  /* gray-100 */
+  --color-muted: 156 163 175;
+  /* gray-400 */
+  --color-primary: 96 165 250;
+  /* blue-400 */
+  --color-card: 31 41 55;
+  /* gray-800 */
+  --color-border: 55 65 81;
+  /* gray-700 */
+}
+
+/* Base page colors using Tailwind tokens */
+body {
+  @apply bg-bg text-fg;
+}
+
+/* Remove default list styling */
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+div {
+  list-style: none;
+}
+
+/* Global button styles */
+.icon-btn {
+  @apply inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-bg hover:bg-card transition-colors;
+}
+
+/* Ensure iconify icons render properly */
+iconify-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+/* Global page layout styles */
+.page-container {
+  padding: 1rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(var(--color-fg));
+}
+
+.view-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+
+  .icon-btn {
+    flex-shrink: 0;
+  }
+}

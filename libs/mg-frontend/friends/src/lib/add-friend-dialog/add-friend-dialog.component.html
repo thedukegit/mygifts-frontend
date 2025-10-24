@@ -1,16 +1,23 @@
-<h2 mat-dialog-title>Add New Friend</h2>
-<form (ngSubmit)="onSubmit()" [formGroup]="friendForm">
-    <div mat-dialog-content>
-        <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input formControlName="email" matInput required type="email" />
-        </mat-form-field>
-    </div>
-
-    <div align="end" mat-dialog-actions>
-        <button (click)="onCancel()" mat-button>Cancel</button>
-        <button [disabled]="!friendForm.valid" color="primary" mat-raised-button type="submit">
-            Add Friend
+<div class="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-lg">
+    <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-xl font-semibold">Add New Friend</h2>
+        <button type="button" (click)="onCancel()" aria-label="Close"
+            class="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-bg hover:bg-card">
+            <iconify-icon icon="heroicons:x-mark" class="text-lg"></iconify-icon>
         </button>
     </div>
-</form>
+    <form (ngSubmit)="onSubmit()" [formGroup]="friendForm" class="space-y-3">
+        <div>
+            <label class="block text-sm font-medium mb-1" for="email">Friend's Email</label>
+            <input id="email" formControlName="email" required type="email"
+                class="block w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+            <button type="button" (click)="onCancel()"
+                class="inline-flex items-center rounded-lg border border-border bg-bg px-4 py-2 text-sm font-medium transition hover:bg-card">Cancel</button>
+            <button type="submit" [disabled]="!friendForm.valid"
+                class="inline-flex items-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/90 disabled:opacity-60">Add
+                Friend</button>
+        </div>
+    </form>
+</div>

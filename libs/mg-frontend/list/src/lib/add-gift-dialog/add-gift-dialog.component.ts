@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { ModalService } from '@mg-frontend/ui';
 import { Gift } from '../gift.interface';
 
 export interface GiftDialogData {
@@ -22,35 +19,31 @@ export interface GiftDialogData {
   standalone: true,
   imports: [
     CommonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
     ReactiveFormsModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './add-gift-dialog.component.html',
   styleUrls: ['./add-gift-dialog.component.scss'],
 })
-export class AddGiftDialogComponent {
-  giftForm: FormGroup;
-  mode: 'add' | 'edit';
-  giftId?: string;
+export class AddGiftDialogComponent implements OnInit {
+  private readonly modalService = inject(ModalService);
+  private readonly fb = inject(FormBuilder);
+  
+  giftForm!: FormGroup;
+  @Input() mode: 'add' | 'edit' = 'add';
+  @Input() gift?: Gift;
+  private giftId?: string;
 
-  constructor(
-    private dialogRef: MatDialogRef<AddGiftDialogComponent>,
-    private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data?: GiftDialogData
-  ) {
-    this.mode = data?.mode || 'add';
-    this.giftId = data?.gift?.id;
-
+  ngOnInit(): void {
+    const initial = this.gift || ({} as Gift);
+    this.giftId = (initial as any).id;
     this.giftForm = this.fb.group({
-      name: [data?.gift?.name || '', Validators.required],
-      description: [data?.gift?.description || '', Validators.required],
-      price: [data?.gift?.price || '', [Validators.required, Validators.min(0)]],
-      quantity: [data?.gift?.quantity || 1, [Validators.required, Validators.min(1)]],
-      imageUrl: [data?.gift?.imageUrl || ''],
-      link: [data?.gift?.link || ''],
+      name: [initial?.name || '', Validators.required],
+      description: [initial?.description || '', Validators.required],
+      price: [initial?.price || '', [Validators.required, Validators.min(0)]],
+      quantity: [initial?.quantity || 1, [Validators.required, Validators.min(1)]],
+      imageUrl: [initial?.imageUrl || ''],
+      link: [initial?.link || ''],
     });
   }
 
@@ -68,11 +61,11 @@ export class AddGiftDialogComponent {
       const result = this.mode === 'edit' 
         ? { ...giftData, id: this.giftId }
         : giftData;
-      this.dialogRef.close(result);
+      this.modalService.close(result);
     }
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.modalService.cancel();
   }
 }

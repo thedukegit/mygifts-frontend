@@ -1,12 +1,4 @@
-.friends-container {
-  padding: 1rem;
-}
-
-.view-controls {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
-}
+// page-container and view-controls styles are now global in styles.scss
 
 .friends-list {
   display: flex;
@@ -44,7 +36,8 @@
     font-size: 120px;
     width: 120px;
     height: 120px;
-    color: #bdbdbd;
+    color: rgb(var(--color-muted));
+    opacity: 0.5;
     margin-bottom: 1.5rem;
   }
 
@@ -52,20 +45,20 @@
     margin: 0 0 1rem 0;
     font-size: 1.75rem;
     font-weight: 500;
-    color: #424242;
+    color: rgb(var(--color-fg));
   }
 
   p {
     margin: 0.5rem 0;
     font-size: 1rem;
-    color: #757575;
+    color: rgb(var(--color-muted));
     max-width: 400px;
   }
 
   .hint {
     margin-top: 1rem;
     font-size: 0.9rem;
-    color: #9e9e9e;
+    color: rgb(var(--color-muted));
     font-style: italic;
   }
 
@@ -74,9 +67,5 @@
     padding: 0.5rem 2rem;
     font-size: 1rem;
     font-weight: 500;
-
-    mat-icon {
-      margin-right: 0.5rem;
-    }
   }
 }

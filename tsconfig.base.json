@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@mg-frontend/friends": ["libs/mg-frontend/friends/src/index.ts"],
-      "@mg-frontend/list": ["libs/mg-frontend/list/src/index.ts"]
+      "@mg-frontend/list": ["libs/mg-frontend/list/src/index.ts"],
+      "@mg-frontend/ui": ["libs/mg-frontend/shared/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

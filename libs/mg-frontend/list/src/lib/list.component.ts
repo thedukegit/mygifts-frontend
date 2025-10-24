@@ -1,16 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
+import { ModalService, ToastService } from '@mg-frontend/ui';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { GiftRepository } from './gift-repository.interface';
@@ -20,24 +13,17 @@ import { Gift } from './gift.interface';
 @Component({
   selector: 'mg-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatGridListModule,
-    MatTooltipModule,
-    MatBadgeModule,
-  ],
+  imports: [CommonModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ListComponent implements OnInit {
   protected viewMode: 'list' | 'grid' = 'grid';
   private readonly giftRepository: GiftRepository =
     inject<GiftRepository>(GIFT_REPOSITORY);
-  private readonly dialog: MatDialog = inject(MatDialog);
-  private readonly snackBar: MatSnackBar = inject(MatSnackBar);
+  private readonly modal = inject(ModalService);
+  private readonly toast: ToastService = inject(ToastService);
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly auth: Auth = inject(Auth);
   private readonly firestore: Firestore = inject(Firestore);
@@ -62,56 +48,41 @@ export class ListComponent implements OnInit {
     this.viewMode = this.viewMode === 'list' ? 'grid' : 'list';
   }
 
-  openAddGiftDialog(): void {
-    const dialogRef: MatDialogRef<AddGiftDialogComponent> = this.dialog.open(
-      AddGiftDialogComponent,
-      {
-        width: '500px',
-        data: { mode: 'add' }
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(async (result: Gift | undefined) => {
-      if (result) {
-        await this.giftRepository.add(result);
-        this._gifts = await this.giftRepository.getAll();
-      }
-    });
+  async openAddGiftDialog(): Promise<void> {
+    const result = await this.modal.open<Gift>(AddGiftDialogComponent, { mode: 'add' });
+    if (result) {
+      await this.giftRepository.add(result);
+      this._gifts = await this.giftRepository.getAll();
+    }
   }
 
-  openEditGiftDialog(gift: Gift): void {
-    const dialogRef: MatDialogRef<AddGiftDialogComponent> = this.dialog.open(
-      AddGiftDialogComponent,
-      {
-        width: '500px',
-        data: { gift, mode: 'edit' }
-      }
-    );
-
-    dialogRef.afterClosed().subscribe(async (result: Gift | undefined) => {
-      if (result && result.id) {
-        await this.giftRepository.update(result.id, result);
-        this._gifts = await this.giftRepository.getAll();
-        this.snackBar.open('Gift updated successfully!', 'Close', { duration: 3000 });
-      }
+  async openEditGiftDialog(gift: Gift): Promise<void> {
+    const result = await this.modal.open<Gift & { id: string }>(AddGiftDialogComponent, { 
+      mode: 'edit', 
+      gift 
     });
+    if (result && result.id) {
+      await this.giftRepository.update(result.id, result);
+      this._gifts = await this.giftRepository.getAll();
+      this.toast.show('Gift updated successfully!', 'success');
+    }
   }
 
   async togglePurchased(gift: Gift): Promise<void> {
     if (!this.currentFriendId) {
-      this.snackBar.open('You cannot mark your own gifts as purchased.', 'Close', { duration: 3000 });
+      this.toast.show('You cannot mark your own gifts as purchased.', 'error');
       return;
     }
 
     const currentUser = this.auth.currentUser;
     if (!currentUser) {
-      this.snackBar.open('You must be logged in to mark gifts as purchased.', 'Close', { duration: 3000 });
+      this.toast.show('You must be logged in to mark gifts as purchased.', 'error');
       return;
     }
 
     // If gift is already purchased, only the person who purchased it can unmark it
     if (gift.purchased && gift.purchasedBy !== currentUser.uid) {
-      this.snackBar.open('Only the person who marked this gift as purchased can unmark it.', 'Close', { duration: 3000 });
+      this.toast.show('Only the person who marked this gift as purchased can unmark it.', 'error');
       return;
     }
 
@@ -145,9 +116,9 @@ export class ListComponent implements OnInit {
       const message = isPurchased
         ? 'Gift marked as purchased!'
         : 'Gift marked as not purchased.';
-      this.snackBar.open(message, 'Close', { duration: 3000 });
+      this.toast.show(message, 'success');
     } catch (error) {
-      this.snackBar.open('Failed to update gift.', 'Close', { duration: 3000 });
+      this.toast.show('Failed to update gift.', 'error');
     }
   }
 
@@ -166,20 +137,14 @@ export class ListComponent implements OnInit {
 
   async deleteGift(id: string): Promise<void> {
     if (this.currentFriendId) {
-      this.snackBar.open('You cannot delete gifts from another user\'s list.', 'Close', { duration: 3000 });
+      this.toast.show('You cannot delete gifts from another user\'s list.', 'error');
       return;
     }
-    const dialogRef: MatDialogRef<DeleteConfirmationDialogComponent> =
-      this.dialog.open(DeleteConfirmationDialogComponent, {
-        width: '400px',
-      });
-
-    dialogRef.afterClosed().subscribe(async (confirmed: boolean) => {
-      if (confirmed) {
-        await this.giftRepository.delete(id);
-        this._gifts = await this.giftRepository.getAll();
-      }
-    });
+    const confirmed = await this.modal.open<boolean>(DeleteConfirmationDialogComponent);
+    if (confirmed) {
+      await this.giftRepository.delete(id);
+      this._gifts = await this.giftRepository.getAll();
+    }
   }
 
   private async loadGifts(): Promise<void> {
@@ -190,7 +155,7 @@ export class ListComponent implements OnInit {
         this._gifts = await this.giftRepository.getAll();
       }
     } catch {
-      this.snackBar.open('Failed to load gifts', 'Close', { duration: 3000 });
+      this.toast.show('Failed to load gifts', 'error');
     }
   }
 
@@ -200,11 +165,10 @@ export class ListComponent implements OnInit {
         // Load friend's name
         const friendDoc = await getDoc(doc(this.firestore, 'users', this.currentFriendId));
         const friendData = friendDoc.data() as any;
-        let friendName = 'Friend';
+        this.displayName = 'Friend';
         if (friendData) {
-          friendName = `${friendData.firstName} ${friendData.lastName}`;
+          this.displayName = `${friendData.firstName} ${friendData.lastName}`;
         } 
-        this.displayName = `${friendName}'s list`;
       } else {
         this.displayName = 'My List';
       }
