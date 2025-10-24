@@ -50,3 +50,54 @@ body {
 body {
   @apply bg-bg text-fg;
 }
+
+/* Remove default list styling */
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+div {
+  list-style: none;
+}
+
+/* Global button styles */
+.icon-btn {
+  @apply inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-bg hover:bg-card transition-colors;
+}
+
+/* Ensure iconify icons render properly */
+iconify-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+/* Global page layout styles */
+.page-container {
+  padding: 1rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgb(var(--color-fg));
+}
+
+.view-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+
+  .icon-btn {
+    flex-shrink: 0;
+  }
+}
