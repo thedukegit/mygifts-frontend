@@ -1,7 +1,7 @@
-<div class="friends-container">
-  <div class="view-controls">
-    <button (click)="openAddFriendDialog()" class="add-friend-fab" [attr.title]="'Add new friend'">
-      <iconify-icon icon="heroicons:plus"></iconify-icon>
+<div class="p-4">
+  <div class="flex justify-end mb-4">
+    <button (click)="openAddFriendDialog()" class="icon-btn" [attr.title]="'Add new friend'">
+      <iconify-icon icon="heroicons:user-plus" class="text-lg"></iconify-icon>
     </button>
   </div>
 
@@ -10,26 +10,33 @@
     <iconify-icon icon="heroicons:user-group" class="empty-icon"></iconify-icon>
     <h2>No Friends Yet</h2>
     <p>Want to see your friends lists, add them here by the email address associated with their account!</p>
-    <button mat-raised-button color="primary" (click)="openAddFriendDialog()" class="cta-button">
+    <button (click)="openAddFriendDialog()"
+      class="cta-button inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
       <iconify-icon icon="heroicons:user-plus"></iconify-icon>
       Add Your First Friend
     </button>
   </div>
   } @else {
-  <div class="friends-list">
+  <div class="flex flex-col gap-3">
     @for (friend of friends; track friend.id) {
-    <mat-card class="friend-card">
-      <mat-card-header>
-        <mat-icon mat-card-avatar>person</mat-icon>
-        <mat-card-title>{{ friend.name }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-actions>
-        <button mat-button (click)="viewGifts(friend)">View Gifts</button>
-        <button mat-button color="warn" (click)="deleteFriend(friend)">
-          Remove
+    <div class="rounded-xl border border-border bg-card p-4 shadow-sm flex items-center justify-between">
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="h-9 w-9 rounded-full bg-bg border border-border flex items-center justify-center">
+          <iconify-icon icon="heroicons:user" class="text-base"></iconify-icon>
+        </div>
+        <div class="truncate">
+          <p class="font-medium truncate">{{ friend.name }}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="icon-btn" (click)="viewGifts(friend)" title="View gifts">
+          <iconify-icon icon="heroicons:gift" class="text-lg"></iconify-icon>
         </button>
-      </mat-card-actions>
-    </mat-card>
+        <button class="icon-btn" (click)="deleteFriend(friend)" title="Remove friend">
+          <iconify-icon icon="heroicons:trash" class="text-lg"></iconify-icon>
+        </button>
+      </div>
+    </div>
     }
   </div>
   }

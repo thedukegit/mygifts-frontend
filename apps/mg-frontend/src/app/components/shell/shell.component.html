@@ -33,7 +33,7 @@
                     <span class="page-title">{{ currentPageTitle }}</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <div class="relative">
+                    <div class="relative" #userMenuRef>
                         <button type="button" class="user-btn" (click)="toggleUserMenu()">
                             @if (currentUser$ | async; as user) { <span class="user-name">{{ user.firstName }}</span> }
                             <iconify-icon icon="heroicons:user-circle" class="text-lg"></iconify-icon>

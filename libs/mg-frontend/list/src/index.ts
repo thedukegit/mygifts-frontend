@@ -1,3 +1,5 @@
+export * from './lib/add-gift-dialog/add-gift-dialog.component';
+export * from './lib/delete-confirmation-dialog/delete-confirmation-dialog.component';
 export * from './lib/gift-repository.interface';
 export * from './lib/gift-repository.token';
 export * from './lib/gift.interface';

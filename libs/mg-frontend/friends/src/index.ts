@@ -1,3 +1,5 @@
+export * from './lib/add-friend-dialog/add-friend-dialog.component';
+export * from './lib/delete-confirmation-dialog/delete-confirmation-dialog.component';
 export * from './lib/friend-repository.interface';
 export * from './lib/friend-repository.token';
 export * from './lib/friend.interface';

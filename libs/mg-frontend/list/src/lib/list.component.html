@@ -1,9 +1,10 @@
 <div class="gifts-container">
   <div class="view-controls">
     <h2 class="list-title">{{ displayName }}</h2>
-    <button (click)="toggleViewMode()"
-      [attr.title]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'" mat-icon-button>
-      <iconify-icon [icon]="viewMode === 'grid' ? 'heroicons:view-list' : 'heroicons:squares-2x2'"></iconify-icon>
+    <button (click)="toggleViewMode()" class="icon-btn"
+      [attr.title]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'">
+      <iconify-icon [icon]="viewMode === 'grid' ? 'heroicons:view-list' : 'heroicons:squares-2x2'"
+        class="text-lg"></iconify-icon>
     </button>
   </div>
 
@@ -16,7 +17,8 @@
     } @else {
     <h2>No Gifts Yet</h2>
     <p>Start building your wishlist by adding your first gift!</p>
-    <button mat-raised-button color="primary" (click)="openAddGiftDialog()" class="cta-button">
+    <button (click)="openAddGiftDialog()"
+      class="cta-button inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
       <iconify-icon icon="heroicons:plus-circle"></iconify-icon>
       Add Your First Gift
     </button>
@@ -27,7 +29,7 @@
   <div class="grid-container">
     @for (gift of gifts; track gift.id) {
     <div class="grid-item">
-      <mat-card class="gift-card">
+      <div class="gift-card rounded-xl border border-border bg-card shadow-sm">
         @if (currentFriendId && gift.purchased) {
         <div class="purchased-badge">
           <iconify-icon icon="heroicons:shopping-cart" class="text-xl"></iconify-icon>
@@ -70,11 +72,11 @@
               </div>
               <div class="action-buttons">
                 @if (currentFriendId) {
-                <button (click)="togglePurchased(gift)"
-                  [matTooltip]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'"
-                  mat-icon-button [color]="gift.purchased ? 'primary' : 'default'" [disabled]="!canTogglePurchase(gift)"
-                  class="cart-button">
-                  <mat-icon>{{ gift.purchased ? 'remove_shopping_cart' : 'add_shopping_cart' }}</mat-icon>
+                <button (click)="togglePurchased(gift)" [disabled]="!canTogglePurchase(gift)"
+                  class="icon-btn cart-button"
+                  [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'">
+                  <iconify-icon [icon]="gift.purchased ? 'heroicons:shopping-cart' : 'heroicons:shopping-bag'"
+                    class="text-lg"></iconify-icon>
                 </button>
                 } @else {
                 <button (click)="openEditGiftDialog(gift)" class="icon-btn edit-button" title="Edit gift">
@@ -88,14 +90,14 @@
             </div>
           </div>
         </div>
-      </mat-card>
+      </div>
     </div>
     }
   </div>
   } @else {
   <div class="list-container">
     @for (gift of gifts; track gift.id) {
-    <mat-card class="gift-card list-item">
+    <div class="gift-card list-item rounded-xl border border-border bg-card shadow-sm">
       @if (currentFriendId && gift.purchased) {
       <div class="purchased-badge">
         <iconify-icon icon="heroicons:shopping-cart" class="text-xl"></iconify-icon>
@@ -144,20 +146,18 @@
                   class="text-lg"></iconify-icon>
               </button>
               } @else {
-              <button (click)="openEditGiftDialog(gift)" mat-icon-button color="primary" matTooltip="Edit gift"
-                class="edit-button">
-                <mat-icon>edit</mat-icon>
+              <button (click)="openEditGiftDialog(gift)" class="icon-btn edit-button" title="Edit gift">
+                <iconify-icon icon="heroicons:pencil-square" class="text-lg"></iconify-icon>
               </button>
-              <button (click)="deleteGift(gift.id)" mat-icon-button color="warn" matTooltip="Delete gift"
-                class="delete-button">
-                <mat-icon>delete</mat-icon>
+              <button (click)="deleteGift(gift.id)" class="icon-btn delete-button" title="Delete gift">
+                <iconify-icon icon="heroicons:trash" class="text-lg"></iconify-icon>
               </button>
               }
             </div>
           </div>
         </div>
       </div>
-    </mat-card>
+    </div>
     }
   </div>
   }

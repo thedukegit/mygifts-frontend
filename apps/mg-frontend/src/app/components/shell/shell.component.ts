@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
@@ -22,6 +22,7 @@ export class ShellComponent {
   currentPageTitle = 'Dashboard';
   sidenavExpanded = true;
   menuOpen = false;
+  @ViewChild('userMenuRef') userMenuRef?: ElementRef<HTMLElement>;
   readonly authService = inject(AuthService);
   readonly userService = inject(UserService);
   private readonly router = inject(Router);
@@ -47,6 +48,16 @@ export class ShellComponent {
 
   toggleUserMenu(): void {
     this.menuOpen = !this.menuOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.menuOpen) return;
+    const target = event.target as Node | null;
+    const host = this.userMenuRef?.nativeElement;
+    if (host && target && !host.contains(target)) {
+      this.menuOpen = false;
+    }
   }
 
   async onLogout() {

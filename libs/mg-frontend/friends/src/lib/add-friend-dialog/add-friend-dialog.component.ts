@@ -1,37 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { ModalService } from '@mg-frontend/ui';
 
 @Component({
   selector: 'lib-add-friend-dialog',
   standalone: true,
   imports: [
     CommonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
     ReactiveFormsModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './add-friend-dialog.component.html',
   styleUrl: './add-friend-dialog.component.scss',
 })
 export class AddFriendDialogComponent {
+  private readonly modalService = inject(ModalService);
+  private readonly fb = inject(FormBuilder);
+  
   friendForm: FormGroup;
 
-  constructor(
-    private dialogRef: MatDialogRef<AddFriendDialogComponent>,
-    private fb: FormBuilder
-  ) {
+  constructor() {
     this.friendForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });
@@ -39,11 +33,11 @@ export class AddFriendDialogComponent {
 
   onSubmit(): void {
     if (this.friendForm.valid) {
-      this.dialogRef.close(this.friendForm.value.email);
+      this.modalService.close(this.friendForm.value.email);
     }
   }
 
   onCancel(): void {
-    this.dialogRef.close();
+    this.modalService.cancel();
   }
 }

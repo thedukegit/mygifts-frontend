@@ -1,25 +1,22 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, inject } from '@angular/core';
+import { ModalService } from '@mg-frontend/ui';
 
 @Component({
   selector: 'mg-delete-confirmation-dialog',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatButtonModule],
+  imports: [CommonModule],
   templateUrl: './delete-confirmation-dialog.component.html',
   styleUrls: ['./delete-confirmation-dialog.component.scss'],
 })
 export class DeleteConfirmationDialogComponent {
-  constructor(
-    private dialogRef: MatDialogRef<DeleteConfirmationDialogComponent>
-  ) {}
+  private readonly modalService = inject(ModalService);
 
   onConfirm(): void {
-    this.dialogRef.close(true);
+    this.modalService.close(true);
   }
 
   onCancel(): void {
-    this.dialogRef.close(false);
+    this.modalService.close(false);
   }
 }
