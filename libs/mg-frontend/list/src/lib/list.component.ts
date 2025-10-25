@@ -176,4 +176,22 @@ export class ListComponent implements OnInit {
       this.displayName = this.currentFriendId ? 'Friend' : 'My List';
     }
   }
+
+  /**
+   * Handle image load error by setting a placeholder
+   */
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'https://placehold.co/400x300/e5e7eb/6b7280?text=No+Image';
+  }
+
+  /**
+   * Get image URL with fallback
+   */
+  getImageUrl(gift: Gift): string {
+    if (!gift.imageUrl || gift.imageUrl.trim() === '') {
+      return 'https://placehold.co/400x300/e5e7eb/6b7280?text=No+Image';
+    }
+    return gift.imageUrl;
+  }
 }

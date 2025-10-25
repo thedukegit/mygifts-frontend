@@ -34,8 +34,13 @@
 
     <div>
       <label class="block text-sm font-medium mb-1" for="imageUrl">Image URL</label>
-      <input id="imageUrl" formControlName="imageUrl" type="url"
+      <input id="imageUrl" formControlName="imageUrl" type="url" placeholder="https://example.com/image.jpg"
         class="block w-full rounded-lg border border-border bg-bg px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-primary/30 focus:border-primary" />
+      <div class="mt-2 rounded-lg border border-border bg-bg p-2">
+        <p class="text-xs text-muted mb-1">Preview:</p>
+        <img [src]="imagePreviewUrl" (error)="onImageError($event)" alt="Image preview"
+          class="h-32 w-full object-cover rounded" />
+      </div>
     </div>
 
     <div>

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
 } from '@angular/forms';
 import { ModalService } from '@mg-frontend/ui';
 import { Gift } from '../gift.interface';
@@ -67,5 +67,18 @@ export class AddGiftDialogComponent implements OnInit {
 
   onCancel(): void {
     this.modalService.cancel();
+  }
+
+  get imagePreviewUrl(): string {
+    const url = this.giftForm.get('imageUrl')?.value;
+    if (!url || url.trim() === '') {
+      return 'https://placehold.co/400x300/e5e7eb/6b7280?text=No+Image';
+    }
+    return url;
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    img.src = 'https://placehold.co/400x300/e5e7eb/6b7280?text=Invalid+URL';
   }
 }
