@@ -4,9 +4,9 @@
   "license": "MIT",
   "scripts": {
     "build": "npx nx run mg-frontend:build:production",
-    "emulators:start": "firebase emulators:start",
-    "emulators:start:import": "firebase emulators:start --import=./firebase-export --export-on-exit",
-    "emulators:export": "firebase emulators:export ./firebase-export",
+    "emulators:start": "firebase emulators:start --project=emulator",
+    "emulators:start:import": "firebase emulators:start --project=emulator --import=./firebase-export --export-on-exit",
+    "emulators:export": "firebase emulators:export ./firebase-export --project=emulator",
     "migration:build": "npx nx build mg-migration",
     "migration:run": "npm run migration:build && node dist/apps/mg-migration/main.js",
     "migration:all": "npm run migration:run migrate-all",
