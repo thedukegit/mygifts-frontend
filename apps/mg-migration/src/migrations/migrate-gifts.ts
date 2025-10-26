@@ -1,4 +1,4 @@
-import { FirestoreGift, MigrationConfig, MigrationStats, SqlGift } from '../types';
+import { MigrationConfig, MigrationStats, SqlGift } from '../types';
 import { getFirestore, getSqlConnection } from '../utils/database';
 import { logger } from '../utils/logger';
 
@@ -16,11 +16,22 @@ export async function migrateGifts(
   const firestore = getFirestore();
 
   try {
-    // Fetch all gifts from SQL
+    // Fetch all gifts from SQL (alias columns to match our interface)
+    // Skip soft-deleted items by checking if deleted_at is NULL or looks like zero date
     const [gifts] = await sql.execute<any[]>(`
-      SELECT g.*, u.id as userId 
+      SELECT 
+        g.id,
+        g.name,
+        g.description,
+        g.price,
+        g.amount_asked as quantity,
+        g.image as imageUrl,
+        g.url as link,
+        g.amount_bought as purchasedQuantity,
+        u.id as userId
       FROM gifts g 
       JOIN users u ON g.user_id = u.id
+      WHERE g.deleted_at IS NULL OR CAST(g.deleted_at AS CHAR) = '0000-00-00 00:00:00'
     `);
     logger.info(`Found ${gifts.length} gifts to migrate`);
 
@@ -45,25 +56,35 @@ export async function migrateGifts(
           const sqlGift = gift as SqlGift;
           
           // Transform SQL gift to Firestore format
-          const firestoreGift: FirestoreGift = {
-            id: sqlGift.id,
+          const firestoreGift: any = {
+            id: String(sqlGift.id),
             name: sqlGift.name || '',
             description: sqlGift.description || '',
             price: sqlGift.price || 0,
             quantity: sqlGift.quantity || 1,
             imageUrl: sqlGift.imageUrl || '',
-            link: sqlGift.link,
             purchased: sqlGift.purchased || false,
-            purchasedBy: sqlGift.purchasedBy,
-            purchasedByName: sqlGift.purchasedByName,
-            purchasedAt: sqlGift.purchasedAt,
           };
+          
+          // Only add optional fields if they have values (Firestore doesn't accept undefined)
+          if (sqlGift.link) {
+            firestoreGift.link = sqlGift.link;
+          }
+          if (sqlGift.purchasedBy) {
+            firestoreGift.purchasedBy = String(sqlGift.purchasedBy);
+          }
+          if (sqlGift.purchasedByName) {
+            firestoreGift.purchasedByName = sqlGift.purchasedByName;
+          }
+          if (sqlGift.purchasedAt) {
+            firestoreGift.purchasedAt = sqlGift.purchasedAt;
+          }
 
           const docRef = firestore
             .collection('users')
-            .doc(sqlGift.userId)
+            .doc(String(sqlGift.userId))
             .collection('gifts')
-            .doc(sqlGift.id);
+            .doc(String(sqlGift.id));
 
           batch.set(docRef, firestoreGift);
           stats.giftsSucceeded++;
@@ -110,7 +131,18 @@ export async function migrateGiftsForUser(
 
   try {
     const [gifts] = await sql.execute<any[]>(
-      'SELECT * FROM gifts WHERE user_id = ?',
+      `SELECT 
+        id,
+        name,
+        description,
+        price,
+        amount_asked as quantity,
+        image as imageUrl,
+        url as link,
+        amount_bought as purchasedQuantity
+      FROM gifts 
+      WHERE user_id = ? 
+      AND (deleted_at IS NULL OR CAST(deleted_at AS CHAR) = '0000-00-00 00:00:00')`,
       [userId]
     );
     logger.info(`Found ${gifts.length} gifts for user ${userId}`);
@@ -126,25 +158,35 @@ export async function migrateGiftsForUser(
       try {
         const sqlGift = gift as SqlGift;
         
-        const firestoreGift: FirestoreGift = {
-          id: sqlGift.id,
+        const firestoreGift: any = {
+          id: String(sqlGift.id),
           name: sqlGift.name || '',
           description: sqlGift.description || '',
           price: sqlGift.price || 0,
           quantity: sqlGift.quantity || 1,
           imageUrl: sqlGift.imageUrl || '',
-          link: sqlGift.link,
           purchased: sqlGift.purchased || false,
-          purchasedBy: sqlGift.purchasedBy,
-          purchasedByName: sqlGift.purchasedByName,
-          purchasedAt: sqlGift.purchasedAt,
         };
+        
+        // Only add optional fields if they have values (Firestore doesn't accept undefined)
+        if (sqlGift.link) {
+          firestoreGift.link = sqlGift.link;
+        }
+        if (sqlGift.purchasedBy) {
+          firestoreGift.purchasedBy = String(sqlGift.purchasedBy);
+        }
+        if (sqlGift.purchasedByName) {
+          firestoreGift.purchasedByName = sqlGift.purchasedByName;
+        }
+        if (sqlGift.purchasedAt) {
+          firestoreGift.purchasedAt = sqlGift.purchasedAt;
+        }
 
         await firestore
           .collection('users')
           .doc(userId)
           .collection('gifts')
-          .doc(sqlGift.id)
+          .doc(String(sqlGift.id))
           .set(firestoreGift);
 
         stats.giftsSucceeded++;

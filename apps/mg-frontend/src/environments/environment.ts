@@ -6,9 +6,9 @@ export const environment = {
   storageSolution: StorageSolution.FirestoreEmulator,
   firebase: {
     apiKey: 'demo-key', // Demo key for emulator
-    authDomain: 'mygifts-faf66.firebaseapp.com',
-    projectId: 'mygifts-faf66', // Match the project ID from .firebaserc
-    storageBucket: 'mygifts-faf66.appspot.com',
+    authDomain: 'demo-mygifts-faf66.firebaseapp.com',
+    projectId: 'demo-mygifts-faf66', // Match the project ID from .firebaserc
+    storageBucket: 'demo-mygifts-faf66.appspot.com',
     messagingSenderId: '123456789',
     appId: 'demo-app-id',
   },

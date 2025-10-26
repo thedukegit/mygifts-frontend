@@ -2,6 +2,27 @@
 
 import { Command } from 'commander';
 import * as dotenv from 'dotenv';
+import * as path from 'path';
+
+// Load .env file FIRST before any other imports
+dotenv.config({ path: path.resolve(process.cwd(), 'apps/mg-migration/.env') });
+dotenv.config();
+
+// Set emulator environment variables BEFORE importing Firebase modules
+// This is critical - must be done before any firebase-admin code loads
+if (!process.env.MIGRATION_TARGET || process.env.MIGRATION_TARGET === 'emulator') {
+  const emulatorHost = process.env.FIRESTORE_EMULATOR_HOST || 'localhost:8080';
+  const authEmulatorHost = emulatorHost.replace('8080', '9099');
+  
+  process.env.FIRESTORE_EMULATOR_HOST = emulatorHost;
+  process.env.FIREBASE_AUTH_EMULATOR_HOST = authEmulatorHost;
+  
+  console.log(`🔧 Emulator environment variables set:`);
+  console.log(`   FIRESTORE_EMULATOR_HOST=${process.env.FIRESTORE_EMULATOR_HOST}`);
+  console.log(`   FIREBASE_AUTH_EMULATOR_HOST=${process.env.FIREBASE_AUTH_EMULATOR_HOST}\n`);
+}
+
+// NOW import Firebase-related modules
 import { config } from './config.template';
 import { migrateBidirectionalFriends, migrateFriends } from './migrations/migrate-friends';
 import { migrateGifts, migrateGiftsForUser } from './migrations/migrate-gifts';
@@ -10,9 +31,6 @@ import { MigrationStats } from './types';
 import { closeSqlConnection, initializeFirebase, initializeSqlConnection } from './utils/database';
 import { logger } from './utils/logger';
 import { sampleRecords, validateMigration } from './utils/validation';
-
-// Load environment variables
-dotenv.config();
 
 const program = new Command();
 

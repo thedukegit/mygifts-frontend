@@ -103,8 +103,8 @@ async function validateFriendshipCount(): Promise<boolean> {
   const firestore = getFirestore();
 
   try {
-    // Get SQL count
-    const [sqlResult] = await sql.execute<any[]>('SELECT COUNT(*) as count FROM friendships');
+    // Get SQL count (table is called `users-friends`)
+    const [sqlResult] = await sql.execute<any[]>('SELECT COUNT(*) as count FROM `users-friends`');
     const sqlCount = sqlResult[0].count;
 
     // Get Firestore count
@@ -198,8 +198,8 @@ export async function sampleRecords(count = 5): Promise<void> {
     for (const user of users) {
       logger.info(`\nUser: ${user.email}`);
       
-      // Check in Firestore
-      const firestoreDoc = await firestore.collection('users').doc(user.id).get();
+      // Check in Firestore (convert ID to string)
+      const firestoreDoc = await firestore.collection('users').doc(String(user.id)).get();
       if (firestoreDoc.exists) {
         logger.success('  ✓ Found in Firestore');
         const data = firestoreDoc.data();

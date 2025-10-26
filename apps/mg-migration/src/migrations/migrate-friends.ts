@@ -16,7 +16,7 @@ export async function migrateFriends(
   const firestore = getFirestore();
 
   try {
-    // Fetch all friendships from SQL
+    // Fetch all friendships from SQL (table is called `users-friends`)
     const [friendships] = await sql.execute<any[]>(`
       SELECT 
         f.*,
@@ -25,7 +25,7 @@ export async function migrateFriends(
         u2.email as friend_email,
         u2.first_name as friend_first_name,
         u2.last_name as friend_last_name
-      FROM friendships f
+      FROM \`users-friends\` f
       JOIN users u1 ON f.user_id = u1.id
       JOIN users u2 ON f.friend_id = u2.id
     `);
@@ -54,7 +54,7 @@ export async function migrateFriends(
           // Create bidirectional friendship documents
           // User -> Friend
           const friendDoc: FirestoreFriend = {
-            id: sqlFriendship.friend_id,
+            id: String(sqlFriendship.friend_id),
             name: sqlFriendship.friend_first_name && sqlFriendship.friend_last_name
               ? `${sqlFriendship.friend_first_name} ${sqlFriendship.friend_last_name}`
               : sqlFriendship.friend_email,
@@ -63,9 +63,9 @@ export async function migrateFriends(
 
           const userFriendRef = firestore
             .collection('users')
-            .doc(sqlFriendship.user_id)
+            .doc(String(sqlFriendship.user_id))
             .collection('friends')
-            .doc(sqlFriendship.friend_id);
+            .doc(String(sqlFriendship.friend_id));
 
           batch.set(userFriendRef, friendDoc);
 
@@ -115,7 +115,7 @@ export async function migrateBidirectionalFriends(
   const firestore = getFirestore();
 
   try {
-    // Fetch all friendships
+    // Fetch all friendships (table is called `users-friends`)
     const [friendships] = await sql.execute<any[]>(`
       SELECT 
         f.*,
@@ -127,7 +127,7 @@ export async function migrateBidirectionalFriends(
         u2.email as friend_email,
         u2.first_name as friend_first_name,
         u2.last_name as friend_last_name
-      FROM friendships f
+      FROM \`users-friends\` f
       JOIN users u1 ON f.user_id = u1.id
       JOIN users u2 ON f.friend_id = u2.id
     `);
@@ -156,7 +156,7 @@ export async function migrateBidirectionalFriends(
 
         // User -> Friend
         const friendDoc: FirestoreFriend = {
-          id: sqlFriendship.friend_id,
+          id: String(sqlFriendship.friend_id),
           name: sqlFriendship.friend_first_name && sqlFriendship.friend_last_name
             ? `${sqlFriendship.friend_first_name} ${sqlFriendship.friend_last_name}`
             : sqlFriendship.friend_email,
@@ -165,15 +165,15 @@ export async function migrateBidirectionalFriends(
 
         const userFriendRef = firestore
           .collection('users')
-          .doc(sqlFriendship.user_id)
+          .doc(String(sqlFriendship.user_id))
           .collection('friends')
-          .doc(sqlFriendship.friend_id);
+          .doc(String(sqlFriendship.friend_id));
 
         batch.set(userFriendRef, friendDoc);
 
         // Friend -> User (reverse)
         const userDoc: FirestoreFriend = {
-          id: sqlFriendship.user_id,
+          id: String(sqlFriendship.user_id),
           name: sqlFriendship.user_first_name && sqlFriendship.user_last_name
             ? `${sqlFriendship.user_first_name} ${sqlFriendship.user_last_name}`
             : sqlFriendship.user_email,
@@ -182,9 +182,9 @@ export async function migrateBidirectionalFriends(
 
         const friendUserRef = firestore
           .collection('users')
-          .doc(sqlFriendship.friend_id)
+          .doc(String(sqlFriendship.friend_id))
           .collection('friends')
-          .doc(sqlFriendship.user_id);
+          .doc(String(sqlFriendship.user_id));
 
         batch.set(friendUserRef, userDoc);
 

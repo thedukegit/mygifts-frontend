@@ -18,8 +18,20 @@ export async function migrateUsers(
   const auth = getAuth();
 
   try {
-    // Fetch all users from SQL
-    const [users] = await sql.execute<any[]>('SELECT * FROM users');
+    // Fetch all users from SQL (alias snake_case columns to camelCase)
+    const [users] = await sql.execute<any[]>(`
+      SELECT 
+        id,
+        email,
+        first_name as firstName,
+        last_name as lastName,
+        password,
+        remember_token as rememberToken,
+        created_at as createdAt,
+        updated_at as updatedAt,
+        date_of_birth as dateOfBirth
+      FROM users
+    `);
     logger.info(`Found ${users.length} users to migrate`);
 
     if (config.migration.dryRun) {
@@ -36,6 +48,9 @@ export async function migrateUsers(
 
         // Check if user already exists in Firebase Auth
         let userRecord;
+        // Convert SQL ID to string for Firebase Auth
+        const firebaseUid = String(user.id);
+        
         try {
           userRecord = await auth.getUserByEmail(user.email);
           logger.info(`User already exists: ${user.email}`);
@@ -43,7 +58,7 @@ export async function migrateUsers(
           if (error.code === 'auth/user-not-found') {
             // Create new Firebase Auth user
             userRecord = await auth.createUser({
-              uid: user.id,
+              uid: firebaseUid,
               email: user.email,
               displayName: user.firstName && user.lastName 
                 ? `${user.firstName} ${user.lastName}` 
@@ -119,7 +134,18 @@ export async function importUsersWithPasswords(
   const auth = getAuth();
 
   try {
-    const [users] = await sql.execute<any[]>('SELECT * FROM users');
+    const [users] = await sql.execute<any[]>(`
+      SELECT 
+        id,
+        email,
+        first_name as firstName,
+        last_name as lastName,
+        password,
+        password as passwordHash,
+        created_at as createdAt,
+        updated_at as updatedAt
+      FROM users
+    `);
     logger.info(`Found ${users.length} users to import`);
 
     if (config.migration.dryRun) {
@@ -133,7 +159,7 @@ export async function importUsersWithPasswords(
       const batch = users.slice(i, i + batchSize);
       
       const userImports = batch.map((user: SqlUser) => ({
-        uid: user.id,
+        uid: String(user.id), // Convert SQL ID to string
         email: user.email,
         displayName: user.firstName && user.lastName 
           ? `${user.firstName} ${user.lastName}` 

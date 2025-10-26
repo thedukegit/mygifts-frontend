@@ -1,6 +1,8 @@
-import * as admin from 'firebase-admin';
 import { Connection, createConnection } from 'mysql2/promise';
 import { MigrationConfig } from '../types';
+
+// Import firebase-admin - env vars should already be set in main.ts
+import * as admin from 'firebase-admin';
 
 /**
  * Database connection utilities
@@ -43,22 +45,30 @@ export async function initializeFirebase(
   try {
     // Initialize Firebase Admin SDK
     if (!admin.apps.length) {
-      const serviceAccount = require(config.firebase.serviceAccountPath);
-      
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        projectId: config.firebase.projectId,
-      });
-    }
-
-    // Configure for emulator if needed
-    if (config.migration.target === 'emulator' && config.migration.emulatorHost) {
-      process.env.FIRESTORE_EMULATOR_HOST = config.migration.emulatorHost;
-      console.log(`✓ Using Firestore emulator at ${config.migration.emulatorHost}`);
+      if (config.migration.target === 'emulator') {
+        // For emulator, we don't need credentials
+        console.log(`✓ Using Firestore emulator at ${process.env.FIRESTORE_EMULATOR_HOST}`);
+        console.log(`✓ Using Auth emulator at ${process.env.FIREBASE_AUTH_EMULATOR_HOST}`);
+        
+        // Initialize with minimal config for emulator
+        admin.initializeApp({
+          projectId: config.firebase.projectId || 'demo-project',
+        });
+      } else {
+        // For production, use service account credentials
+        const serviceAccount = require(config.firebase.serviceAccountPath);
+        
+        admin.initializeApp({
+          credential: admin.credential.cert(serviceAccount),
+          projectId: config.firebase.projectId,
+        });
+      }
     }
 
     firestoreInstance = admin.firestore();
     console.log('✓ Connected to Firestore');
+    console.log(`  Project ID: ${admin.app().options.projectId}`);
+    console.log(`  Emulator Host: ${process.env.FIRESTORE_EMULATOR_HOST || 'NOT SET'}`);
     
     return firestoreInstance;
   } catch (error) {
