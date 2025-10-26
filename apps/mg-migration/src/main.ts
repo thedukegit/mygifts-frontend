@@ -4,9 +4,25 @@ import { Command } from 'commander';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 
-// Load .env file FIRST before any other imports
-dotenv.config({ path: path.resolve(process.cwd(), 'apps/mg-migration/.env') });
-dotenv.config();
+// Check command-line arguments EARLY to determine which .env file to load
+const targetArgIndex = process.argv.indexOf('--target');
+const commandLineTarget = targetArgIndex !== -1 ? process.argv[targetArgIndex + 1] : null;
+const hasDryRunFlag = process.argv.includes('--dry-run');
+
+// Load the appropriate .env file based on target
+const envFile = commandLineTarget === 'production' ? '.env.production' : '.env';
+const envPath = path.resolve(process.cwd(), 'apps/mg-migration', envFile);
+console.log(`📁 Loading environment from: ${envFile}`);
+dotenv.config({ path: envPath });
+dotenv.config(); // Fallback to root .env if it exists
+
+// Override environment variables with command-line arguments if provided
+if (commandLineTarget) {
+  process.env.MIGRATION_TARGET = commandLineTarget;
+}
+if (hasDryRunFlag) {
+  process.env.DRY_RUN = 'true';
+}
 
 // Set emulator environment variables BEFORE importing Firebase modules
 // This is critical - must be done before any firebase-admin code loads
@@ -20,6 +36,9 @@ if (!process.env.MIGRATION_TARGET || process.env.MIGRATION_TARGET === 'emulator'
   console.log(`🔧 Emulator environment variables set:`);
   console.log(`   FIRESTORE_EMULATOR_HOST=${process.env.FIRESTORE_EMULATOR_HOST}`);
   console.log(`   FIREBASE_AUTH_EMULATOR_HOST=${process.env.FIREBASE_AUTH_EMULATOR_HOST}\n`);
+} else {
+  console.log(`🚀 Production mode: Connecting to real Firebase`);
+  console.log(`   Project ID: ${process.env.FIREBASE_PROJECT_ID || 'from service account'}\n`);
 }
 
 // NOW import Firebase-related modules

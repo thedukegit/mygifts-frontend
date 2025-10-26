@@ -11,7 +11,10 @@
     "migration:run": "npm run migration:build && node dist/apps/mg-migration/main.js",
     "migration:all": "npm run migration:run migrate-all",
     "migration:all:dry": "npm run migration:run migrate-all -- --dry-run",
-    "migration:validate": "npm run migration:run validate"
+    "migration:all:prod": "npm run migration:run migrate-all -- --target production",
+    "migration:all:prod:dry": "npm run migration:run migrate-all -- --target production --dry-run",
+    "migration:validate": "npm run migration:run validate",
+    "migration:validate:prod": "npm run migration:run validate -- --target production"
   },
   "private": true,
   "dependencies": {
