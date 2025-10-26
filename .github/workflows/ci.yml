@@ -1,4 +1,4 @@
-name: Deploy Project
+name: Deploy v2.mygifts.me
 
 on:
   push:
