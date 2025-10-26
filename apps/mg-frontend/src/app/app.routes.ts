@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { FriendsComponent } from '@mg-frontend/friends';
 import { ListComponent } from '@mg-frontend/list';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -45,6 +46,10 @@ export const appRoutes: Route[] = [
   {
     path: 'register',
     component: RegisterComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
   {
     path: 'verify-email',

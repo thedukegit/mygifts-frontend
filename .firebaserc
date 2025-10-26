@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "mygifts-faf66"
+    "default": "demo-mygifts-faf66",
+    "emulator": "demo-mygifts-faf66",
+    "production": "mygifts-faf66"
   }
 }

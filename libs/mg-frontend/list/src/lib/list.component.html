@@ -45,7 +45,7 @@
           }
           <div class="card-content">
             <div class="image-container">
-              <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
+              <img [src]="getImageUrl(gift)" [alt]="gift.name" class="gift-image" (error)="onImageError($event)">
             </div>
             <div class="gift-details">
               <div class="gift-header">
@@ -112,7 +112,7 @@
         }
         <div class="card-content">
           <div class="image-container">
-            <img [src]="gift.imageUrl" [alt]="gift.name" class="gift-image">
+            <img [src]="getImageUrl(gift)" [alt]="gift.name" class="gift-image" (error)="onImageError($event)">
           </div>
           <div class="gift-details">
             <div class="gift-header">
