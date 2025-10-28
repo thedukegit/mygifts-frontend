@@ -23,7 +23,8 @@
 - [x] remember which view a user has selected list or grid
 - [x] use the unsplash image when no image link is available
 - [x] Keep track of how many of a gift have been bought
-- [ ] when resizing the website smaller, colapse the menu when its getting really small
+- [ ] remove the ugly icon of a gift top left and move 'collapse' icon the the left of the page and see if there is a better icon to indicate 'collapse'
+- [ ] when resizing the website smaller, collapse the menu when its getting really small
 - [ ] Refactor settings of a user. they are currently stored in localstorage, but need to create a repository for user so that these settings can be saved in cloud as well as list/grid setting
 - [ ] implement roles so an admin can see the 'add friends' button when regular users cant
 - [ ] find some nice gift images to use as backgrounds.
