@@ -16,6 +16,7 @@
 - [x] implement tailwind css instead of angular material, to make the website look much more professional
 - [x] purchase icon changes to cart icon when clicked, should show an 'unpurchase' icon
 - [x] make header in card sticky and scrollable
+- [x] Use euros for everything instead of dollars
 - [ ] make a friend clickable which leads to their list
 - [ ] sort friends by alphabet by default
 - [ ] implement roles so an admin can see the 'add friends' button when regular users cant
