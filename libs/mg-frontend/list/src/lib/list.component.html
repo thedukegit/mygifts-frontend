@@ -73,7 +73,7 @@
 
                   <span class="quantity">
                     <iconify-icon icon="heroicons:hashtag" class="text-base"></iconify-icon>
-                    <span>{{ gift.quantity }} wanted</span>
+                    <span>{{ getQuantityDisplayText(gift) }}</span>
                   </span>
 
                 </div>
@@ -81,7 +81,7 @@
                   @if (currentFriendId) {
                   <button (click)="togglePurchased(gift)" [disabled]="!canTogglePurchase(gift)"
                     class="icon-btn cart-button" [ngClass]="{'purchased-state': gift.purchased}"
-                    [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'">
+                    [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Remove one purchased item' : 'Mark one item as purchased') : 'Only the person who purchased this can unmark it'">
                     <iconify-icon icon="heroicons:shopping-bag" class="text-lg"></iconify-icon>
                   </button>
                   } @else {
@@ -140,7 +140,7 @@
 
                 <span class="quantity">
                   <iconify-icon icon="heroicons:hashtag" class="text-base"></iconify-icon>
-                  <span>{{ gift.quantity }} wanted</span>
+                  <span>{{ getQuantityDisplayText(gift) }}</span>
                 </span>
 
               </div>
@@ -148,7 +148,7 @@
                 @if (currentFriendId) {
                 <button (click)="togglePurchased(gift)" [disabled]="!canTogglePurchase(gift)"
                   class="icon-btn cart-button" [ngClass]="{'purchased-state': gift.purchased}"
-                  [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Mark as not purchased' : 'Mark as purchased') : 'Only the person who purchased this can unmark it'">
+                  [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Remove one purchased item' : 'Mark one item as purchased') : 'Only the person who purchased this can unmark it'">
                   <iconify-icon icon="heroicons:shopping-bag" class="text-lg"></iconify-icon>
                 </button>
                 } @else {

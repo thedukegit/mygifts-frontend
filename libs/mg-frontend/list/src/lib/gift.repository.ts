@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
+import { GiftRepository } from './gift-repository.interface';
 import { Gift } from './gift.interface';
 
 @Injectable({ providedIn: 'root' })
-export class GiftRepository {
+export class MockGiftRepository implements GiftRepository {
   private gifts: Gift[] = [
     {
       id: uuidv4(),
@@ -11,7 +12,7 @@ export class GiftRepository {
       description:
         'Premium noise-cancelling wireless headphones with 30-hour battery life',
       price: 199.99,
-      quantity: 1,
+      quantity: 2,
       imageUrl:
         'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aGVhZHBob25lc3xlbnwwfHwwfHx8MA%3D%3D',
     },
@@ -29,7 +30,7 @@ export class GiftRepository {
       name: 'Coffee Maker',
       description: 'Programmable coffee maker with thermal carafe',
       price: 89.99,
-      quantity: 1,
+      quantity: 3,
       imageUrl:
         'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNvZmZlZSUyMG1ha2VyfGVufDB8fDB8fHww',
     },
@@ -44,12 +45,31 @@ export class GiftRepository {
     },
   ];
 
-  public getAll(): Gift[] {
-    return this.gifts;
+  async getAll(): Promise<Gift[]> {
+    return Promise.resolve(this.gifts);
   }
 
-  public add(gift: Omit<Gift, 'id'>): void {
+  async add(gift: Omit<Gift, 'id'>): Promise<void> {
     const newGift: Gift = { ...gift, id: uuidv4() };
     this.gifts.push(newGift);
+    return Promise.resolve();
+  }
+
+  async update(id: string, gift: Partial<Gift>, userId?: string): Promise<void> {
+    const index = this.gifts.findIndex(g => g.id === id);
+    if (index !== -1) {
+      this.gifts[index] = { ...this.gifts[index], ...gift };
+    }
+    return Promise.resolve();
+  }
+
+  async delete(id: string): Promise<void> {
+    this.gifts = this.gifts.filter(gift => gift.id !== id);
+    return Promise.resolve();
+  }
+
+  async getByUserId(userId: string): Promise<Gift[]> {
+    // Mock implementation - return all gifts for any user
+    return Promise.resolve(this.gifts);
   }
 }

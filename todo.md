@@ -21,14 +21,16 @@
 - [x] sort friends by alphabet by default
 - [x] less padding above the title in main card
 - [x] remember which view a user has selected list or grid
-- [ ] Refactor settings of a user. they are currently stored in localstorage, but need to create a repository for user so that these settings can be saved in cloud as well as list/grid setting
 - [x] use the unsplash image when no image link is available
+- [x] Keep track of how many of a gift have been bought
+- [ ] when resizing the website smaller, colapse the menu when its getting really small
+- [ ] Refactor settings of a user. they are currently stored in localstorage, but need to create a repository for user so that these settings can be saved in cloud as well as list/grid setting
 - [ ] implement roles so an admin can see the 'add friends' button when regular users cant
 - [ ] find some nice gift images to use as backgrounds.
 - [ ] use christmas themes images for when its christmas
 - [ ] use sinterklaas themed images for when it is sinterklaas (only for netherlands)
 - [ ] Implement user agreement, when creating an account
-- [ ] Keep track of how many of a gift have been bought
+
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
 - [ ] when someone marks a gift as bought and its more than the user asked for then show a warning that says that it was already bought, when it was bought and by who
 - [ ] create an overview page that shows which gifts you bought for each of your friends and how much youve spent. Add filters for friends and year

@@ -85,18 +85,20 @@ export class ListComponent implements OnInit {
       return;
     }
 
-    // If gift is already purchased, only the person who purchased it can unmark it
+    // If gift is fully purchased, only the person who purchased it can unmark it
     if (gift.purchased && gift.purchasedBy !== currentUser.uid) {
       this.toast.show('Only the person who marked this gift as purchased can unmark it.', 'error');
       return;
     }
 
     try {
-      const isPurchased = !gift.purchased;
+      const currentPurchasedQuantity = gift.purchasedQuantity || 0;
+      const newPurchasedQuantity = gift.purchased ? currentPurchasedQuantity - 1 : currentPurchasedQuantity + 1;
+      const isFullyPurchased = newPurchasedQuantity >= gift.quantity;
       
       // Get purchaser's name from Firestore
       let purchaserName = 'Unknown';
-      if (isPurchased) {
+      if (newPurchasedQuantity > currentPurchasedQuantity) {
         try {
           const userDoc = await getDoc(doc(this.firestore, 'users', currentUser.uid));
           const userData = userDoc.data() as any;
@@ -109,18 +111,19 @@ export class ListComponent implements OnInit {
       }
       
       const updateData: Partial<Gift> = {
-        purchased: isPurchased,
-        purchasedBy: isPurchased ? currentUser.uid : undefined,
-        purchasedByName: isPurchased ? purchaserName : undefined,
-        purchasedAt: isPurchased ? new Date() : undefined,
+        purchased: isFullyPurchased,
+        purchasedQuantity: Math.max(0, newPurchasedQuantity),
+        purchasedBy: isFullyPurchased ? currentUser.uid : gift.purchasedBy,
+        purchasedByName: isFullyPurchased ? purchaserName : gift.purchasedByName,
+        purchasedAt: isFullyPurchased ? new Date() : gift.purchasedAt,
       };
 
       await this.giftRepository.update(gift.id, updateData, this.currentFriendId || undefined);
       await this.loadGifts();
 
-      const message = isPurchased
-        ? 'Gift marked as purchased!'
-        : 'Gift marked as not purchased.';
+      const message = newPurchasedQuantity > currentPurchasedQuantity
+        ? `Gift quantity updated! ${newPurchasedQuantity}/${gift.quantity} purchased.`
+        : `Gift quantity updated! ${newPurchasedQuantity}/${gift.quantity} purchased.`;
       this.toast.show(message, 'success');
     } catch (error) {
       this.toast.show('Failed to update gift.', 'error');
@@ -132,11 +135,15 @@ export class ListComponent implements OnInit {
     if (!currentUser || !this.currentFriendId) {
       return false;
     }
-    // If not purchased yet, anyone can mark it
+    
+    const purchasedQuantity = gift.purchasedQuantity || 0;
+    
+    // If not fully purchased yet, anyone can mark it
     if (!gift.purchased) {
       return true;
     }
-    // If already purchased, only the purchaser can unmark it
+    
+    // If fully purchased, only the purchaser can unmark it
     return gift.purchasedBy === currentUser.uid;
   }
 
@@ -195,6 +202,14 @@ export class ListComponent implements OnInit {
    */
   getImageUrl(gift: Gift): string {
     return DefaultImageService.ensureDefaultImage(gift.imageUrl);
+  }
+
+  /**
+   * Get quantity display text showing purchased/total
+   */
+  getQuantityDisplayText(gift: Gift): string {
+    const purchasedQuantity = gift.purchasedQuantity || 0;
+    return `${purchasedQuantity}/${gift.quantity} bought`;
   }
 
   /**
