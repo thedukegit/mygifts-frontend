@@ -18,7 +18,7 @@
 - [x] make header in card sticky and scrollable
 - [x] Use euros for everything instead of dollars
 - [x] make a friend clickable which leads to their list
-- [ ] sort friends by alphabet by default
+- [x] sort friends by alphabet by default
 - [ ] less padding above the title in main card
 - [ ] use the unsplash image when no image link is available
 - [ ] implement roles so an admin can see the 'add friends' button when regular users cant

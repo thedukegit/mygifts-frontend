@@ -26,7 +26,7 @@ export class FriendsComponent implements OnInit {
   private _friends: Friend[] = [];
 
   public get friends(): Array<Friend> {
-    return this._friends;
+    return this._friends.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   async ngOnInit(): Promise<void> {
