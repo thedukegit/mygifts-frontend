@@ -9,6 +9,7 @@ import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/
 import { GiftRepository } from './gift-repository.interface';
 import { GIFT_REPOSITORY } from './gift-repository.token';
 import { Gift } from './gift.interface';
+import { DefaultImageService } from './services/default-image.service';
 
 @Component({
   selector: 'mg-list',
@@ -182,16 +183,13 @@ export class ListComponent implements OnInit {
    */
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    img.src = 'https://placehold.co/400x300/e5e7eb/6b7280?text=No+Image';
+    img.src = DefaultImageService.ensureDefaultImage();
   }
 
   /**
    * Get image URL with fallback
    */
   getImageUrl(gift: Gift): string {
-    if (!gift.imageUrl || gift.imageUrl.trim() === '') {
-      return 'https://placehold.co/400x300/e5e7eb/6b7280?text=No+Image';
-    }
-    return gift.imageUrl;
+    return DefaultImageService.ensureDefaultImage(gift.imageUrl);
   }
 }
