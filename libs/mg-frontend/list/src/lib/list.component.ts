@@ -29,6 +29,8 @@ export class ListComponent implements OnInit {
   private readonly auth: Auth = inject(Auth);
   private readonly firestore: Firestore = inject(Firestore);
 
+  private readonly VIEW_MODE_STORAGE_KEY = 'mg-view-mode';
+
   private _gifts: Gift[] = [];
   protected currentFriendId: string | null = null;
   protected displayName: string = '';
@@ -38,6 +40,7 @@ export class ListComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.loadViewModePreference();
     this.route.queryParamMap.subscribe(async (params) => {
       this.currentFriendId = params.get('friendId');
       await this.loadDisplayName();
@@ -47,6 +50,7 @@ export class ListComponent implements OnInit {
 
   toggleViewMode(): void {
     this.viewMode = this.viewMode === 'list' ? 'grid' : 'list';
+    this.saveViewModePreference();
   }
 
   async openAddGiftDialog(): Promise<void> {
@@ -191,5 +195,32 @@ export class ListComponent implements OnInit {
    */
   getImageUrl(gift: Gift): string {
     return DefaultImageService.ensureDefaultImage(gift.imageUrl);
+  }
+
+  /**
+   * Load view mode preference from localStorage
+   */
+  private loadViewModePreference(): void {
+    try {
+      const savedViewMode = localStorage.getItem(this.VIEW_MODE_STORAGE_KEY);
+      if (savedViewMode === 'list' || savedViewMode === 'grid') {
+        this.viewMode = savedViewMode;
+      }
+    } catch (error) {
+      // If localStorage is not available or there's an error, keep the default value
+      console.warn('Failed to load view mode preference:', error);
+    }
+  }
+
+  /**
+   * Save view mode preference to localStorage
+   */
+  private saveViewModePreference(): void {
+    try {
+      localStorage.setItem(this.VIEW_MODE_STORAGE_KEY, this.viewMode);
+    } catch (error) {
+      // If localStorage is not available or there's an error, silently fail
+      console.warn('Failed to save view mode preference:', error);
+    }
   }
 }

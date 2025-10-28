@@ -20,8 +20,9 @@
 - [x] make a friend clickable which leads to their list
 - [x] sort friends by alphabet by default
 - [x] less padding above the title in main card
-- [ ] remember which view a user has selected list or grid
-- [ ] use the unsplash image when no image link is available
+- [x] remember which view a user has selected list or grid
+- [ ] Refactor settings of a user. they are currently stored in localstorage, but need to create a repository for user so that these settings can be saved in cloud as well as list/grid setting
+- [x] use the unsplash image when no image link is available
 - [ ] implement roles so an admin can see the 'add friends' button when regular users cant
 - [ ] find some nice gift images to use as backgrounds.
 - [ ] use christmas themes images for when its christmas
