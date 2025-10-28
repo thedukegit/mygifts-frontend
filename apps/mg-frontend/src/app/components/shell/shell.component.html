@@ -2,9 +2,11 @@
     <!-- Sidebar -->
     <aside class="transition-all duration-300 border-r border-border bg-card" [class.w-64]="sidenavExpanded"
         [class.w-16]="!sidenavExpanded">
-        <div class="flex h-14 items-center justify-center border-b border-border">
-            @if (sidenavExpanded) { <img src="/logo-full.svg" alt="MyGifts" class="h-6"> } @else { <img
-                src="/logo-icon.svg" alt="MG" class="h-6 w-6"> }
+        <div class="relative h-14 border-b border-border">
+            <button type="button" (click)="toggleSidenav()" class="absolute left-3 top-1/2 -translate-y-1/2 icon-btn">
+                <iconify-icon [icon]="sidenavExpanded ? 'heroicons:chevron-left' : 'heroicons:chevron-right'"
+                    class="text-lg"></iconify-icon>
+            </button>
         </div>
         <nav class="p-2">
             <a routerLink="/list" routerLinkActive="active" class="nav-item">
@@ -21,12 +23,7 @@
     <!-- Main -->
     <div class="flex-1 flex flex-col overflow-hidden">
         <header class="flex-shrink-0 z-10 border-b border-border bg-bg/80 backdrop-blur">
-            <div class="flex h-14 items-center justify-between px-3">
-                <div class="flex items-center gap-2">
-                    <button type="button" (click)="toggleSidenav()" class="icon-btn">
-                        <iconify-icon icon="heroicons:bars-3" class="text-lg"></iconify-icon>
-                    </button>
-                </div>
+            <div class="flex h-14 items-center justify-end px-3">
                 <div class="flex items-center gap-2">
                     <div class="relative" #userMenuRef>
                         <button type="button" class="user-btn" (click)="toggleUserMenu()">

@@ -7,6 +7,7 @@ export interface Gift {
   imageUrl: string;
   link?: string;
   purchased?: boolean;
+  purchasedQuantity?: number;
   purchasedBy?: string;
   purchasedByName?: string;
   purchasedAt?: Date;

@@ -9,6 +9,7 @@ import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/
 import { GiftRepository } from './gift-repository.interface';
 import { GIFT_REPOSITORY } from './gift-repository.token';
 import { Gift } from './gift.interface';
+import { DefaultImageService } from './services/default-image.service';
 
 @Component({
   selector: 'mg-list',
@@ -28,6 +29,8 @@ export class ListComponent implements OnInit {
   private readonly auth: Auth = inject(Auth);
   private readonly firestore: Firestore = inject(Firestore);
 
+  private readonly VIEW_MODE_STORAGE_KEY = 'mg-view-mode';
+
   private _gifts: Gift[] = [];
   protected currentFriendId: string | null = null;
   protected displayName: string = '';
@@ -37,6 +40,7 @@ export class ListComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.loadViewModePreference();
     this.route.queryParamMap.subscribe(async (params) => {
       this.currentFriendId = params.get('friendId');
       await this.loadDisplayName();
@@ -46,6 +50,7 @@ export class ListComponent implements OnInit {
 
   toggleViewMode(): void {
     this.viewMode = this.viewMode === 'list' ? 'grid' : 'list';
+    this.saveViewModePreference();
   }
 
   async openAddGiftDialog(): Promise<void> {
@@ -80,18 +85,20 @@ export class ListComponent implements OnInit {
       return;
     }
 
-    // If gift is already purchased, only the person who purchased it can unmark it
+    // If gift is fully purchased, only the person who purchased it can unmark it
     if (gift.purchased && gift.purchasedBy !== currentUser.uid) {
       this.toast.show('Only the person who marked this gift as purchased can unmark it.', 'error');
       return;
     }
 
     try {
-      const isPurchased = !gift.purchased;
+      const currentPurchasedQuantity = gift.purchasedQuantity || 0;
+      const newPurchasedQuantity = gift.purchased ? currentPurchasedQuantity - 1 : currentPurchasedQuantity + 1;
+      const isFullyPurchased = newPurchasedQuantity >= gift.quantity;
       
       // Get purchaser's name from Firestore
       let purchaserName = 'Unknown';
-      if (isPurchased) {
+      if (newPurchasedQuantity > currentPurchasedQuantity) {
         try {
           const userDoc = await getDoc(doc(this.firestore, 'users', currentUser.uid));
           const userData = userDoc.data() as any;
@@ -104,18 +111,19 @@ export class ListComponent implements OnInit {
       }
       
       const updateData: Partial<Gift> = {
-        purchased: isPurchased,
-        purchasedBy: isPurchased ? currentUser.uid : undefined,
-        purchasedByName: isPurchased ? purchaserName : undefined,
-        purchasedAt: isPurchased ? new Date() : undefined,
+        purchased: isFullyPurchased,
+        purchasedQuantity: Math.max(0, newPurchasedQuantity),
+        purchasedBy: isFullyPurchased ? currentUser.uid : gift.purchasedBy,
+        purchasedByName: isFullyPurchased ? purchaserName : gift.purchasedByName,
+        purchasedAt: isFullyPurchased ? new Date() : gift.purchasedAt,
       };
 
       await this.giftRepository.update(gift.id, updateData, this.currentFriendId || undefined);
       await this.loadGifts();
 
-      const message = isPurchased
-        ? 'Gift marked as purchased!'
-        : 'Gift marked as not purchased.';
+      const message = newPurchasedQuantity > currentPurchasedQuantity
+        ? `Gift quantity updated! ${newPurchasedQuantity}/${gift.quantity} purchased.`
+        : `Gift quantity updated! ${newPurchasedQuantity}/${gift.quantity} purchased.`;
       this.toast.show(message, 'success');
     } catch (error) {
       this.toast.show('Failed to update gift.', 'error');
@@ -127,11 +135,15 @@ export class ListComponent implements OnInit {
     if (!currentUser || !this.currentFriendId) {
       return false;
     }
-    // If not purchased yet, anyone can mark it
+    
+    const purchasedQuantity = gift.purchasedQuantity || 0;
+    
+    // If not fully purchased yet, anyone can mark it
     if (!gift.purchased) {
       return true;
     }
-    // If already purchased, only the purchaser can unmark it
+    
+    // If fully purchased, only the purchaser can unmark it
     return gift.purchasedBy === currentUser.uid;
   }
 
@@ -182,16 +194,48 @@ export class ListComponent implements OnInit {
    */
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    img.src = 'https://placehold.co/400x300/e5e7eb/6b7280?text=No+Image';
+    img.src = DefaultImageService.ensureDefaultImage();
   }
 
   /**
    * Get image URL with fallback
    */
   getImageUrl(gift: Gift): string {
-    if (!gift.imageUrl || gift.imageUrl.trim() === '') {
-      return 'https://placehold.co/400x300/e5e7eb/6b7280?text=No+Image';
+    return DefaultImageService.ensureDefaultImage(gift.imageUrl);
+  }
+
+  /**
+   * Get quantity display text showing purchased/total
+   */
+  getQuantityDisplayText(gift: Gift): string {
+    const purchasedQuantity = gift.purchasedQuantity || 0;
+    return `${purchasedQuantity}/${gift.quantity} bought`;
+  }
+
+  /**
+   * Load view mode preference from localStorage
+   */
+  private loadViewModePreference(): void {
+    try {
+      const savedViewMode = localStorage.getItem(this.VIEW_MODE_STORAGE_KEY);
+      if (savedViewMode === 'list' || savedViewMode === 'grid') {
+        this.viewMode = savedViewMode;
+      }
+    } catch (error) {
+      // If localStorage is not available or there's an error, keep the default value
+      console.warn('Failed to load view mode preference:', error);
     }
-    return gift.imageUrl;
+  }
+
+  /**
+   * Save view mode preference to localStorage
+   */
+  private saveViewModePreference(): void {
+    try {
+      localStorage.setItem(this.VIEW_MODE_STORAGE_KEY, this.viewMode);
+    } catch (error) {
+      // If localStorage is not available or there's an error, silently fail
+      console.warn('Failed to save view mode preference:', error);
+    }
   }
 }

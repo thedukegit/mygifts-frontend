@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { ModalService } from '@mg-frontend/ui';
 import { Gift } from '../gift.interface';
+import { DefaultImageService } from '../services/default-image.service';
 
 export interface GiftDialogData {
   gift?: Gift;
@@ -71,14 +72,11 @@ export class AddGiftDialogComponent implements OnInit {
 
   get imagePreviewUrl(): string {
     const url = this.giftForm.get('imageUrl')?.value;
-    if (!url || url.trim() === '') {
-      return 'https://placehold.co/400x300/e5e7eb/6b7280?text=No+Image';
-    }
-    return url;
+    return DefaultImageService.ensureDefaultImage(url);
   }
 
   onImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
-    img.src = 'https://placehold.co/400x300/e5e7eb/6b7280?text=Invalid+URL';
+    img.src = DefaultImageService.ensureDefaultImage();
   }
 }
