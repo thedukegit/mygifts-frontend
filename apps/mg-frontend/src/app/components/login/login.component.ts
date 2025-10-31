@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { FeatureFlagsService } from '../../services/feature-flags.service';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +20,16 @@ export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly formBuilder = inject(FormBuilder);
+  private readonly featureFlagsService = inject(FeatureFlagsService);
 
   loading = false;
   errorMessage = '';
   infoMessage = '';
+
+  // Feature flag for create account
+  get isCreateAccountEnabled(): boolean {
+    return this.featureFlagsService.isEnabled('createAccount');
+  }
 
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -52,7 +59,9 @@ export class LoginComponent {
   }
 
   navigateToRegister() {
-    this.router.navigate(['/register']);
+    if (this.isCreateAccountEnabled) {
+      this.router.navigate(['/register']);
+    }
   }
 }
 
