@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyGifts.me - Nieuwe Versie!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        img {
+            border: 0;
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .wrapper {
+            width: 100%;
+            background-color: #f5f5f5;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            color: #ffffff;
+            font-size: 18px;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .intro {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333333;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .section-description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #666666;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .comparison {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .comparison-cell {
+            width: 48%;
+            vertical-align: top;
+            padding: 10px;
+        }
+
+        .comparison-label {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .comparison-new {
+            color: #10b981;
+        }
+
+        .comparison-old {
+            color: #ef4444;
+        }
+
+        .divider {
+            width: 4%;
+            background-color: #667eea;
+            min-width: 3px;
+        }
+
+        .single-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .single-image img {
+            margin: 0 auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button {
+            text-align: center;
+            margin: 40px 0 30px 0;
+        }
+
+        .cta-button a {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff !important;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            background-color: #f9fafb;
+            padding: 30px;
+            text-align: center;
+            font-size: 13px;
+            color: #666666;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+                border-radius: 0 !important;
+            }
+
+            .header {
+                padding: 30px 20px !important;
+            }
+
+            .header h1 {
+                font-size: 26px !important;
+            }
+
+            .content {
+                padding: 30px 20px !important;
+            }
+
+            .comparison-cell {
+                display: block !important;
+                width: 100% !important;
+                margin-bottom: 20px;
+            }
+
+            .divider {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table class="wrapper" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center">
+                <table class="container" width="600" cellpadding="0" cellspacing="0">
+                    <!-- Header -->
+                    <tr>
+                        <td class="header">
+                            <h1>MyGifts.me is vernieuwd!</h1>
+                            <p>Ontdek wat er allemaal nieuw is</p>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td class="content">
+                            <!-- Intro -->
+                            <div class="intro">
+                                <p>Hey!</p>
+                                <p>We hebben goed nieuws! MyGifts.me is volledig vernieuwd en ziet er nu een stuk
+                                    frisser uit.</p>
+                                    <p>Je verlanglijstje is meeverhuisd naar de nieuwe website!</p>
+                                    <p>Maar let op! De eerste keer dat je inlogt op de nieuwe site, moet je eerst je wachtwoord resetten.</p>
+                                    <p>Je kunt dit doen door op de "Forgot password?" knop te klikken en je email adres in te vullen.</p>
+                                    <p>Je krijgt dan een email met een link om je wachtwoord te resetten.</p>
+                                    <p>Let op! Dit moet je doen voordat je je verlanglijstje kunt bekijken.</p>
+                                    
+                                
+                            </div>
+
+                            <!-- Section 1: Login Vergelijking -->
+                            <div class="section">
+                                <h2 class="section-title">Vernieuwd Login Scherm</h2>
+                                <p class="section-description">
+                                    Ons login scherm heeft een complete make-over gekregen! Moderne styling, betere UX,
+                                    en veel overzichtelijker.
+                                </p>
+                                <table class="comparison" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td class="comparison-cell">
+                                            <div class="comparison-label comparison-new">✓ Nieuw</div>
+                                            <img src="/newsletters/2025-10-sample/login-new.png"
+                                                alt="Nieuwe login pagina"
+                                                style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                        </td>
+                                        <td class="divider"></td>
+                                        <td class="comparison-cell">
+                                            <div class="comparison-label comparison-old">× Oud</div>
+                                            <img src="/newsletters/2025-10-sample/login-old.png" alt="Oude login pagina"
+                                                style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Section 2: Lijstweergave -->
+                            <div class="section">
+                                <h2 class="section-title">Verbeterde Lijstweergave</h2>
+                                <p class="section-description">
+                                    Je verlanglijstjes zien er nu stukken mooier uit! Overzichtelijke kaarten met al je
+                                    favoriete items, compleet met afbeeldingen, prijzen en handige knoppen.
+                                </p>
+                                <div class="single-image">
+                                    <img src="/newsletters/2025-10-sample/list-view.png" alt="Nieuwe lijstweergave"
+                                        style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                </div>
+                            </div>
+
+                            <!-- Section 3: Dark Mode -->
+                            <div class="section">
+                                <h2 class="section-title">Dark Mode & Light Mode</h2>
+                                <p class="section-description">
+                                    Yes! Je kunt nu kiezen tussen een licht en donker thema. Klik rechtsboven op je
+                                    naam, ga naar Settings, en kies je favoriete thema!
+                                </p>
+                                <table class="comparison" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td class="comparison-cell">
+                                            <div class="comparison-label" style="color: #f59e0b;">Light</div>
+                                            <img src="/newsletters/2025-10-sample/light-theme.png" alt="Light mode"
+                                                style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                        </td>
+                                        <td class="divider"></td>
+                                        <td class="comparison-cell">
+                                            <div class="comparison-label" style="color: #6366f1;">Dark</div>
+                                            <img src="/newsletters/2025-10-sample/dark-theme.png" alt="Dark mode"
+                                                style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- CTA Button -->
+                            <div class="cta-button">
+                                <a href="https://mygifts.me">Bekijk de nieuwe versie!</a>
+                            </div>
+
+                            <!-- Closing -->
+                            <div class="intro" style="margin-top: 20px; text-align: center;">
+                                <p>We hopen dat je net zo enthousiast bent als wij! Log in en ontdek alle vernieuwingen.
+                                </p>
+                                <p style="margin-top: 20px;"><strong>Veel plezier met de nieuwe MyGifts.me!</strong></p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td class="footer">
+                            <p>© 2024 MyGifts.me | <a href="https://mygifts.me">mygifts.me</a></p>
+                            <p style="margin-top: 10px; font-size: 12px; color: #999999;">
+                                Je ontvangt deze email omdat je een account hebt bij MyGifts.me
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

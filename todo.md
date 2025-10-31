@@ -25,6 +25,7 @@
 - [x] Keep track of how many of a gift have been bought
 - [x] remove the ugly icon of a gift top left and move 'collapse' icon the the left of the page and see if there is a better icon to indicate 'collapse'
 - [x] find better icon for the login page
+- [ ] create extra app that will host html/images for newsletters that will be sent via email and also be seen online in this app
 - [ ] the settings page is not using the same styling as the friends and mylist pages. The header is different and missing a divider
 - [ ] when resizing the website smaller, collapse the menu when its getting really small
 - [ ] Refactor settings of a user. they are currently stored in localstorage, but need to create a repository for user so that these settings can be saved in cloud as well as list/grid setting
