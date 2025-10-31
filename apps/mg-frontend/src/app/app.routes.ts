@@ -9,6 +9,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ShellComponent } from './components/shell/shell.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { AuthGuard } from './guards/auth.guard';
+import { FeatureFlagGuard } from './guards/feature-flag.guard';
 
 export const appRoutes: Route[] = [
   {
@@ -46,6 +47,8 @@ export const appRoutes: Route[] = [
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [FeatureFlagGuard],
+    data: { featureFlag: 'createAccount' },
   },
   {
     path: 'forgot-password',
