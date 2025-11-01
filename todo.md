@@ -45,3 +45,5 @@
 - [ ] on the friends page show the amount of gifts the friend has
 - [ ] on the profile page, make firstname and lastname editable
 - [ ] implement translations
+- [ ] create a chrome plugin to quickly add gifts to my list
+- [ ] improve website for phone, like autocollapse side bar and make sure each gifts is shown completely (no horizontal scrolling wanted)
