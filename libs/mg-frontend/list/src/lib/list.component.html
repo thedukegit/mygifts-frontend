@@ -2,13 +2,13 @@
   <div class="view-controls">
     <h2 class="page-title">{{ displayName }}</h2>
     <div class="flex gap-2">
-      <button (click)="toggleViewMode()" class="icon-btn"
-        [attr.title]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'">
+      <button (click)="toggleViewMode()" [attr.title]="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'"
+        class="icon-btn">
         <iconify-icon [icon]="viewMode === 'grid' ? 'heroicons:list-bullet' : 'heroicons:squares-2x2'"
           class="text-lg"></iconify-icon>
       </button>@if (!currentFriendId) {
-      <button (click)="openAddGiftDialog()" class="icon-btn" [attr.title]="'Add new gift'">
-        <iconify-icon icon="heroicons:plus" class="text-lg"></iconify-icon>
+      <button (click)="openAddGiftDialog()" [attr.title]="'Add new gift'" class="icon-btn">
+        <iconify-icon class="text-lg" icon="heroicons:plus"></iconify-icon>
       </button>
       }
     </div>
@@ -35,84 +35,16 @@
     @if (viewMode === 'grid') {
     <div class="grid-container">
       @for (gift of gifts; track gift.id) {
-      <div class="grid-item">
-        <div class="gift-card rounded-xl border border-border bg-card shadow-sm">
-          @if (currentFriendId && gift.purchased) {
-          <div class="purchased-badge">
-            <iconify-icon icon="heroicons:shopping-bag" class="text-xl"></iconify-icon>
-            <span>Purchased</span>
-          </div>
-          }
-          <div class="card-content">
-            <div class="image-container">
-              <img [src]="getImageUrl(gift)" [alt]="gift.name" class="gift-image" (error)="onImageError($event)">
-            </div>
-            <div class="gift-details">
-              <div class="gift-header">
-                <h3 class="gift-name">{{ gift.name }}</h3>
-              </div>
-              <p class="gift-description">{{ gift.description }}</p>
-              @if (currentFriendId && gift.purchased && gift.purchasedByName) {
-              <p class="purchased-info">
-                Purchased by {{ gift.purchasedByName }}
-                @if (gift.purchasedAt) {
-                <span class="purchased-date"> on {{ gift.purchasedAt | date:'mediumDate' }}</span>
-                }
-              </p>
-              }
-              <div class="gift-footer">
-                <div class="price-info">
-                  <span class="price">€{{ gift.price }}</span>
-
-                  @if (gift.link) {
-                  <a [href]="gift.link" target="_blank" rel="noopener noreferrer" class="gift-link">
-                    <iconify-icon icon="heroicons:link" class="text-base"></iconify-icon>
-                    <span>View product</span>
-                  </a>
-                  }
-
-                  <span class="quantity">
-                    <iconify-icon icon="heroicons:hashtag" class="text-base"></iconify-icon>
-                    <span>{{ getQuantityDisplayText(gift) }}</span>
-                  </span>
-
-                </div>
-                <div class="action-buttons">
-                  @if (currentFriendId) {
-                  <button (click)="togglePurchased(gift)" [disabled]="!canTogglePurchase(gift)"
-                    class="icon-btn cart-button" [ngClass]="{'purchased-state': gift.purchased}"
-                    [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Remove one purchased item' : 'Mark one item as purchased') : 'Only the person who purchased this can unmark it'">
-                    <iconify-icon icon="heroicons:shopping-bag" class="text-lg"></iconify-icon>
-                  </button>
-                  } @else {
-                  <button (click)="openEditGiftDialog(gift)" class="icon-btn edit-button" title="Edit gift">
-                    <iconify-icon icon="heroicons:pencil-square" class="text-lg"></iconify-icon>
-                  </button>
-                  <button (click)="deleteGift(gift.id)" class="icon-btn delete-button" title="Delete gift">
-                    <iconify-icon icon="heroicons:trash" class="text-lg"></iconify-icon>
-                  </button>
-                  }
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      }
-    </div>
-    } @else {
-    <div class="list-container">
-      @for (gift of gifts; track gift.id) {
-      <div class="gift-card list-item rounded-xl border border-border bg-card shadow-sm">
+      <div class="gift-card grid-item rounded-xl border border-border bg-card shadow-sm">
         @if (currentFriendId && gift.purchased) {
         <div class="purchased-badge">
-          <iconify-icon icon="heroicons:shopping-bag" class="text-xl"></iconify-icon>
+          <iconify-icon class="text-xl" icon="heroicons:shopping-bag"></iconify-icon>
           <span>Purchased</span>
         </div>
         }
         <div class="card-content">
           <div class="image-container">
-            <img [src]="getImageUrl(gift)" [alt]="gift.name" class="gift-image" (error)="onImageError($event)">
+            <img (error)="onImageError($event)" [alt]="gift.name" [src]="getImageUrl(gift)" class="gift-image">
           </div>
           <div class="gift-details">
             <div class="gift-header">
@@ -132,31 +64,102 @@
                 <span class="price">€{{ gift.price }}</span>
 
                 @if (gift.link) {
-                <a [href]="gift.link" target="_blank" rel="noopener noreferrer" class="gift-link">
-                  <iconify-icon icon="heroicons:link" class="text-base"></iconify-icon>
+                <a [href]="gift.link" class="gift-link" rel="noopener noreferrer" target="_blank">
+                  <iconify-icon class="text-base" icon="heroicons:link"></iconify-icon>
                   <span>View product</span>
                 </a>
                 }
 
                 <span class="quantity">
-                  <iconify-icon icon="heroicons:hashtag" class="text-base"></iconify-icon>
+                  <iconify-icon class="text-base" icon="heroicons:hashtag"></iconify-icon>
                   <span>{{ getQuantityDisplayText(gift) }}</span>
                 </span>
 
               </div>
               <div class="action-buttons">
                 @if (currentFriendId) {
-                <button (click)="togglePurchased(gift)" [disabled]="!canTogglePurchase(gift)"
-                  class="icon-btn cart-button" [ngClass]="{'purchased-state': gift.purchased}"
-                  [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Remove one purchased item' : 'Mark one item as purchased') : 'Only the person who purchased this can unmark it'">
-                  <iconify-icon icon="heroicons:shopping-bag" class="text-lg"></iconify-icon>
+                <button (click)="togglePurchased(gift)" [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Remove one purchased item' : 'Mark one item as purchased') : 'Only the person who purchased this can unmark it'"
+                  [disabled]="!canTogglePurchase(gift)" [ngClass]="{'purchased-state': gift.purchased}"
+                  class="icon-btn cart-button">
+                  <iconify-icon class="text-lg" icon="heroicons:shopping-bag"></iconify-icon>
                 </button>
                 } @else {
                 <button (click)="openEditGiftDialog(gift)" class="icon-btn edit-button" title="Edit gift">
-                  <iconify-icon icon="heroicons:pencil-square" class="text-lg"></iconify-icon>
+                  <iconify-icon class="text-lg" icon="heroicons:pencil-square"></iconify-icon>
                 </button>
                 <button (click)="deleteGift(gift.id)" class="icon-btn delete-button" title="Delete gift">
-                  <iconify-icon icon="heroicons:trash" class="text-lg"></iconify-icon>
+                  <iconify-icon class="text-lg" icon="heroicons:trash"></iconify-icon>
+                </button>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <div (cdkDropListDropped)="drop($event)" [attr.data-key]="listRenderKey" [cdkDropListDisabled]="!!currentFriendId" cdkDropList class="list-container">
+      @for (gift of gifts; track gift.id) {
+      <div [cdkDragDisabled]="!!currentFriendId" cdkDrag class="gift-card list-item rounded-xl border border-border bg-card shadow-sm">
+        @if (!currentFriendId) {
+        <div cdkDragHandle class="drag-handle">
+          <iconify-icon class="text-lg" icon="heroicons:arrows-up-down"></iconify-icon>
+        </div>
+        }
+        @if (currentFriendId && gift.purchased) {
+        <div class="purchased-badge">
+          <iconify-icon class="text-xl" icon="heroicons:shopping-bag"></iconify-icon>
+          <span>Purchased</span>
+        </div>
+        }
+        <div class="card-content">
+          <div class="image-container">
+            <img (error)="onImageError($event)" [alt]="gift.name" [src]="getImageUrl(gift)" class="gift-image">
+          </div>
+          <div class="gift-details">
+            <div class="gift-header">
+              <h3 class="gift-name">{{ gift.name }}</h3>
+            </div>
+            <p class="gift-description">{{ gift.description }}</p>
+            @if (currentFriendId && gift.purchased && gift.purchasedByName) {
+            <p class="purchased-info">
+              Purchased by {{ gift.purchasedByName }}
+              @if (gift.purchasedAt) {
+              <span class="purchased-date"> on {{ gift.purchasedAt | date:'mediumDate' }}</span>
+              }
+            </p>
+            }
+            <div class="gift-footer">
+              <div class="price-info">
+                <span class="price">€{{ gift.price }}</span>
+
+                @if (gift.link) {
+                <a [href]="gift.link" class="gift-link" rel="noopener noreferrer" target="_blank">
+                  <iconify-icon class="text-base" icon="heroicons:link"></iconify-icon>
+                  <span>View product</span>
+                </a>
+                }
+
+                <span class="quantity">
+                  <iconify-icon class="text-base" icon="heroicons:hashtag"></iconify-icon>
+                  <span>{{ getQuantityDisplayText(gift) }}</span>
+                </span>
+
+              </div>
+              <div class="action-buttons">
+                @if (currentFriendId) {
+                <button (click)="togglePurchased(gift)" [attr.title]="canTogglePurchase(gift) ? (gift.purchased ? 'Remove one purchased item' : 'Mark one item as purchased') : 'Only the person who purchased this can unmark it'"
+                  [disabled]="!canTogglePurchase(gift)" [ngClass]="{'purchased-state': gift.purchased}"
+                  class="icon-btn cart-button">
+                  <iconify-icon class="text-lg" icon="heroicons:shopping-bag"></iconify-icon>
+                </button>
+                } @else {
+                <button (click)="openEditGiftDialog(gift)" class="icon-btn edit-button" title="Edit gift">
+                  <iconify-icon class="text-lg" icon="heroicons:pencil-square"></iconify-icon>
+                </button>
+                <button (click)="deleteGift(gift.id)" class="icon-btn delete-button" title="Delete gift">
+                  <iconify-icon class="text-lg" icon="heroicons:trash"></iconify-icon>
                 </button>
                 }
               </div>

@@ -11,4 +11,5 @@ export interface Gift {
   purchasedBy?: string;
   purchasedByName?: string;
   purchasedAt?: Date;
+  order?: number;
 }
