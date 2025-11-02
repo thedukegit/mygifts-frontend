@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ModalService, ToastService } from '@mg-frontend/ui';
 import { AddGiftDialogComponent } from './add-gift-dialog/add-gift-dialog.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
@@ -14,13 +15,16 @@ import { DefaultImageService } from './services/default-image.service';
 @Component({
   selector: 'mg-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DragDropModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ListComponent implements OnInit {
   protected viewMode: 'list' | 'grid' = 'grid';
+  protected currentFriendId: string | null = null;
+  protected displayName = '';
+  protected listRenderKey = 0; // Add a key to force re-render
   private readonly giftRepository: GiftRepository =
     inject<GiftRepository>(GIFT_REPOSITORY);
   private readonly modal = inject(ModalService);
@@ -28,12 +32,10 @@ export class ListComponent implements OnInit {
   private readonly route: ActivatedRoute = inject(ActivatedRoute);
   private readonly auth: Auth = inject(Auth);
   private readonly firestore: Firestore = inject(Firestore);
-
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly VIEW_MODE_STORAGE_KEY = 'mg-view-mode';
 
   private _gifts: Gift[] = [];
-  protected currentFriendId: string | null = null;
-  protected displayName: string = '';
 
   get gifts(): ReadonlyArray<Gift> {
     return this._gifts;
@@ -62,9 +64,9 @@ export class ListComponent implements OnInit {
   }
 
   async openEditGiftDialog(gift: Gift): Promise<void> {
-    const result = await this.modal.open<Gift & { id: string }>(AddGiftDialogComponent, { 
-      mode: 'edit', 
-      gift 
+    const result = await this.modal.open<Gift & { id: string }>(AddGiftDialogComponent, {
+      mode: 'edit',
+      gift
     });
     if (result && result.id) {
       await this.giftRepository.update(result.id, result);
@@ -95,7 +97,7 @@ export class ListComponent implements OnInit {
       const currentPurchasedQuantity = gift.purchasedQuantity || 0;
       const newPurchasedQuantity = gift.purchased ? currentPurchasedQuantity - 1 : currentPurchasedQuantity + 1;
       const isFullyPurchased = newPurchasedQuantity >= gift.quantity;
-      
+
       // Get purchaser's name from Firestore
       let purchaserName = 'Unknown';
       if (newPurchasedQuantity > currentPurchasedQuantity) {
@@ -109,7 +111,7 @@ export class ListComponent implements OnInit {
           purchaserName = currentUser.email || 'Unknown';
         }
       }
-      
+
       const updateData: Partial<Gift> = {
         purchased: isFullyPurchased,
         purchasedQuantity: Math.max(0, newPurchasedQuantity),
@@ -135,14 +137,14 @@ export class ListComponent implements OnInit {
     if (!currentUser || !this.currentFriendId) {
       return false;
     }
-    
+
     const purchasedQuantity = gift.purchasedQuantity || 0;
-    
+
     // If not fully purchased yet, anyone can mark it
     if (!gift.purchased) {
       return true;
     }
-    
+
     // If fully purchased, only the purchaser can unmark it
     return gift.purchasedBy === currentUser.uid;
   }
@@ -159,33 +161,45 @@ export class ListComponent implements OnInit {
     }
   }
 
-  private async loadGifts(): Promise<void> {
-    try {
-      if (this.currentFriendId && this.giftRepository.getByUserId) {
-        this._gifts = await this.giftRepository.getByUserId(this.currentFriendId);
-      } else {
-        this._gifts = await this.giftRepository.getAll();
-      }
-    } catch {
-      this.toast.show('Failed to load gifts', 'error');
+  async drop(event: CdkDragDrop<Gift[]>): Promise<void> {
+    if (this.currentFriendId) {
+      // Don't allow reordering friend's gifts
+      return;
     }
-  }
 
-  private async loadDisplayName(): Promise<void> {
+    if (event.previousIndex === event.currentIndex) {
+      return;
+    }
+
+    // Update the local array
+    moveItemInArray(this._gifts, event.previousIndex, event.currentIndex);
+
+    // Force iconify icons to reload after DOM manipulation
+    requestAnimationFrame(() => {
+      // Find all iconify-icon elements and force them to re-render
+      const iconElements = document.querySelectorAll('iconify-icon');
+      iconElements.forEach((icon: any) => {
+        // Force the web component to re-render by toggling the icon attribute
+        const iconValue = icon.getAttribute('icon');
+        if (iconValue) {
+          icon.setAttribute('icon', '');
+          requestAnimationFrame(() => {
+            icon.setAttribute('icon', iconValue);
+          });
+        }
+      });
+    });
+
+    // Update the order in the database
     try {
-      if (this.currentFriendId) {
-        // Load friend's name
-        const friendDoc = await getDoc(doc(this.firestore, 'users', this.currentFriendId));
-        const friendData = friendDoc.data() as any;
-        this.displayName = 'Friend';
-        if (friendData) {
-          this.displayName = `${friendData.firstName} ${friendData.lastName}`;
-        } 
-      } else {
-        this.displayName = 'My List';
-      }
+      const updatePromises = this._gifts.map((gift, index) =>
+        this.giftRepository.update(gift.id, { order: index })
+      );
+      await Promise.all(updatePromises);
     } catch {
-      this.displayName = this.currentFriendId ? 'Friend' : 'My List';
+      this.toast.show('Failed to update gift order.', 'error');
+      // Reload gifts to restore the correct order
+      await this.loadGifts();
     }
   }
 
@@ -210,6 +224,36 @@ export class ListComponent implements OnInit {
   getQuantityDisplayText(gift: Gift): string {
     const purchasedQuantity = gift.purchasedQuantity || 0;
     return `${purchasedQuantity}/${gift.quantity} bought`;
+  }
+
+  private async loadGifts(): Promise<void> {
+    try {
+      if (this.currentFriendId && this.giftRepository.getByUserId) {
+        this._gifts = await this.giftRepository.getByUserId(this.currentFriendId);
+      } else {
+        this._gifts = await this.giftRepository.getAll();
+      }
+    } catch {
+      this.toast.show('Failed to load gifts', 'error');
+    }
+  }
+
+  private async loadDisplayName(): Promise<void> {
+    try {
+      if (this.currentFriendId) {
+        // Load friend's name
+        const friendDoc = await getDoc(doc(this.firestore, 'users', this.currentFriendId));
+        const friendData = friendDoc.data() as any;
+        this.displayName = 'Friend';
+        if (friendData) {
+          this.displayName = `${friendData.firstName} ${friendData.lastName}`;
+        }
+      } else {
+        this.displayName = 'My List';
+      }
+    } catch {
+      this.displayName = this.currentFriendId ? 'Friend' : 'My List';
+    }
   }
 
   /**
