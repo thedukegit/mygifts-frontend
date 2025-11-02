@@ -34,3 +34,63 @@
 .menu-item {
     @apply block rounded-md px-3 py-2 text-sm hover:bg-bg;
 }
+
+/* Desktop sidebar - hidden on mobile */
+.sidebar-desktop {
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+/* Main content - adjust padding for bottom nav on mobile */
+.main-content {
+    @media (max-width: 768px) {
+        padding: 0.75rem;
+        padding-bottom: 0;
+    }
+}
+
+/* Bottom Navigation - only visible on mobile */
+.bottom-nav {
+    display: none;
+
+    @media (max-width: 768px) {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        border-top: 1px solid rgb(var(--color-border));
+        background-color: rgb(var(--color-card));
+        padding: 0.5rem 0;
+        flex-shrink: 0;
+        z-index: 20;
+    }
+}
+
+.bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    color: rgb(var(--color-muted));
+    text-decoration: none;
+    transition: all 0.2s;
+    border-radius: 0.5rem;
+    min-width: 80px;
+
+    span {
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    &:hover {
+        background-color: rgb(var(--color-bg));
+        color: rgb(var(--color-fg));
+    }
+
+    &.active {
+        color: rgb(var(--color-primary));
+        background-color: rgb(var(--color-primary) / 0.1);
+    }
+}
