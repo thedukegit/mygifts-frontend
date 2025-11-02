@@ -27,23 +27,28 @@
 - [x] find better icon for the login page
 - [x] create extra app that will host html/images for newsletters that will be sent via email and also be seen online in this app
 - [x] Disable the 'create account' for now
-- [ ] the settings page is not using the same styling as the friends and mylist pages. The header is different and missing a divider
-- [ ] when resizing the website smaller, collapse the menu when its getting really small
+- [x] the settings page is not using the same styling as the friends and mylist pages. The header is different and missing a divider
+- [x] Implement a drag and drop functionality for a users own list to order the gifts. The higher the gift, the more user wants it
+- [x] improve website for phone, like auto collapse side bar and make sure each gifts is shown completely (no horizontal scrolling wanted)
 - [ ] Refactor settings of a user. they are currently stored in localstorage, but need to create a repository for user so that these settings can be saved in cloud as well as list/grid setting
-- [ ] implement roles so an admin can see the 'add friends' button when regular users cant
+- [x] when resizing the website smaller, collapse the menu when its getting really small
 - [ ] find some nice gift images to use as backgrounds.
+- [ ] implement roles so an admin can see the 'add friends' button when regular users cant
 - [ ] use christmas themes images for when its christmas
 - [ ] use sinterklaas themed images for when it is sinterklaas (only for netherlands)
 - [ ] Implement user agreement, when creating an account
-
 - [ ] Any friend should be able to mark gift as purchased even if it is already marked as purchased
 - [ ] when someone marks a gift as bought and its more than the user asked for then show a warning that says that it was already bought, when it was bought and by who
 - [ ] create an overview page that shows which gifts you bought for each of your friends and how much youve spent. Add filters for friends and year
 - [ ] in case a gift has been marked as purchased a long time ago, but the owner hasnt removed it from their list (for instance if its something they want every year), implement a button that will ask the owner if they still want this gift. On the owners gift a text must appear that says something like 'jimmy wants to know if you still want this gift?' if they answer with 'yes' then mark the gift as not purchased and reset it back to 0 bought
-- [ ] Implement a drag and drop functionality for a users own list to order the gifts. The higher the gift, the more user wants it
 - [ ] On the homepage show a summary of changes that happened on friends lists in the past 30 days, so that user can quickly see updates on friends lists. Make the updates link to the respective list
 - [ ] on the friends page show the amount of gifts the friend has
 - [ ] on the profile page, make firstname and lastname editable
 - [ ] implement translations
 - [ ] create a chrome plugin to quickly add gifts to my list
-- [ ] improve website for phone, like autocollapse side bar and make sure each gifts is shown completely (no horizontal scrolling wanted)
+- [ ] implement ability to add a secret gift to a friends list that anyone, except the friend can see. 
+      This gift has to have slightly different styling to make it clear its a secret gift
+      this feature has to be allowed by the friend through a setting 'allow secret gifts'
+- 
+- 
+

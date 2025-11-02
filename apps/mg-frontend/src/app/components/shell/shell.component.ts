@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostListener, inject, OnInit, ViewChild } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 
@@ -16,18 +16,25 @@ import { UserService } from '../../services/user.service';
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss',
 })
-export class ShellComponent {
+export class ShellComponent implements OnInit {
   title = 'mg-frontend';
   sidenavExpanded = true;
   menuOpen = false;
   @ViewChild('userMenuRef') userMenuRef?: ElementRef<HTMLElement>;
   readonly authService = inject(AuthService);
   readonly userService = inject(UserService);
-  private readonly router = inject(Router);
-  
   readonly currentUser$ = this.userService.getCurrentUserDoc();
+  private readonly MOBILE_BREAKPOINT = 768; // Tablets and phones
+  private readonly router = inject(Router);
 
+  ngOnInit(): void {
+    this.checkScreenSize();
+  }
 
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(): void {
+    this.checkScreenSize();
+  }
 
   toggleSidenav() {
     this.sidenavExpanded = !this.sidenavExpanded;
@@ -51,6 +58,15 @@ export class ShellComponent {
     await this.authService.signOut();
     await this.router.navigate(['/login']);
   }
+
+  private checkScreenSize(): void {
+    const width = window.innerWidth;
+    if (width < this.MOBILE_BREAKPOINT) {
+      this.sidenavExpanded = false;
+    } else {
+      // On larger screens, keep the expanded state (don't force expand if user collapsed it manually)
+      // If you want to auto-expand on larger screens, uncomment the next line:
+      // this.sidenavExpanded = true;
+    }
+  }
 }
-
-

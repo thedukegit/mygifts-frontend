@@ -1,20 +1,20 @@
 <div class="flex h-screen overflow-hidden">
-    <!-- Sidebar -->
-    <aside class="transition-all duration-300 border-r border-border bg-card" [class.w-64]="sidenavExpanded"
-        [class.w-16]="!sidenavExpanded">
+    <!-- Desktop Sidebar -->
+    <aside [class.w-16]="!sidenavExpanded" [class.w-64]="sidenavExpanded"
+        class="sidebar-desktop transition-all duration-300 border-r border-border bg-card">
         <div class="relative h-14 border-b border-border">
-            <button type="button" (click)="toggleSidenav()" class="absolute left-3 top-1/2 -translate-y-1/2 icon-btn">
+            <button (click)="toggleSidenav()" class="absolute left-3 top-1/2 -translate-y-1/2 icon-btn" type="button">
                 <iconify-icon [icon]="sidenavExpanded ? 'heroicons:chevron-left' : 'heroicons:chevron-right'"
                     class="text-lg"></iconify-icon>
             </button>
         </div>
         <nav class="p-2">
-            <a routerLink="/list" routerLinkActive="active" class="nav-item">
-                <iconify-icon icon="heroicons:queue-list" class="text-lg"></iconify-icon>
+            <a class="nav-item" routerLink="/list" routerLinkActive="active">
+                <iconify-icon class="text-lg" icon="heroicons:queue-list"></iconify-icon>
                 @if (sidenavExpanded) { <span>My list</span> }
             </a>
-            <a routerLink="/friends" routerLinkActive="active" class="nav-item">
-                <iconify-icon icon="heroicons:users" class="text-lg"></iconify-icon>
+            <a class="nav-item" routerLink="/friends" routerLinkActive="active">
+                <iconify-icon class="text-lg" icon="heroicons:users"></iconify-icon>
                 @if (sidenavExpanded) { <span>Friends</span> }
             </a>
         </nav>
@@ -25,16 +25,16 @@
         <header class="flex-shrink-0 z-10 border-b border-border bg-bg/80 backdrop-blur">
             <div class="flex h-14 items-center justify-end px-3">
                 <div class="flex items-center gap-2">
-                    <div class="relative" #userMenuRef>
-                        <button type="button" class="user-btn" (click)="toggleUserMenu()">
+                    <div #userMenuRef class="relative">
+                        <button (click)="toggleUserMenu()" class="user-btn" type="button">
                             @if (currentUser$ | async; as user) { <span class="user-name">{{ user.firstName }}</span> }
-                            <iconify-icon icon="heroicons:user-circle" class="text-lg"></iconify-icon>
+                            <iconify-icon class="text-lg" icon="heroicons:user-circle"></iconify-icon>
                         </button>
                         @if (menuOpen) {
-                        <div class="menu" (click)="$event.stopPropagation()">
+                        <div (click)="$event.stopPropagation()" class="menu">
                             <div class="menu-items">
-                                <a routerLink="/profile" class="menu-item">Profile</a>
-                                <a routerLink="/settings" class="menu-item">Settings</a>
+                                <a class="menu-item" routerLink="/profile">Profile</a>
+                                <a class="menu-item" routerLink="/settings">Settings</a>
                                 <hr class="my-1 border-border" />
                                 <button (click)="onLogout()" class="menu-item w-full text-left">Logout</button>
                             </div>
@@ -45,10 +45,22 @@
             </div>
         </header>
 
-        <main class="flex-1 overflow-hidden p-4">
+        <main class="flex-1 overflow-hidden main-content">
             <div class="h-full rounded-xl border border-border bg-card p-4 shadow-sm overflow-hidden">
                 <router-outlet></router-outlet>
             </div>
         </main>
+
+        <!-- Mobile Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a class="bottom-nav-item" routerLink="/list" routerLinkActive="active">
+                <iconify-icon class="text-2xl" icon="heroicons:queue-list"></iconify-icon>
+                <span>My list</span>
+            </a>
+            <a class="bottom-nav-item" routerLink="/friends" routerLinkActive="active">
+                <iconify-icon class="text-2xl" icon="heroicons:users"></iconify-icon>
+                <span>Friends</span>
+            </a>
+        </nav>
     </div>
 </div>
