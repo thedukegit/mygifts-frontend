@@ -44,6 +44,8 @@
 
 /* Main content - adjust padding for bottom nav on mobile */
 .main-content {
+    padding: 1rem;
+
     @media (max-width: 768px) {
         padding: 0.75rem;
         padding-bottom: 0;
