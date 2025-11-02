@@ -17,10 +17,10 @@ import { ModalService } from '../services/modal.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule, AsyncPipe],
   template: `
-    <div class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-4"
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4"
          [class.hidden]="!(modalService.modal$ | async)?.component">
       <div class="absolute inset-0 bg-black/40" (click)="modalService.cancel()"></div>
-      <div class="relative z-10 w-full max-h-[90vh] overflow-y-auto my-auto">
+      <div class="relative z-10 max-h-[90vh] overflow-y-auto">
         <ng-container #dialogContainer></ng-container>
       </div>
     </div>
